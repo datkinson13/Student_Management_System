@@ -21,3 +21,4 @@ Route::get('/login', function (){
 });
 
 Route::resource('/course', 'CourseController');
+Route::get('course/{course}/email', 'CourseController@compose');

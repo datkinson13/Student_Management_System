@@ -88,4 +88,15 @@ class CourseController extends Controller
     {
         //
     }
+
+    /**
+     * Allows sending of an email to all students enrolled in the course..
+     *
+     * @param  Course  $course
+     * @return \Illuminate\Http\Response
+     */
+    public function compose($course)
+    {
+        return view('course.email', compact('course'));
+    }
 }
