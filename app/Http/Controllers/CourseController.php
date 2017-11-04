@@ -50,7 +50,7 @@ class CourseController extends Controller
      * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function show($id) // This should be changed to reflect the doco above. Course $course.
+    public function show($course) // This should be changed to reflect the doco above. Course $course.
     {
         return view('course.show', compact('course'));
     }

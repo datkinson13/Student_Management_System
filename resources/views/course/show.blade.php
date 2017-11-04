@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="jumbotron">
-        <h1 class="display-3">Course 1
+        <h1 class="display-3">Course {{ $course }}
             <a class="btn btn-warning btn-lg" href="#" role="button">Edit Course</a>
-            <a class="btn btn-success btn-lg" href="#" role="button">Email Students</a>
+            <a class="btn btn-success btn-lg" href="/course/{{$course}}/email" role="button">Email Students</a>
         </h1>
         <p class="lead">This is the first course. Obviously this is the best course.</p><a class="btn btn-primary btn-lg" href="#" role="button">Enroll</a>
         <hr class="my-4">
