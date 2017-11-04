@@ -19,3 +19,5 @@ Route::get('/user/show/{user}', 'UserController@show');
 Route::get('/login', function (){
     return view('login.index');
 });
+
+Route::resource('/course', 'CourseController');
