@@ -13,7 +13,7 @@
                             of
                             the
                             card's content.</p>
-                        <a href="#" class="btn btn-primary">View Course</a>
+                        <a href="/course/1" class="btn btn-primary">View Course</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Last updated 3 mins ago</small>
