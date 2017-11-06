@@ -10,5 +10,11 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
         </ul>
+        <ul class = "navbar-nav ml-auto">
+          <li class = "nav-item active">
+            <!-- Will need to pass in user object for name variables? -->
+            <a class = "nav-link" href = "/users/{{$user}}">John Smith</a>
+          </li>
+        </ul>
     </div>
 </nav>

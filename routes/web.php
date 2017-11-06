@@ -14,7 +14,7 @@
 Route::get('/', 'PageController@index');
 
 // User routing
-Route::get('/user/show/{user}', 'UserController@show');
+Route::resource('users', 'UserController');
 
 Route::get('/login', function (){
     return view('login.index');
