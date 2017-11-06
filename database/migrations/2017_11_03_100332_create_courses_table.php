@@ -4,19 +4,22 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCourseTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('course', function (Blueprint $table) {
-            $table->foreign('facilitator_id')->references('facilitator_id')->on('facilitator');
-$table->dateTimeTz('created_at');
+    public function up() {
+        Schema::create('courses', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('facilitator_id');
+            $table->date('StartDate');
+            $table->date('EndDate');
+            $table->timeTz('CourseTime');
             $table->timestamps();
+            $table->foreign('facilitator_id')->references('id')->on('facilitators');
         });
     }
 
@@ -25,8 +28,7 @@ $table->dateTimeTz('created_at');
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('course');
+    public function down() {
+        Schema::dropIfExists('courses');
     }
 }
