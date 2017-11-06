@@ -15,7 +15,7 @@ class CreateAdministratorTable extends Migration
     {
         Schema::create('administrator', function (Blueprint $table) {
             $table->increments('admin_id');
-		$table->foreign('user_id')->references('user_id')->on('users');
+		$table->foreign('user_id')->references('user_id')->on('user');
             $table->timestamps();
         });
     }
