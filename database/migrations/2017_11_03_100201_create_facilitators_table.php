@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFacilitatorsTable extends Migration
+class CreateFacilitatorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateFacilitatorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('facilitators', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('facilitator', function (Blueprint $table) {
+            $table->increments('facilitator_id');
+$table->foreign('user_id')->references('user_id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateFacilitatorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('facilitators');
+        Schema::dropIfExists('facilitator');
     }
 }
