@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdministratorsTable extends Migration
+class CreateAdministratorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateAdministratorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('administrators', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('administrator', function (Blueprint $table) {
+            $table->increments('admin_id');
+		$table->foreign('user_id')->references('user_id')->on('users');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateAdministratorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('administrators');
+        Schema::dropIfExists('administrator');
     }
 }
