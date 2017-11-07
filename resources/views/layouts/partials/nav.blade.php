@@ -24,6 +24,12 @@
                     </a>
 
                     <ul class="dropdown-menu">
+                      <li>
+                          <a href="/users/{{ $currentUser->id }}">
+                              My Profile
+                          </a>
+                      </li>
+                      <hr/>
                         <li>
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();

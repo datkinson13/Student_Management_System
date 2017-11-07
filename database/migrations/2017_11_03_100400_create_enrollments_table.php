@@ -14,10 +14,10 @@ class CreateEnrollmentsTable extends Migration
     public function up() {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('facilitator_id');
-            $table->integer('employee_id');
-            $table->integer('employer_id');
-            $table->integer('course_id');
+            $table->integer('facilitator_id')->unsigned();
+            $table->integer('employee_id')->unsigned();
+            $table->integer('employer_id')->unsigned();
+            $table->integer('course_id')->unsigned();
             $table->timestamps();
             $table->foreign('facilitator_id')->references('id')->on('facilitators');
             $table->foreign('employee_id')->references('id')->on('employees');
