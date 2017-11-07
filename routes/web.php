@@ -14,7 +14,7 @@
 Route::get('/', 'PageController@index');
 
 // User routing
-Route::resource('users', 'UserController');
+Route::resource('users', 'UserController')->middleware('auth');
 
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
