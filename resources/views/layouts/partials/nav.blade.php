@@ -6,6 +6,8 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        {{-- Leaving this home link here for now as an example but how many do we really need?
+              Dashboard is a link home, and there is another home link in the side bar.        --}}
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
