@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-  <h1>User: {{ $user->FName }} {{ $user->LName }}</h1>
+  <h1>User: {{ $user->Fname }} {{ $user->Lname }}</h1>
   <p>Date of Birth: {{ $user->DOB }}</p>
-  <p>Address: {{ $user->Address }}</p>
-  <p>Phone: {{ $user->Phone }}</p>
-  <p>Mobile: {{ $user->Mobile }}</p>
+  <p>Address: {{ $user->address }}</p>
+  <p>Phone: {{ $user->phone }}</p>
+  <p>Mobile: {{ $user->mobile }}</p>
 
 @endsection
