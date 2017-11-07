@@ -14,7 +14,10 @@
 Route::get('/', 'PageController@index');
 
 // User routing
-Route::resource('users', 'UserController');
+Route::resource('user', 'UserController');
+
+// Report routing
+Route::resource('report', 'ReportController');
 
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
