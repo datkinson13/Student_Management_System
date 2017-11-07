@@ -23,3 +23,7 @@ Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
 
 Auth::routes();
+
+Route::get('/help', function() {
+  return view('dashboard.help');
+});
