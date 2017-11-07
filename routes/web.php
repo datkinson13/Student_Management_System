@@ -13,10 +13,12 @@
 
 Route::get('/', 'PageController@index');
 
+Auth::routes(); // Laravel built in Auth routes. /login /register /password/forgot /password/reset
+
 // User routing
 Route::resource('users', 'UserController')->middleware('auth');
 
+// Course routing
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
 
-Auth::routes();
