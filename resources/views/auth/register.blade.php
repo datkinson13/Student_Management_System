@@ -144,8 +144,12 @@
 
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
+                        {{-- Make these buttons the same size and appear at opposite sides of the form. --}}
                         <button type="submit" class="btn btn-primary">
                             Register
+                        </button>
+                        <button type="reset" class="btn btn-warning">
+                            Clear
                         </button>
                     </div>
                 </div>
