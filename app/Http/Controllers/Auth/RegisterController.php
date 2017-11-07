@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -34,7 +34,8 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest');
     }
 
@@ -44,15 +45,16 @@ class RegisterController extends Controller
      * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data) {
+    protected function validator(array $data)
+    {
         return Validator::make($data, [
-            'Fname' => 'required|string|max:255',
-            'Lname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'nullable|digits:10',
-            'mobile' => 'nullable|digits:10',
-            'DOB' => 'nullable|date',
-            'address' => 'nullable|string',
+            'Fname'    => 'required|string|max:255',
+            'Lname'    => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
+            'phone'    => 'nullable|digits:10',
+            'mobile'   => 'nullable|digits:10',
+            'DOB'      => 'nullable|date',
+            'address'  => 'nullable|string',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -63,18 +65,20 @@ class RegisterController extends Controller
      * @param  array $data
      * @return \App\User
      */
-    protected function create(array $data) {
+    protected function create(array $data)
+    {
 
         $user = User::create([
-                                'Fname' => $data['Fname'],
-                                'Lname' => $data['Lname'],
-                                'email' => $data['email'],
-                                'phone' => $data['phone'],
-                                'mobile' => $data['mobile'],
-                                'DOB' => $data['DOB'],
-                                'address' => $data['address'],
-                                'password' => bcrypt($data['password']),
-                            ]);
+            'Fname'    => $data['Fname'],
+            'Lname'    => $data['Lname'],
+            'email'    => $data['email'],
+            'phone'    => $data['phone'],
+            'mobile'   => $data['mobile'],
+            'DOB'      => $data['DOB'],
+            'address'  => $data['address'],
+            'password' => bcrypt($data['password']),
+        ]);
+
         return $user;
     }
 }
