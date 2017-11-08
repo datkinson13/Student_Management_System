@@ -82,7 +82,7 @@ class UserController extends Controller
               'mobile' => $request->input('mobile')
             ]);
 
-        return view('user.show', compact('user'));
+        return redirect()->route('users.show', ['user' => $user]);
     }
 
     /**
