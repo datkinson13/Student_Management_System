@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -37,7 +37,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request, [
+        'password' => 'min:6',
+        'confirmPassword' => 'required_with:password|same:password|min:6'
+      ]);
+
+      User::create([
+              'Fname' => $request->input('Fname'),
+              'Lname' => $request->input('Lname'),
+              'email' => $request->input('email'),
+              'DOB' => $request->input('DOB'),
+              'address' => $request->input('address'),
+              'phone' => $request->input('phone'),
+              'mobile' => $request->input('mobile'),
+              'password' => bcrypt($request->input('password'))
+            ]);
+
+        return redirect('/users');
     }
 
     /**
@@ -93,6 +109,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+      User::where('id', $user->id)->delete();
+
+      return redirect('/users');
     }
 }
