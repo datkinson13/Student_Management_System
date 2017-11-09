@@ -13,8 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layouts.partials.nav', function($view) {
-            $view->with('currentUser', \Auth::user());
+        view()->composer('*', function($view) {
+            $user = \Auth::user();
+            view()->share('currentUser', $user);
         });
     }
 
