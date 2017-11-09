@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Submit help request</h1>
-    
+<h1>Submit a ticket</h1>
+
 @endsection

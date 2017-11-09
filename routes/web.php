@@ -21,14 +21,12 @@ Auth::routes(); // Laravel built in Auth routes. /login /register /password/forg
 Route::resource('users', 'UserController')->middleware('auth');
 // Route::get('/users/{user}/updatePassword', 'UserController@updatePassword');
 
+// Routing for help tickets
+Route::resource('tickets', 'TicketController');
+
 // Report routing
 Route::resource('report', 'ReportController');
 
 // Course routing
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
-
-// Help page
-Route::get('/help', function() {
-  return view('dashboard.help');
-});
