@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Administrator;
+use App\Facilitator;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -81,6 +83,21 @@ class UserController extends Controller
               'phone' => $request->input('phone'),
               'mobile' => $request->input('mobile')
             ]);
+
+        // This will require an authorization check.
+        if ( isset ($request['admin'])) {
+            Administrator::create(['user_id' => $user->id]);
+        } else {
+            $admin_id = Administrator::where('user_id', $user->id)->first();
+            Administrator::destroy($admin_id->id);
+        }
+
+        if ( isset ($request['facil'])) {
+            Facilitator::create(['user_id' => $user->id]);
+        } else {
+            $facil_id = Facilitator::where('user_id', $user->id)->first();
+            Facilitator::destroy($facil_id->id);
+        }
 
         return redirect()->route('users.show', ['user' => $user]);
     }
