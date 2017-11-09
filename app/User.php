@@ -33,4 +33,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function isAdmin() {
+        // Load the relationship between User and Admin.
+        $admin = Administrator::where('user_id', $this->id)->first();
+        if ($admin === null) {
+            // If admin is returned, the user is an administrator.
+            return false;
+        } else {
+            // Otherwise they are not.
+            return true;
+        }
+    }
+
+    public function isFacilitator() {
+        // Load the relationship between User and Facilitator.
+        $facilitator = Facilitator::where('user_id', $this->id)->first();
+        if ($facilitator === null) {
+            // If facilitator is returned, the user is a facilitator.
+            return false;
+        } else {
+            // Otherwise they are not.
+            return true;
+        }
+    }
 }
