@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Administrator;
 use App\Facilitator;
 use App\User;
+use Gate;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -100,22 +101,24 @@ class UserController extends Controller
               'mobile' => $request->input('mobile')
             ]);
 
-        // This will require an authorization check.
-        if ( isset ($request['admin'])) {
-            Administrator::create(['user_id' => $user->id]);
-        } else {
-            $admin_id = Administrator::where('user_id', $user->id)->first();
-            if ($admin_id) {
-                Administrator::destroy($admin_id->id);
+        if (Gate::allows('change-permissions')) {
+            // This will require an authorization check.
+            if (isset ($request['admin'])) {
+                Administrator::create(['user_id' => $user->id]);
+            } else {
+                $admin_id = Administrator::where('user_id', $user->id)->first();
+                if ($admin_id) {
+                    Administrator::destroy($admin_id->id);
+                }
             }
-        }
 
-        if ( isset ($request['facil'])) {
-            Facilitator::create(['user_id' => $user->id]);
-        } else {
-            $facil_id = Facilitator::where('user_id', $user->id)->first();
-            if ($facil_id) {
-                Facilitator::destroy($facil_id->id);
+            if (isset ($request['facil'])) {
+                Facilitator::create(['user_id' => $user->id]);
+            } else {
+                $facil_id = Facilitator::where('user_id', $user->id)->first();
+                if ($facil_id) {
+                    Facilitator::destroy($facil_id->id);
+                }
             }
         }
 

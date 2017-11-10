@@ -48,18 +48,20 @@
         <input type = "text" class = "form-control" id = "mobile" name = "mobile" value = "{{ $user->mobile }}">
       </div>
     </div>
-      @if ($currentUser->isAdmin())
+      @can('change-permissions')
           <div class="form-check">
               <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" name="admin" id="admin" {{ $user->isAdmin() ? 'Checked' : '' }}>
+                  <input type="checkbox" class="form-check-input" name="admin"
+                         id="admin" {{ $user->isAdmin() ? 'Checked' : '' }}>
                   Administrator
               </label>
               <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" name="facil" id="facil" {{ $user->isFacilitator() ? 'Checked' : '' }}>
+                  <input type="checkbox" class="form-check-input" name="facil"
+                         id="facil" {{ $user->isFacilitator() ? 'Checked' : '' }}>
                   Facilitator
               </label>
           </div>
-      @endif
+      @endcan
     <button class="btn btn-primary user-edit-buttons" type="submit">Update User</button>
     <a href = "/users/{{ $user->id }}"><button class="btn btn-primary user-edit-buttons" type="button">Cancel</button></a>
   </form>
