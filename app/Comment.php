@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ticket extends Model
+class Comment extends Model
 {
   /**
    * The attributes that are mass assignable.
@@ -12,10 +12,9 @@ class Ticket extends Model
    * @var array
    */
   protected $fillable = [
+      'ticket_id',
       'user_id',
-      'subject',
-      'description',
-      'status'
+      'body'
   ];
 
   /**
@@ -27,13 +26,13 @@ class Ticket extends Model
 
   ];
 
-  public function comments()
-  {
-    return $this->hasMany(Comment::class);
-  }
+    public function ticket()
+    {
+      return $this->belongsTo(Ticket::class);
+    }
 
-  public function user()
-  {
-    return $this->belongsTo(User::class);
-  }
+    public function user()
+    {
+      return $this->belongsTo(User::class);
+    }
 }

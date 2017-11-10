@@ -23,6 +23,7 @@ Route::resource('users', 'UserController')->middleware('auth');
 
 // Routing for help tickets
 Route::resource('tickets', 'TicketController');
+Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 
 // Report routing
 Route::resource('report', 'ReportController');
