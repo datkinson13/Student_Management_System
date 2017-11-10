@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Administrator;
-use App\Facilitator;
+use App\SystemRole;
 use App\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -101,27 +100,34 @@ class UserController extends Controller
               'mobile' => $request->input('mobile')
             ]);
 
+        // Only do the next steps if the user is authorized.
         if (Gate::allows('change-permissions')) {
-            // This will require an authorization check.
-            if (isset ($request['admin'])) {
-                Administrator::create(['user_id' => $user->id]);
-            } else {
-                $admin_id = Administrator::where('user_id', $user->id)->first();
-                if ($admin_id) {
-                    Administrator::destroy($admin_id->id);
+            // This user has the 'change-permissions' permission.
+            $role_arr = is_array($request->input('roles')) ? $request->input('roles') : array();
+            foreach ($user->roles as $role) {
+                // Iterate through the roles the user currently has.
+                if (!array_key_exists($role->id, $role_arr)) {
+                    // They don't have this permission anymore.
+                    // Get the entry.
+                    $sys_role = SystemRole::where('user_id', $user->id)->where('role_id', $role->id)->first();
+                    // Delete it.
+                    $sys_role->delete();
                 }
             }
 
-            if (isset ($request['facil'])) {
-                Facilitator::create(['user_id' => $user->id]);
-            } else {
-                $facil_id = Facilitator::where('user_id', $user->id)->first();
-                if ($facil_id) {
-                    Facilitator::destroy($facil_id->id);
+            foreach ($role_arr as $role_id => $role) {
+                // Iterate through the roles that have been submitted.
+                // Double check that the role should be added to the user.
+                if ($role) {
+                    // Does the user already have this role?
+                    $user_role = SystemRole::where('user_id', $user->id)->where('role_id', $role_id)->first();
+                    if (!$user_role) {
+                        // Add this role to the user.
+                        SystemRole::create(['user_id' => $user->id, 'role_id' => $role_id]);
+                    }
                 }
             }
         }
-
         return redirect()->route('users.show', ['user' => $user]);
     }
 
