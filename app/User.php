@@ -34,27 +34,31 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isAdmin() {
-        // Load the relationship between User and Admin.
-        $admin = Administrator::where('user_id', $this->id)->first();
-        if ($admin === null) {
-            // If admin is returned, the user is an administrator.
-            return false;
-        } else {
-            // Otherwise they are not.
-            return true;
-        }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'system_roles');
     }
 
-    public function isFacilitator() {
-        // Load the relationship between User and Facilitator.
-        $facilitator = Facilitator::where('user_id', $this->id)->first();
-        if ($facilitator === null) {
-            // If facilitator is returned, the user is a facilitator.
-            return false;
-        } else {
-            // Otherwise they are not.
-            return true;
+    /**
+     * Checks if User has access to $permissions.
+     */
+    public function hasAccess($permissions)
+    {
+        // check if the permission is available in any role
+        foreach ($this->roles as $role) {
+            if ($role->hasAccess($permissions)) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    /**
+     * Checks if the user belongs to role.
+     */
+    public function inRole($roleSlug)
+    {
+        return $this->roles()->where('slug', $roleSlug)->count() == 1;
     }
 }
