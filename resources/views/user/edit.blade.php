@@ -49,17 +49,17 @@
       </div>
     </div>
       @can('change-permissions')
-          <div class="form-check">
-              <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" name="admin"
-                         id="admin" {{ $user->isAdmin() ? 'Checked' : '' }}>
-                  Administrator
-              </label>
-              <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" name="facil"
-                         id="facil" {{ $user->isFacilitator() ? 'Checked' : '' }}>
-                  Facilitator
-              </label>
+          <div class="form-group row">
+              <label class="col-sm-2 col-form-label">Permissions:</label>
+              <div class="form-check">
+                  @foreach(\App\Role::all() as $role)
+                      <label class="form-check-label">
+                          <input type="checkbox" class="form-check-input" name="roles[{{ $role->id }}]{{ $role->slug }}"
+                                 id="{{ $role->slug }}" {{ $user->inRole($role->slug) ? 'Checked' : '' }}>
+                          {{ $role->name }}
+                      </label>
+                  @endforeach
+              </div>
           </div>
       @endcan
     <button class="btn btn-primary user-edit-buttons" type="submit">Update User</button>
