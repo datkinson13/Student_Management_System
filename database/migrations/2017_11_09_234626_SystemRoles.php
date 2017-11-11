@@ -20,7 +20,7 @@ class SystemRoles extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->jsonb('permissions')->default('{}'); // jsonb deletes duplicates
+            $table->jsonb('permissions'); // ->default('{}'); DA - Commented out as can't have default for migration - jsonb deletes duplicates
             $table->timestamps();
         });
 

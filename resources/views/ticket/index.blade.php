@@ -10,6 +10,7 @@
         <th>ID</th>
         <th>Subject</th>
         <th>Lasted Updated</th>
+        <th>Priority</th>
         <th>Status</th>
       </tr>
     </thead>
@@ -19,6 +20,7 @@
           <td>{{ $ticket->id }}</td>
           <td>{{ $ticket->subject }}</td>
           <td>{{ $ticket->updated_at }}</td>
+          <td>{{ $ticket->priority }}</td>
           <td>{{ $ticket->status }}</td>
           <td>
             <td>

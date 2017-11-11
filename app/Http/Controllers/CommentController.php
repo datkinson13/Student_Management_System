@@ -18,6 +18,11 @@ class CommentController extends Controller
         'user_id' => Auth::id()
       ]);
 
+      Ticket::where('id', $ticket->id)
+            ->update([
+              'updated_at' => now()
+            ]);
+
       return redirect()->route('tickets.show', ['ticket' => $ticket]);
     }
 }

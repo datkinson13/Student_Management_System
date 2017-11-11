@@ -18,7 +18,7 @@ class CreateTicketsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('subject');
             $table->string('description');
-            $table->string('priority');
+            $table->string('priority')->default('Normal');
             $table->string('status')->default('Open');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');

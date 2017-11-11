@@ -8,6 +8,8 @@
 <p>{{ $ticket->created_at }}</p>
 <h5>Ticket last updated: </h5>
 <p>{{ $ticket->updated_at }}</p>
+<h5>Ticket Priority: </h5>
+<p>{{ $ticket->priority }}</p>
 <h5>Ticket Status: </h5>
 <p>{{ $ticket->status }}</p>
 <h5>Subject: </h5>
@@ -20,7 +22,7 @@
   <ul class = "list-group">
     @foreach($ticket->comments as $comment)
       <li class = "list-group-item">
-        {{ $comment->user()->Fname }} {{ $comment->user()->Lname }}<br/>
+        {{ $comment->user->Fname }} {{ $comment->user->Lname }}<br/>
         <em>{{ $comment->created_at->diffForHumans() }}</em><br/><br/>
         {{ $comment->body }}
       </li>
