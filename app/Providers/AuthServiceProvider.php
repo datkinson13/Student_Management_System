@@ -24,15 +24,20 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $this->registerPermissionPolicies();
+        $this->registerUserActionPolicies();
         //
     }
 
-    public function registerPermissionPolicies()
+    public function registerUserActionPolicies()
     {
-        // Define a gate allowing permissions to be changed.
+        // Define a gate allowing a users permissions to be changed.
         Gate::define('change-permissions', function ($user) {
             return $user->hasAccess(['change-permissions']);
+        });
+
+        // Define a gate allowing user deletion.
+        Gate::define('user-delete', function ($user) {
+            return $user->hasAccess(['user-delete']);
         });
     }
 }
