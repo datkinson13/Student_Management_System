@@ -15,6 +15,14 @@
             </div>
             <hr class="my-4">
             <div class="form-group">
+                <label for="StartDate">Start Date: </label>
+                <input type="date" class="form-control" name="StartDate" id="StartDate">
+            </div>
+            <div class="form-group">
+                <label for="EndDate">End Date: </label>
+                <input type="date" class="form-control" name="EndDate" id="EndDate">
+            </div>
+            <div class="form-group">
                 <textarea class="form-control" name="description" id="description" placeholder="Description...."></textarea>
             </div>
         </div>
