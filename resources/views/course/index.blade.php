@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+    <a href = "/course/create"><button class = "btn btn-primary user-profile-buttons">Add Course</button></a>
     <h1>Courses</h1>
     <div class="card-deck">
         @for($i = 1; $i < 11; $i++)
