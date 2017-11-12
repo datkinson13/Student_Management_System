@@ -48,14 +48,17 @@ class CourseController extends Controller
     {
         // Do some validation first.
 
-        dd($request);
         Course::create([
             'name' => $request->input('name'),
             'subtitle' => $request->input('subtitle'),
             'description' => $request->input('description'),
             'StartDate' => $request->input('StartDate'),
-            'EndDate' => $request->input('EndDate')
+            'EndDate' => $request->input('EndDate'),
+            'CourseTime' => $request->input('CourseTime'),
+            'user_id' => \Auth::user()->id,
         ]);
+
+        return redirect(route('course.index'));
     }
 
     /**
