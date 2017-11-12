@@ -46,7 +46,16 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Do some validation first.
+
+        dd($request);
+        Course::create([
+            'name' => $request->input('name'),
+            'subtitle' => $request->input('subtitle'),
+            'description' => $request->input('description'),
+            'StartDate' => $request->input('StartDate'),
+            'EndDate' => $request->input('EndDate')
+        ]);
     }
 
     /**
