@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-    <form method="POST" action="{{ route('course.create') }}">
+    <form method="POST" action="{{ route('course.store') }}">
+        {{ csrf_field() }}
         <div class="jumbotron">
             <a href="/course/create">
                 <button class="btn btn-primary user-profile-buttons">Save</button>
