@@ -32,6 +32,10 @@ class Role extends Model {
     private function hasPermission($permission)
     {
         // if permission is set, return value, otherwise return false.
-        return $this->permissions[$permission] != null ? $this->permissions[$permission] : false;
+        if (array_key_exists($permission, $this->permissions)) {
+            return $this->permissions[$permission] !== null ? $this->permissions[$permission] : false;
+        } else {
+            return false;
+        }
     }
 }
