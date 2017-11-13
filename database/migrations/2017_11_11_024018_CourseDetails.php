@@ -28,6 +28,11 @@ class CourseDetails extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('courses', function (Blueprint $table) {
+            $table->renameColumn('user_id', 'facilitator_id');
+            $table->dropColumn('name');
+            $table->dropColumn('subtitle');
+            $table->dropColumn('description');
+        });
     }
 }
