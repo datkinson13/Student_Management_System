@@ -26,7 +26,7 @@ Route::resource('tickets', 'TicketController');
 Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 
 // Report routing
-Route::resource('report', 'ReportController');
+Route::resource('reports', 'ReportController');
 
 // Course routing
 Route::resource('/course', 'CourseController');
