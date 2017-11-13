@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CourseDetails extends Migration
+class FacilitatorRename extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CourseDetails extends Migration
      */
     public function up()
     {
-        Schema::table('courses', function (Blueprint $table) {
+        Schema::table('enrollments', function (Blueprint $table) {
             $table->renameColumn('facilitator_id', 'user_id');
-            $table->string('name')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->string('description')->nullable();
         });
     }
 
