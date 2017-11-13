@@ -19,7 +19,7 @@ class CreateCoursesTable extends Migration
             $table->date('EndDate');
             $table->timeTz('CourseTime');
             $table->timestamps();
-            $table->foreign('facilitator_id')->references('id')->on('facilitators');
+            $table->foreign('facilitator_id')->references('id')->on('users');
         });
     }
 

@@ -24,7 +24,7 @@ class CourseController extends Controller
         //   After selecting the course a Coordinator would then be able to edit.
         //   Pagination should not be apart of this version, maybe considered for v2.
 
-        //$courses = Course::all(); // Uncomment when we have a DB and some courses.
+        $courses = Course::all(); // Uncomment when we have a DB and some courses.
         return view('course.index', compact('courses'));
     }
 
@@ -35,7 +35,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('course.create');
     }
 
     /**
@@ -46,7 +46,19 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Do some validation first.
+
+        Course::create([
+            'name' => $request->input('name'),
+            'subtitle' => $request->input('subtitle'),
+            'description' => $request->input('description'),
+            'StartDate' => $request->input('StartDate'),
+            'EndDate' => $request->input('EndDate'),
+            'CourseTime' => $request->input('CourseTime'),
+            'user_id' => \Auth::user()->id,
+        ]);
+
+        return redirect(route('course.index'));
     }
 
     /**
@@ -55,7 +67,7 @@ class CourseController extends Controller
      * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function show($course) // This should be changed to reflect the doco above. Course $course.
+    public function show(Course $course) // This should be changed to reflect the doco above. Course $course.
     {
         return view('course.show', compact('course'));
     }

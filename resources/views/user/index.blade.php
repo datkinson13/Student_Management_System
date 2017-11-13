@@ -25,7 +25,13 @@
             <td>{{ $user->email }}</td>
             <td>
               <a href = "/users/{{ $user->id }}"><button class = "btn btn-primary user-action-buttons">View Details</button></a>
-              <a href = "#"><button type = "button" class = "btn btn-danger user-action-buttons" data-toggle="modal" data-target="#user-delete-modal-{{ $user->id }}">Delete User</button></a>
+              @can('user-delete')
+                  <a href="#">
+                      <button type="button" class="btn btn-danger user-action-buttons" data-toggle="modal"
+                              data-target="#user-delete-modal-{{ $user->id }}">Delete User
+                      </button>
+                  </a>
+              @endcan
             </td>
           </tr>
 

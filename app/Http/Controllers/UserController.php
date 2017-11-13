@@ -139,7 +139,20 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-      User::where('id', $user->id)->delete();
+        $del_user = User::where('id', $user->id); // Get the user that is trying to be deleted.
+        if (Gate::denies('user-delete')) { // Is this 'managing' user allowed to delete users?
+            // This user isn't allowed to delete other users.
+            //   Ensure that the only returned result is themselves.
+            //   This doesn't mean that all deletes will result in themselves being deleted.
+            //   It just prevents the user from deleting other users.
+            //   Because the route will be hidden they should reach this point but,
+            //    security through obscurity isn't actually security.
+            $del_user = $del_user->where('id', \Auth::user()->id)->first();
+        }
+
+        if ($del_user) {
+            $del_user->delete();
+        }
 
       return redirect('/users');
     }

@@ -19,7 +19,7 @@ class CreateEnrollmentsTable extends Migration
             $table->integer('employer_id')->unsigned();
             $table->integer('course_id')->unsigned();
             $table->timestamps();
-            $table->foreign('facilitator_id')->references('id')->on('facilitators');
+            $table->foreign('facilitator_id')->references('id')->on('users');
             $table->foreign('employee_id')->references('id')->on('employees');
             $table->foreign('employer_id')->references('id')->on('employers');
             $table->foreign('course_id')->references('id')->on('courses');
