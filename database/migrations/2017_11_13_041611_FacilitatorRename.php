@@ -25,6 +25,8 @@ class FacilitatorRename extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('enrollments', function (Blueprint $table) {
+            $table->renameColumn('user_id', 'facilitator_id');
+        });
     }
 }
