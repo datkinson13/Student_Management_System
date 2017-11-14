@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Report;
+use App\User;
+use App\Course;
+use App\Enrollment;
+use Charts;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -24,7 +28,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        //
+        return view('report.create');
     }
 
     /**
@@ -46,7 +50,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        //
+
     }
 
     /**

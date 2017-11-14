@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<a href = "#"><button class = "btn btn-primary user-profile-buttons">Create report</button></a>
+<a href = "/reports/create"><button class = "btn btn-primary user-profile-buttons">Create report</button></a>
 <h1>My Reports</h1>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -14,9 +14,8 @@
       </tr>
     </thead>
     <tbody>
-      
+
     </tbody>
   </table>
 </div>
-
 @endsection
