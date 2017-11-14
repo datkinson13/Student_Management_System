@@ -33,9 +33,12 @@ class EnrollmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Enrollment $enrollment)
     {
-        //
+        // Add some validation
+
+        // For now, you can only enroll yourself in things.
+        Enrollment::create(['course_id' => $enrollment, 'user_id' => \Auth::user()]);
     }
 
     /**
