@@ -28,6 +28,9 @@ Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 // Report routing
 Route::resource('reports', 'ReportController');
 
+// Enrollment routing
+Route::resource('enrollment', 'EnrollmentController');
+
 // Course routing
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
