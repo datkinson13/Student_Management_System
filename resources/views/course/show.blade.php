@@ -31,7 +31,7 @@
                     Are you sure you want to enroll in {{ $course->name }}?
                 </div>
                 <div class="modal-footer">
-                    <form method="POST" action="/enrollments/{{ $course->id }}">
+                    <form method="POST" action="/enrollment/{{ $course->id }}">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         <button type="submit" class="btn btn-primary">Enroll</button>
