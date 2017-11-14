@@ -54,7 +54,7 @@ class CourseController extends Controller
             'description' => $request->input('description'),
             'StartDate' => $request->input('StartDate'),
             'EndDate' => $request->input('EndDate'),
-            'CourseTime' => $request->input('CourseTime'),
+            'CourseTime' => "10:00:00",
             'user_id' => \Auth::user()->id,
         ]);
 
