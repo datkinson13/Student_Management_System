@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+<div class="dropdown">
+<a href = "/reports/create"><button class = "btn btn-primary user-profile-buttons">Create a report</button></a>
 <h1>My Reports</h1>
 <div class="table-responsive">
   <table class="table table-striped">
