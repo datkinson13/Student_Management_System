@@ -6,7 +6,6 @@ use App\Report;
 use App\User;
 use App\Course;
 use App\Enrollment;
-use Charts;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -18,7 +17,9 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('report.index');
+        $reports = Report::orderBy('created_at', 'desc')->get();
+
+        return view('report.index', compact('reports'));
     }
 
     /**
@@ -28,7 +29,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        return view('report.create');
+
     }
 
     /**
@@ -50,7 +51,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-
+      return view('report.show', compact('report'));
     }
 
     /**
