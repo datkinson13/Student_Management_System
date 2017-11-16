@@ -40,7 +40,16 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      Report::create([
+              'report_name' => $request->input('report_name'),
+              'report_entity' => $request->input('report_entity'),
+              'type' => $request->input('chart_type'),
+              'label' => '',
+              'data' => '',
+              'options' => ''
+            ]);
+
+        return redirect('/reports');
     }
 
     /**
