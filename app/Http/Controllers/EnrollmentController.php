@@ -35,7 +35,11 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Add some validation
+
+        // For now, you can only enroll yourself in things.
+        Enrollment::create(['course_id' => $request->input('course_id'), 'user_id' => \Auth::user()->id]);
+        return redirect('/');
     }
 
     /**
@@ -80,6 +84,7 @@ class EnrollmentController extends Controller
      */
     public function destroy(Enrollment $enrollment)
     {
-        //
+        $enrollment->delete();
+        return redirect('/');
     }
 }
