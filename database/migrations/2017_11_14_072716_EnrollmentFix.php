@@ -16,12 +16,14 @@ class EnrollmentFix extends Migration
         Schema::table('enrollments', function (Blueprint $table) {
             $table->dropForeign(['facilitator_id']); // Remove the foreign constraints
             $table->dropForeign(['employer_id']); // Remove the foreign constraints
+            $table->dropForeign(['employee_id']); // Remove the foreign constraints
             // This column was originally facilitator_id. We can determine the facilitator via the course.
             $table->dropColumn('user_id');
             // We can determine who the employer is via the user. They may not even have an employer.
             $table->dropColumn('employer_id');
             // When it comes to enrollments we really only care about which user is enrolling into what course.
             $table->renameColumn('employee_id', 'user_id');
+            $table->string('enrolment_status')->default('pending');
         });
     }
 
@@ -32,10 +34,6 @@ class EnrollmentFix extends Migration
      */
     public function down()
     {
-        Schema::table('enrollments', function (Blueprint $table) {
-            $table->renameColumn('user_id', 'employee_id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('employer_id')->unsigned();
-        });
+        //
     }
 }
