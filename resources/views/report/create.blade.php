@@ -13,10 +13,10 @@
 <div class = "form-group row">
   <label for ="report_entity" class = "col-sm-2 col-form-label">Report Entity: </label>
   <select class = "col-sm-4 form-control" id = "report_entity" name = "report_entity">
-    <option value = "user">User</option>
-    <option value = "enrolment">Enrolment</option>
-    <option value = "course">Course</option>
-    <option value = "ticket">Ticket</option>
+    <option value = "users">Users</option>
+    <option value = "enrolments">Enrolments</option>
+    <option value = "courses">Courses</option>
+    <option value = "tickets">Tickets</option>
   </select>
 </div>
 
@@ -34,27 +34,6 @@
   </select>
 </div>
 
-<div id = "data_row" class = "form-group row">
-  <label for ="selected_data" class = "col-sm-2 col-form-label">Selected data: </label>
-  <select id = "selected_data" class = "col-sm-4 form-control">
-    <option value = "created">Created</option>
-    <option value = "geographic">Geographic</option>
-    <option value = "demographic">Demographic</option>
-  </select>
-  <select id = "created" class = "col-sm-4 form-control" style = "margin-left: 30px;">
-    <option value = "monthly">Monthly</option>
-    <option value = "yearly">Yearly</option>
-  </select>
-  <select id = "geographic" class = "col-sm-4 form-control" style = "margin-left: 30px; display: none;">
-    <option value = "suburb">Suburb</option>
-    <option value = "state">State</option>
-    <option value = "country">Country</option>
-  </select>
-  <select id = "demographic" class = "col-sm-4 form-control" style = "margin-left: 30px; display: none;">
-    <option value = "ageGroup">Age Group</option>
-    <option value = "gender">Gender</option>
-  </select>
-</div>
 <br/><br/>
 <button class="btn btn-primary user-edit-buttons" type="submit">Save Report</button>
 <a href = "/reports"><button class="btn btn-primary user-edit-buttons" type="button">Cancel</button></a>
@@ -64,22 +43,6 @@
 
 @section('footer-scripts')
 <script>
-$('#selected_data').change(function() {
-  var selected_data = $('#selected_data').val();
 
-  if(selected_data === ("created")) {
-    $("#created").show();
-    $("#geographic").hide();
-    $("#demographic").hide();
-  } else if (selected_data === ("geographic")) {
-    $("#geographic").show();
-    $("#created").hide();
-    $("#demographic").hide();
-  } else if (selected_data === ("demographic")) {
-    $("#demographic").show();
-    $("#created").hide();
-    $("#geographic").hide();
-  }
-});
 </script>
 @endsection
