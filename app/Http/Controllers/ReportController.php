@@ -66,10 +66,19 @@ class ReportController extends Controller
       $data = DB::select("SELECT * FROM $table");
 
       $labels = '["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]';
-      $frequencies = DB::select("SELECT MONTH(created_at) month, COUNT(*) count FROM $table WHERE YEAR(created_at)=YEAR(CURRENT_TIMESTAMP) GROUP BY month");
+      $frequencies = DB::select("SELECT MONTH(created_at) month, COUNT(*) count FROM $table WHERE YEAR(created_at)=YEAR(CURRENT_TIMESTAMP) GROUP BY month ORDER BY month ASC");
 
+      $chart_data = [0,0,0,0,0,0,0,0,0,0,0,0];
 
-      return view('report.show', compact('report', 'columns', 'data', 'labels', 'frequencies'));
+      foreach($frequencies as $frequency) {
+        for($i = 1; $i < 13; $i++) {
+          if($i == $frequency->month) {
+            $chart_data[$i - 1] = $frequency->count;
+          }
+        }
+      }
+
+      return view('report.show', compact('report', 'columns', 'data', 'labels', 'chart_data'));
     }
 
     /**
@@ -96,10 +105,7 @@ class ReportController extends Controller
             ->update([
               'report_name' => $request->input('report_name'),
               'report_entity' => $request->input('report_entity'),
-              'type' => $request->input('chart_type'),
-              /*'label' => '',
-              'data' => '',
-              'options' => ''*/
+              'type' => $request->input('chart_type')
             ]);
 
             return redirect()->route('reports.show', ['report' => $report]);

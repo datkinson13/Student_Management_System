@@ -30,7 +30,6 @@
     <option value = "pie">Pie chart</option>
     <option value = "doughnut">Doughnut chart</option>
     <option value = "polarArea">Polar Area chart</option>
-    <option value = "bubble">Bubble chart</option>
   </select>
 </div>
 

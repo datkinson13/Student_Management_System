@@ -37,7 +37,6 @@
           <option value = "pie">Pie chart</option>
           <option value = "doughnut">Doughnut chart</option>
           <option value = "polarArea">Polar Area chart</option>
-          <option value = "bubble">Bubble chart</option>
         </select>
       </div>
       <br/>
@@ -78,14 +77,8 @@ var myChart = new Chart(ctx, {
         labels: {!! $labels !!},
         datasets: [{
             data: [
-              @for($i = 1; $i < 13; $i++)
-                @foreach($frequencies as $frequency)
-                  @if($frequency->month == $i)
-                    {{ $frequency->count }},
-                  @else
-                    0,
-                  @endif
-                @endforeach
+              @for($i = 0; $i < 12; $i++)
+                {{ $chart_data[$i] }},
               @endfor
             ],
             backgroundColor: [
