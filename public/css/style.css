@@ -41,6 +41,7 @@
   padding: 10px;
   color: #212529;
   border-radius: .25rem;
+  overflow: auto;
 }
 
 #course-droppable {
@@ -51,4 +52,5 @@
   padding: 10px;
   color: #212529;
   border-radius: .25rem;
+  overflow: auto;
 }

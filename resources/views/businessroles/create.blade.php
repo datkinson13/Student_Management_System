@@ -47,7 +47,8 @@
       <ul class = "list-group">
         @foreach($courses as $course)
           <li class = "list-group-item course-draggable">
-            <strong>{{ $course->name }}</strong><br/>
+            <span class = "course-id" style = "display: none;">{{ $course->id }}</span>
+            <strong><span class = "course-name">{{ $course->name }}</span></strong><br/>
             {{ $course->subtitle }}
           </li>
         @endforeach
@@ -74,8 +75,8 @@
           $(this).append('<div class = "role-user"><span class = "role-user-id">'
            + $(item.draggable).find('.user-id').text() + "</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;"
            + '<span class = "role-user-name">' + $(item.draggable).find('.user-name').text()
-           + '<span style = "float:right;" class = "role-user-delete">'
-           + '<i class="fa fa-minus-circle" aria-hidden="true"></i></span></div><br/>');
+           + '</span><span style = "float:right;">'
+           + '<i class="fa fa-minus-circle remove-item" aria-hidden="true"></i></span></div>');
         }
       });
 
@@ -89,9 +90,16 @@
       });
       $('#course-droppable').droppable({
         accept: '.course-draggable',
-        drop: function(event, ui) {
-          $(this).append($(ui.draggable).clone());
+        drop: function(event, item) {
+          $(this).append('<div class = "role-course"><span style = "display: none;" class = "role-course-id">'
+           + $(item.draggable).find('.course-id').text() + '</span><span class = "role-course-name">'
+           + $(item.draggable).find('.course-name').text() + '</span><span style = "float:right;">'
+           + '<i class="fa fa-minus-circle remove-item" aria-hidden="true"></i></span></div>');
         }
+      });
+
+      $(document).on('click', '.remove-item', function() {
+        $(this).parent().parent().remove();
       });
     });
   </script>
