@@ -19,31 +19,12 @@
       @foreach($enrollments as $enrollment)
         <tr>
           <td>{{ $enrollment->id }}</td>
-          <td>{{ $enrollment->course_id }}</td>
+          <td>{{ $enrollment->course->name }}</td>
           <td>{{ $enrollment->CompletedDate }}</td>
           <td>{{ $enrollment->enrolment_status }}</td>
           <td>{{ $enrollment->ExpiryDate }}</td>
-          <td>
-            @php
-              $date1 = new DateTime($enrollment->ExpiryDate);
-              $now = new DateTime('now');
-              $interval = $date1->diff($now);
-              $days = $interval->format('%a')
-            @endphp
-            {{ $days }}
-          </td>
-          <td>
-            @php
-              if ($days < 30) {
-                $level = "RED";
-              } elseif ($days < 90) {
-                $level = "YELLOW";
-              } else {
-                $level = "GREEN";
-              }
-            @endphp
-            {{ $level }}
-          </td>
+          <td>{{ $enrollment->daysRemaining() }}</td>
+          <td>{{ $enrollment->competencyStatus()['color'] }}</td>
         </tr>
       @endforeach
     </tbody>

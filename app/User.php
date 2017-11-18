@@ -48,6 +48,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'system_roles');
     }
+    
+    public function competencies() {
+        return $this->hasMany(Enrollment::class);
+    }
 
     /**
      * Checks if User has access to $permissions.
