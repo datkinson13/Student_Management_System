@@ -25,22 +25,30 @@
   height: 100%;
 }
 
-#users-droppable {
+#users {
+  overflow: hidden;
+}
+
+#courses {
+  overflow: hidden;
+}
+
+#user-droppable {
   width: 100%;
   height: 110px;
   border: 1px solid #e0e0e0;
   margin-bottom: 20px;
   padding: 10px;
-  color: #868e95;
+  color: #212529;
   border-radius: .25rem;
 }
 
-#courses-droppable {
+#course-droppable {
   width: 100%;
   height: 110px;
   border: 1px solid #e0e0e0;
   margin-bottom: 20px;
   padding: 10px;
-  color: #868e95;
+  color: #212529;
   border-radius: .25rem;
 }

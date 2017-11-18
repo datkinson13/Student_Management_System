@@ -16,6 +16,9 @@
 <link href="/css/open-iconic-bootstrap.css" rel="stylesheet">
 <link href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel = "stylesheet">
 
+<!-- JQuery UI CDN -->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
 <!-- Custom styles for this template -->
 <link href="/css/dashboard.css" rel="stylesheet">
 <link href = "/css/style.css" rel="stylesheet">
