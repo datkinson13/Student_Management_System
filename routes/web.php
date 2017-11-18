@@ -25,6 +25,9 @@ Route::resource('users', 'UserController')->middleware('auth');
 Route::resource('tickets', 'TicketController');
 Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 
+// Business role Routing
+Route::resource('businessroles', 'BusinessRoleController');
+
 // Report routing
 Route::resource('reports', 'ReportController');
 
