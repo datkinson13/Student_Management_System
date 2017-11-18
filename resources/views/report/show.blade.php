@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<div class="table-responsive col-md-12" style = "padding-top: 30px;">
+<div class="pre-scrollable table-responsive col-md-12" style = "padding-top: 30px;">
   <table class="table table-striped">
     <thead>
       <tr>
