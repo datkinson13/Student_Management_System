@@ -11,6 +11,10 @@
                 <h4>{{ $enrollment->course->name }}</h4>
                 <div class="text-muted">{{ $enrollment->ExpiryDate }}</div>
             </div>
+            @if ($loop->iteration == 4)
+                {{-- This is the 4th loop, break now. We are only showing the 4 closest to expiry. --}}
+                @break
+            @endif
         @endforeach
     </section>
 
