@@ -12,8 +12,8 @@ class Enrollment extends Model
     public function daysRemaining() {
         $expiryDate = new DateTime($this->ExpiryDate);
         $now = new DateTime('now');
-        $difference = $expiryDate->diff($now);
-        $days = $difference->format('%a');
+        $difference = $now->diff($expiryDate);
+        $days = $difference->format('%R%a');
 
         return $days;
     }
