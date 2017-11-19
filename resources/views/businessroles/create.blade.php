@@ -77,6 +77,7 @@
       });
       $('#user-droppable').droppable({
         accept: '.user-draggable',
+        tolerance: 'pointer',
         drop: function(event, item) {
           $(this).append('<div class = "role-user"><span style = "display:none;" class = "role-user-id">'
            + $(item.draggable).find('.user-id').text() + ",</span>"
@@ -98,6 +99,7 @@
       });
       $('#course-droppable').droppable({
         accept: '.course-draggable',
+        tolerance: 'pointer',
         drop: function(event, item) {
           $(this).append('<div class = "role-course"><span style = "display: none;" class = "role-course-id">'
            + $(item.draggable).find('.course-id').text() + ',</span><span class = "role-course-name">'
