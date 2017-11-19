@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasMany(Enrollment::class);
     }
 
+    public function employer() {
+        return $this->hasOne(Employer::class);
+    }
+
     /**
      * Checks if User has access to $permissions.
      */
