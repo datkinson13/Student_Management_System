@@ -20,6 +20,11 @@ class BusinessRoleController extends Controller
     {
         $business_roles = BusinessRole::all();
 
+        foreach($business_roles as $business_role) {
+          $business_role->users = sizeof(explode(",", $business_role->users)) - 1;
+          $business_role->courses = sizeof(explode(",", $business_role->courses)) - 1;
+        }
+
         return view('businessroles.index', compact('business_roles'));
     }
 
@@ -62,7 +67,12 @@ class BusinessRoleController extends Controller
      */
     public function show(BusinessRole $businessRole)
     {
-        //
+      $users = User::orderBy('Lname', 'asc')->get();
+      $courses = Course::orderBy('name', 'asc')->get()->unique('name');
+
+      dd($businessRole);
+
+      return view('businessroles.show', compact('businessRole', 'users', 'courses'));
     }
 
     /**

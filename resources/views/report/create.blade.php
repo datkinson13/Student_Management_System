@@ -17,6 +17,7 @@
     <option value = "enrolments">Enrolments</option>
     <option value = "courses">Courses</option>
     <option value = "tickets">Tickets</option>
+    <option value = "business_roles">Business Roles</option>
   </select>
 </div>
 
@@ -38,10 +39,4 @@
 <a href = "/reports"><button class="btn btn-primary user-edit-buttons" type="button">Cancel</button></a>
 
 </form>
-@endsection
-
-@section('footer-scripts')
-<script>
-
-</script>
 @endsection

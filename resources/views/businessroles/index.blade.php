@@ -21,9 +21,7 @@
           <td>{{ $business_role->description }}</td>
           <td>{{ $business_role->users }}</td>
           <td>{{ $business_role->courses }}</td>
-          <td>
-            <td>
-            </td>
+          <!--<td><a href = "/businessroles/{{ $business_role->id }}"><button class = "btn btn-primary user-action-buttons">Edit role</button></a></td>-->
         </tr>
       @endforeach
     </tbody>
