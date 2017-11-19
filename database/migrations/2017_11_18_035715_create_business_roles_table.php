@@ -17,8 +17,8 @@ class CreateBusinessRolesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->json('users');
-            $table->json('courses');
+            $table->string('users');
+            $table->string('courses');
             $table->timestamps();
         });
     }

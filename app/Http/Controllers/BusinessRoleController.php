@@ -44,7 +44,14 @@ class BusinessRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      BusinessRole::create([
+              'name' => $request->input('name'),
+              'description' => $request->input('description'),
+              'users' => $request->input('request-users'),
+              'courses' => $request->input('request-courses')
+            ]);
+
+        return redirect('/businessroles');
     }
 
     /**

@@ -23,7 +23,6 @@
           <td>{{ $business_role->courses }}</td>
           <td>
             <td>
-              <!-- <a href = "/tickets/{{ $ticket->id }}"><button class = "btn btn-primary user-action-buttons">View Ticket</button></a> -->
             </td>
         </tr>
       @endforeach

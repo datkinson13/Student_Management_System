@@ -34,9 +34,11 @@
         <label for = "user-droppable">Users:</label>
         <div id = "user-droppable">
         </div>
+        <input type = "hidden" id = "request-users" name = "request-users">
         <label for = "course-droppable">Courses:</label>
         <div id = "course-droppable">
         </div>
+        <input type = "hidden" id = "request-courses" name = "request-courses">
         <button type="submit" class="btn btn-primary">Submit</button>
         <a href = "/businessroles"><button class="btn btn-primary user-edit-buttons" type="button">Cancel</button></a>
       </form>
@@ -72,11 +74,13 @@
       $('#user-droppable').droppable({
         accept: '.user-draggable',
         drop: function(event, item) {
-          $(this).append('<div class = "role-user"><span class = "role-user-id">'
-           + $(item.draggable).find('.user-id').text() + "</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;"
+          $(this).append('<div class = "role-user"><span style = "display:none;" class = "role-user-id">'
+           + $(item.draggable).find('.user-id').text() + ",</span>"
            + '<span class = "role-user-name">' + $(item.draggable).find('.user-name').text()
            + '</span><span style = "float:right;">'
-           + '<i class="fa fa-minus-circle remove-item" aria-hidden="true"></i></span></div>');
+           + '<i class="fa fa-minus-circle remove-user" aria-hidden="true"></i></span></div>');
+
+           $('#request-users').val($('#request-users').val() + $(item.draggable).find('.user-id').text() + ',');
         }
       });
 
@@ -92,14 +96,22 @@
         accept: '.course-draggable',
         drop: function(event, item) {
           $(this).append('<div class = "role-course"><span style = "display: none;" class = "role-course-id">'
-           + $(item.draggable).find('.course-id').text() + '</span><span class = "role-course-name">'
+           + $(item.draggable).find('.course-id').text() + ',</span><span class = "role-course-name">'
            + $(item.draggable).find('.course-name').text() + '</span><span style = "float:right;">'
-           + '<i class="fa fa-minus-circle remove-item" aria-hidden="true"></i></span></div>');
+           + '<i class="fa fa-minus-circle remove-course" aria-hidden="true"></i></span></div>');
+
+           $('#request-courses').val($('#request-courses').val() + $(item.draggable).find('.course-id').text() + ',');
         }
       });
 
-      $(document).on('click', '.remove-item', function() {
+      $(document).on('click', '.remove-user', function() {
         $(this).parent().parent().remove();
+        $('#request-users').val($('#user-droppable').find('.role-user-id').text());
+      });
+
+      $(document).on('click', '.remove-course', function() {
+        $(this).parent().parent().remove();
+        $('#request-courses').val($('#course-droppable').find('.role-course-id').text());
       });
     });
   </script>
