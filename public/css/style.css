@@ -26,11 +26,17 @@
 }
 
 #users {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  min-height: 100%;
 }
 
 #courses {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  min-height: 100%;
 }
 
 #user-droppable {
