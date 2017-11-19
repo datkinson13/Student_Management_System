@@ -57,6 +57,14 @@ class User extends Authenticatable
         return $this->hasOne(Employer::class);
     }
 
+    public function isEmployer() {
+        return count(Employer::where('user_id', $this->id)->get()) == 1;
+    }
+
+    public function isEmployee() {
+        return count(Employee::where('user_id', $this->id)->get()) == 1;
+    }
+
     /**
      * Checks if User has access to $permissions.
      */
