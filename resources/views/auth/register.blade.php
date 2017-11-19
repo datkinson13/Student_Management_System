@@ -79,7 +79,7 @@
 
                     <div class="col-md-6">
                         <input id="address" type="text" class="form-control" name="address"
-                               value="{{ old('address') }}" required>
+                               value="{{ old('address') }}">
 
                         @if ($errors->has('address'))
                             <span class="help-block">
