@@ -27,12 +27,14 @@
 
 #users {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
   min-height: 100%;
 }
 
 #courses {
   overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
   min-height: 100%;
 }
