@@ -59,7 +59,11 @@ class User extends Authenticatable
     }
 
     public function employer() {
-        return $this->hasOne(Employer::class);
+        if ($this->isEmployer()) {
+            return $this->hasOne(Employer::class);
+        } else {
+            return $this->employee->employer();
+        }
     }
 
     public function isEmployer() {
