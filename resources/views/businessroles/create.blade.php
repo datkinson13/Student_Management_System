@@ -4,18 +4,20 @@
 <h1>Create business role</h1>
 <div id = "dragzone col-md-12">
   <div class = "row vdivide">
-    <div id = "users" class="col-md-4 pre-scrollable">
+    <div class="col-md-4">
       <h4>Users</h4>
       <hr/>
-      <ul class = "list-group">
-        @foreach($users as $user)
-          <li class = "list-group-item user-draggable">
-            <span class = "user-id" style = "display: none;">{{ $user->id }}</span>
-            <strong><span class = "user-name">{{ $user->Fname }} {{ $user->Lname }}</span></strong><br/>
-            {{ $user->email }}
-          </li>
-        @endforeach
-      </ul>
+      <div id = "users" class = "pre-scrollable">
+        <ul class = "list-group">
+          @foreach($users as $user)
+            <li class = "list-group-item user-draggable">
+              <span class = "user-id" style = "display: none;">{{ $user->id }}</span>
+              <strong><span class = "user-name">{{ $user->Fname }} {{ $user->Lname }}</span></strong><br/>
+              {{ $user->email }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
     </div>
     <div class="col-md-4">
       <h4>Business role</h4>
@@ -43,18 +45,20 @@
         <a href = "/businessroles"><button class="btn btn-primary user-edit-buttons" type="button">Cancel</button></a>
       </form>
     </div>
-    <div id = "courses" class="col-md-4 pre-scrollable">
+    <div class="col-md-4">
       <h4>Courses</h4>
       <hr/>
-      <ul class = "list-group">
-        @foreach($courses as $course)
-          <li class = "list-group-item course-draggable">
-            <span class = "course-id" style = "display: none;">{{ $course->id }}</span>
-            <strong><span class = "course-name">{{ $course->name }}</span></strong><br/>
-            {{ $course->subtitle }}
-          </li>
-        @endforeach
-      </ul>
+      <div id = "courses" class = "pre-scrollable">
+        <ul class = "list-group">
+          @foreach($courses as $course)
+            <li class = "list-group-item course-draggable">
+              <span class = "course-id" style = "display: none;">{{ $course->id }}</span>
+              <strong><span class = "course-name">{{ $course->name }}</span></strong><br/>
+              {{ $course->subtitle }}
+            </li>
+          @endforeach
+        </ul>
+      </div>
     </div>
   </div>
 </div>
