@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-  <h1>Edit User</h1>
+  <h1>New User</h1>
   <form action = "/users" method = "POST">
     {{ csrf_field() }}
 

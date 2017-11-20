@@ -25,11 +25,17 @@ Route::resource('users', 'UserController')->middleware('auth');
 Route::resource('tickets', 'TicketController');
 Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 
+// Business role Routing
+Route::resource('businessroles', 'BusinessRoleController');
+
 // Report routing
 Route::resource('reports', 'ReportController');
 
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
+
+// Employer/Business routing
+Route::resource('business', 'EmployerController');
 
 // Course routing
 Route::resource('/course', 'CourseController');

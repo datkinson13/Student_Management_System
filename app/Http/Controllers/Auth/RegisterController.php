@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Employer;
+use App\Employee;
 
 class RegisterController extends Controller {
 
@@ -68,6 +70,9 @@ class RegisterController extends Controller {
     protected function create(array $data)
     {
 
+        $email = preg_replace('/.+@/', '', strtolower($data['email']));
+        $employer = Employer::where('domain', $email)->get();
+
         $user = User::create([
             'Fname'    => $data['Fname'],
             'Lname'    => $data['Lname'],
@@ -78,6 +83,10 @@ class RegisterController extends Controller {
             'address'  => $data['address'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if (count($employer) == 1) {
+            Employee::create(['user_id' => $user->id, 'employer_id' => $employer->first()->id]);
+        }
 
         return $user;
     }

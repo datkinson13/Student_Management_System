@@ -9,4 +9,19 @@
   <p>Address: {{ $user->address }}</p>
   <p>Phone: {{ $user->phone }}</p>
   <p>Mobile: {{ $user->mobile }}</p>
+
+  {{-- Allow user (not employer) to convert into a business account. --}}
+  <hr>
+  <h2>Business Account</h2>
+  @if (!($user->isEmployee() or $user->isEmployer()))
+    <a href="{{ route('business.create') }}">Click here to create a business account</a>
+  @else
+    @if ($user->isEmployer())
+      <a href = "/business/{{ $user->employer->id }}/edit"><button class = "btn btn-primary user-profile-buttons">Edit Business</button></a>
+    @endif
+    <p>Email: {{ $user->employer->company}}
+    <p>Address: {{ $user->employer->address }}</p>
+    <p>Phone: {{ $user->employer->phone }}</p>
+  @endif
+
 @endsection
