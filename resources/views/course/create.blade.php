@@ -27,6 +27,10 @@
                 <input type="date" class="form-control" name="EndDate" id="EndDate">
             </div>
             <div class="form-group">
+                <label for="days_valid">Competency valid for (days): </label>
+                <input type="number" class="form-control" name="days_valid" id="days_valid">
+            </div>
+            <div class="form-group">
                 <textarea class="form-control" name="description" id="description" placeholder="Description...."></textarea>
             </div>
         </div>

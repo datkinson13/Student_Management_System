@@ -74,7 +74,21 @@ class EnrollmentController extends Controller
      */
     public function update(Request $request, Enrollment $enrollment)
     {
-        //
+        $completed = $request->input('CompletedDate');
+        if ($completed) {
+            $expiry = date('Y-m-d', strtotime($completed . ' + ' . $enrollment->course->days_valid . ' days'));
+        } else {
+            $expiry = null;
+        }
+
+        Enrollment::where('id', $enrollment->id)
+            ->update([
+                'enrolment_status' => $request->input('enrolment_status'),
+                'CompletedDate' => $request->input('CompletedDate'),
+                'ExpiryDate' => $expiry,
+            ]);
+
+        return redirect()->route('enrollment.index');
     }
 
     /**
