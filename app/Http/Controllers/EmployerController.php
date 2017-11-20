@@ -70,7 +70,7 @@ class EmployerController extends Controller
      */
     public function edit(Employer $employer)
     {
-        //
+        return view('errors.indev');
     }
 
     /**
