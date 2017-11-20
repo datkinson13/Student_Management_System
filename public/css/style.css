@@ -60,3 +60,47 @@
   border-radius: .25rem;
   overflow: auto;
 }
+
+.ui-accordion .ui-accordion-content {
+  padding-right: 0px !important;
+  padding-top: 0px !important;
+
+}
+
+#competency-space {
+  max-height: 100%;
+  height: 100%;
+  border: 1px solid #000000;
+}
+
+#user-accordion {
+  max-height: 100%;
+  height: 100%;
+  overflow:hidden;
+  padding-left: 20px;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  border: 0px !important;
+  border-bottom: 1px solid #000000 !important;
+}
+
+.ui-widget-content {
+  border: 0px !important;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+  border: 0px;
+  border-bottom: 1px solid #000000 !important;
+  background: #ffffff;
+}

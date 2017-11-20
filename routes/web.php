@@ -31,6 +31,12 @@ Route::resource('businessroles', 'BusinessRoleController');
 // Report routing
 Route::resource('reports', 'ReportController');
 
+// Competency monitor routing
+Route::get('/competencies/monitor', 'CompetencyMonitorController@index');
+
+// Training Liability Calculator routing
+Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index');
+
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
 
