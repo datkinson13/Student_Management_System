@@ -14,10 +14,10 @@
   <hr>
   <h2>Business Account</h2>
   @if (!($user->isEmployee() or $user->isEmployer()))
-    <a href="">Click here to create a business account</a>
+    <a href="{{ route('business.create') }}">Click here to create a business account</a>
   @else
     @if ($user->isEmployer())
-    <a href = "/users/{{ $user->id }}/edit"><button class = "btn btn-primary user-profile-buttons">Edit Business</button></a>
+      <a href = "/business/{{ $user->employer->id }}/edit"><button class = "btn btn-primary user-profile-buttons">Edit Business</button></a>
     @endif
     <p>Email: {{ $user->employer->company}}
     <p>Address: {{ $user->employer->address }}</p>

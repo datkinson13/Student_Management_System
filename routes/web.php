@@ -34,6 +34,9 @@ Route::resource('reports', 'ReportController');
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
 
+// Employer/Business routing
+Route::resource('business', 'EmployerController');
+
 // Course routing
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');

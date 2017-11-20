@@ -24,7 +24,7 @@ class EmployerController extends Controller
      */
     public function create()
     {
-        //
+        return view('employer.create');
     }
 
     /**
@@ -35,7 +35,20 @@ class EmployerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Do some validation first.
+        $this->validate($request, [
+            'domain'        => 'unique:employers'
+        ]);
+
+        Employer::create(['user_id'     => \Auth::id(),
+                          'company'     => $request->input('company'),
+                          'address'     => $request->input('address'),
+                          'phone'       => $request->input('phone'),
+                          //'auto_enroll' => $request->input('auto_enroll'),
+                          'domain'      => strtolower($request->input('domain'))
+        ]);
+
+        return redirect(route('users.show', \Auth::id()));
     }
 
     /**
@@ -57,7 +70,7 @@ class EmployerController extends Controller
      */
     public function edit(Employer $employer)
     {
-        //
+        return view('errors.indev');
     }
 
     /**
