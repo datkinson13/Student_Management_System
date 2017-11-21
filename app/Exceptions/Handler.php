@@ -51,8 +51,6 @@ class Handler extends ExceptionHandler
         // If app is in debug mode always display the error page.
         if (env('APP_DEBUG', true)) {
             // App is in debug mode. Display all errors.
-            dd($exception, $request, $exception->getCode());
-
             return parent::render($request, $exception);
         }
 
