@@ -48,13 +48,39 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // Render well-known exceptions here
+        // If app is in debug mode always display the error page.
+        if (env('APP_DEBUG', true)) {
+            // App is in debug mode. Display all errors.
+            dd($exception, $request, $exception->getCode());
 
-        // Otherwise display internal error message
-        if(env('APP_DEBUG', true)){
             return parent::render($request, $exception);
+        }
+
+        // Render well-known exceptions here
+        switch (get_class($exception)) {
+            case "Illuminate\Auth\AuthenticationException":
+                return $this->unauthenticated($request, $exception);
+                break;
+            case "Illuminate\Validation\ValidationException":
+                return parent::render($request, $exception);
+                break;
+            case "Illuminate\Auth\Access\AuthorizationException":
+                $exception = new HttpException(403, $exception->getMessage());
+                break;
+            case "Illuminate\Http\Exceptions\HttpResponseException":
+                return $exception->getResponse();
+                break;
+            case "Illuminate\Database\Eloquent\ModelNotFoundException":
+                //$exception = new NotFoundHttpException($exception->getMessage(), $exception);
+            case "Illuminate\Database\QueryException":
+            default:
+                return view('errors.500', compact($exception));
+        }
+
+        if ($this->isHttpException($exception)) {
+            return $this->toIlluminateResponse($this->renderHttpException($exception), $exception);
         } else {
-            return view('errors.500', compact($exception));
+            return $this->toIlluminateResponse($this->convertExceptionToResponse($exception), $exception);
         }
     }
 }
