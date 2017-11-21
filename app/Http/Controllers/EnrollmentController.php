@@ -38,8 +38,17 @@ class EnrollmentController extends Controller
     {
         // Add some validation
 
-        // For now, you can only enroll yourself in things.
-        Enrollment::create(['course_id' => $request->input('course_id'), 'user_id' => \Auth::user()->id]);
+        // What type of user are you?
+        if (\Auth::user()->isEmployer()) {
+            // Add an additional validator here.
+
+            // If you are an employer you must enroll an employee.
+            $enrollUser = $request->input('user_id');
+        } else {
+            // If you are just a user, you can only enroll yourself.
+            $enrollUser = \Auth::id();
+        }
+        Enrollment::create(['course_id' => $request->input('course_id'), 'user_id' => $enrollUser]);
         return redirect('/');
     }
 
