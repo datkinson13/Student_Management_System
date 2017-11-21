@@ -27,10 +27,6 @@ class CourseValid extends Migration
      */
     public function down()
     {
-        Schema::table('courses', function (Blueprint $table) {
-            $table->dropColumn('days_valid');
-            $table->string('description')->nullable()->change();
-            $table->timeTz('CourseTime')->change();
-        });
+
     }
 }
