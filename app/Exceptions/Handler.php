@@ -61,6 +61,7 @@ class Handler extends ExceptionHandler
             case "Illuminate\Auth\AuthenticationException":
                 return $this->unauthenticated($request, $exception);
                 break;
+            case "Symfony\Component\HttpKernel\Exception\NotFoundHttpException":
             case "Illuminate\Validation\ValidationException":
                 return parent::render($request, $exception);
                 break;
