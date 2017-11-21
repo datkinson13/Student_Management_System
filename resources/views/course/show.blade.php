@@ -63,18 +63,29 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        Are you sure you want to enroll in {{ $course->name }}?
-                    </div>
-                    <div class="modal-footer">
-                        <form method="POST" action="{{ route('enrollment.store') }}">
+                    <form method="POST" action="{{ route('enrollment.store') }}">
+                        <div class="modal-body">
+                            @if ($currentUser->isEmployer())
+                                <div class="form-group">
+                                    <label for="enrolment_status">Select the employee you wish to enroll:</label>
+                                    <select class="form-control" id="user_id" name="user_id">
+                                        @foreach ($currentUser->employer->employees as $employee)
+                                            <option value="{{ $employee->user->id }}">{{ $employee->user->Fname }} {{ $employee->user->Lname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                Are you sure you want to enroll in {{ $course->name }}?
+                            @endif
+                        </div>
+                        <div class="modal-footer">
                             {{ csrf_field() }}
                             <input type="hidden" name="course_id" value="{{ $course->id }}">
                             {{ method_field('POST') }}
                             <button type="submit" class="btn btn-primary">Enroll</button>
-                        </form>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
