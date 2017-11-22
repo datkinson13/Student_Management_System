@@ -13,21 +13,43 @@ class EnrollmentSeeder extends Seeder
     public function run()
     {
         Enrollment::create([
-            'user_id' => 1,
-            'course_id' => 1,
-            'ExpiryDate' => "2017-12-10"
+            'user_id' => 2,
+            'course_id' => 1
         ]);
 
         Enrollment::create([
-            'user_id' => 1,
-            'course_id' => 2,
-            'ExpiryDate' => "2018-01-10"
+            'user_id' => 2,
+            'course_id' => 2
         ]);
 
         Enrollment::create([
-            'user_id' => 1,
-            'course_id' => 3,
-            'ExpiryDate' => "2018-06-10"
+            'user_id' => 2,
+            'course_id' => 3
+        ]);
+
+        Enrollment::create([
+            'user_id' => 2,
+            'course_id' => 4
+        ]);
+
+        Enrollment::create([
+            'user_id' => 2,
+            'course_id' => 5
+        ]);
+
+        Enrollment::create([
+            'user_id' => 2,
+            'course_id' => 6
+        ]);
+
+        Enrollment::create([
+            'user_id' => 4,
+            'course_id' => 3
+        ]);
+
+        Enrollment::create([
+            'user_id' => 4,
+            'course_id' => 5
         ]);
     }
 }

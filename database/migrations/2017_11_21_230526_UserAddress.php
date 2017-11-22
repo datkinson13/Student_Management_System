@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CourseValid extends Migration
+class UserAddress extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CourseValid extends Migration
      */
     public function up()
     {
-        Schema::table('courses', function (Blueprint $table) {
-            $table->integer('days_valid')->nullable();
-            $table->text('description')->nullable()->change();
-            $table->string('CourseTime')->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('address')->nullable()->change();
+            $table->string('phone', 12)->nullable()->change();
+            $table->string('mobile', 12)->nullable()->change();
         });
     }
 
@@ -27,6 +27,6 @@ class CourseValid extends Migration
      */
     public function down()
     {
-
+        //
     }
 }

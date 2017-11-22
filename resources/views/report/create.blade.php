@@ -14,7 +14,7 @@
   <label for ="report_entity" class = "col-sm-2 col-form-label">Report Entity: </label>
   <select class = "col-sm-4 form-control" id = "report_entity" name = "report_entity">
     <option value = "users">Users</option>
-    <option value = "enrolments">Enrolments</option>
+    <option value = "enrollments">Enrolments</option>
     <option value = "courses">Courses</option>
     <option value = "tickets">Tickets</option>
     <option value = "business_roles">Business Roles</option>
