@@ -37,6 +37,11 @@ Route::get('/competencies/monitor', 'CompetencyMonitorController@index');
 // Training Liability Calculator routing
 Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index');
 
+// Calendar routing
+Route::get('calendar', function () {
+    return view('calendar.index');
+});
+
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
 
