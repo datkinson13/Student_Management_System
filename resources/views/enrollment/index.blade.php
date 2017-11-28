@@ -22,7 +22,7 @@
                     <td>{{ $enrollment->id }}</td>
                     <td>{{ $enrollment->course->name }}</td>
                     <td>{{ $enrollment->CompletedDate }}</td>
-                    <td>{{ $enrollment->enrolment_status }}</td>
+                    <td>{{ $enrollment->enrollment_status }}</td>
                     <td>{{ $enrollment->ExpiryDate }}</td>
                     <td>{{ $enrollment->daysRemaining() }}</td>
                     <td>{{ $enrollment->competencyStatus()['color'] }}</td>
@@ -50,8 +50,8 @@
                     <form method="POST" action="/" id="enroll-form">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="enrolment_status">Enrollment Status</label>
-                                <select class="form-control" id="enrolment_status" name="enrolment_status">
+                                <label for="enrollment_status">Enrollment Status</label>
+                                <select class="form-control" id="enrollment_status" name="enrollment_status">
                                     <option>In Progress</option>
                                     <option>Completed</option>
                                     <option>Failed</option>
