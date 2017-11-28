@@ -67,7 +67,7 @@
                         <div class="modal-body">
                             @if ($currentUser->isEmployer())
                                 <div class="form-group">
-                                    <label for="enrolment_status">Select the employee you wish to enroll:</label>
+                                    <label for="enrollment_status">Select the employee you wish to enroll:</label>
                                     <select class="form-control" id="user_id" name="user_id">
                                         @foreach ($currentUser->employer->employees as $employee)
                                             <option value="{{ $employee->user->id }}">{{ $employee->user->Fname }} {{ $employee->user->Lname }}</option>
