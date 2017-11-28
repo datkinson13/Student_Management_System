@@ -23,6 +23,7 @@
         <p>{{ $course->StartDate->format('Y-m-d') }} - {{ $course->EndDate->format('Y-m-d') }}
             @ {{ $course->CourseTime }}</p>
         <hr class="my-4">
+        <p>${{ $course->cost }}</p>
         <p>{{ $course->description }}</p>
     </div>
     @if ($enrollment)

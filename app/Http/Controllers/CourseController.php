@@ -57,6 +57,7 @@ class CourseController extends Controller
             'CourseTime' => $request->input('CourseTime'),
             'days_valid' => $request->input('days_valid'),
             'user_id' => \Auth::user()->id,
+            'cost' => $request->input('cost')
         ]);
 
         return redirect(route('course.index'));
