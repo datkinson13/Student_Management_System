@@ -20,6 +20,8 @@ class User extends Authenticatable
         'Lname',
         'phone',
         'mobile',
+        'avatar',
+        'identification',
         'address',
         'DOB',
         'email',
@@ -49,7 +51,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'system_roles');
     }
-    
+
     public function competencies() {
         return $this->hasMany(Enrollment::class);
     }

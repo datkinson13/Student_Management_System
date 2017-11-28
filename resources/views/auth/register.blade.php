@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+    <form enctype = "multipart/form-data" class="form-horizontal" method="POST" action="{{ route('register') }}">
         {{ csrf_field() }}
 
         <div class="row">
@@ -57,6 +57,13 @@
                                     </span>
                         @endif
                     </div>
+                </div>
+
+                <div class = "form-group">
+                  <label for = "avatar" class = "col-sm-4 col-form-label">Profile Picture:</label>
+                  <div class = "col-sm-6">
+                    <input type = "file" id = "avatar" name = "avatar" accept = "image/*">
+                  </div>
                 </div>
 
                 <div class="form-group{{ $errors->has('DOB') ? ' has-error' : '' }}">
@@ -117,6 +124,13 @@
                                     </span>
                         @endif
                     </div>
+                </div>
+
+                <div class = "form-group">
+                  <label for = "identification" class = "col-sm-4 col-form-label">Proof of identification:</label>
+                  <div class = "col-sm-6">
+                    <input type = "file" id = "identification" name = "identification" accept = "application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/pdf, image/*">
+                  </div>
                 </div>
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">

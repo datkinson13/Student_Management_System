@@ -10,7 +10,7 @@
               Dashboard is a link home, and there is another home link in the side bar.        --}}
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <!-- <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a> -->
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -19,18 +19,19 @@
                     <!-- Will need to pass in $user object for name variables? -->
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" role="button"
                        aria-expanded="false"
-                       aria-haspopup="true">
+                       aria-haspopup="true" style = "position: relative; padding-left: 50px;">
+                       <img src = "/uploads/avatars/{{ $currentUser->avatar }}" id = "profile-picture-small">
                         {{ $currentUser->Fname }} {{ $currentUser->Lname }} <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu">
-                      <li>
+                      <li style = "padding-left: 15px;">
                           <a href="/users/{{ $currentUser->id }}">
                               My Profile
                           </a>
                       </li>
                       <hr/>
-                        <li>
+                        <li style = "padding-left: 15px;">
                             <a href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                                      document.getElementById('logout-form').submit();">
