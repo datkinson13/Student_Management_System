@@ -44,6 +44,7 @@ Route::get('calendar', function () {
 
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
+Route::post('/enrollment/withdraw', 'EnrollmentController@withdraw')->name('enrollment.withdraw');
 
 // Employer/Business routing
 Route::resource('business', 'EmployerController');

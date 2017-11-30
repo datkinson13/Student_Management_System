@@ -111,4 +111,11 @@ class EnrollmentController extends Controller
         $enrollment->delete();
         return redirect('/');
     }
+
+    public function withdraw(Request $request)
+    {
+        // Get enrollment_id from submission and pass to destroy command.
+        $this->destroy(Enrollment::find($request->input('enrollment_id')));
+        return redirect()->back();
+    }
 }
