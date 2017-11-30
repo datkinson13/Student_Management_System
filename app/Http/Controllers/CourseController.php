@@ -91,11 +91,11 @@ class CourseController extends Controller
             // This user is an Administrator. Return all users.
             // $enrollments = $course->enrollments; // Get all enrollments
         } else {
-            $enrollment = $course->enrollments->where('user_id', $currentUser->id);
-            if ($enrollment > 0) {
-                array_push($enrolledUsers, $enrollment);
+            $enrollment = $course->enrollments->where('user_id', $currentUser->id)->first();
+            if (count($enrollment) > 0) {
+                $enrolledUsers = $enrollment;
             } else {
-                array_push($nonEnrolledUsers, $currentUser);
+                $nonEnrolledUsers = $currentUser;
             }
         }
 
