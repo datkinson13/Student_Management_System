@@ -45,14 +45,21 @@ class UserController extends Controller
         'confirmPassword' => 'required_with:password|same:password|min:6'
       ]);
 
-      $avatar = $request->file('avatar');
-      $fileName = time() . '.' . $avatar->getClientOriginalExtension();
-      Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+      if(isset($request['avatar'])) {
+        $avatar = $request->file('avatar');
+        $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+        Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+      } else {
+        $fileName = 'default.jpg';
+      }
 
-      $identification_file = $request->file('identification');
-      $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
-      $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
-
+      if(isset($request['identification'])) {
+        $identification_file = $request->file('identification');
+        $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+        $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+      } else {
+        $identification_upload = NULL;
+      }
 
       User::create([
               'Fname' => $request->input('Fname'),
@@ -101,13 +108,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-      $avatar = $request->file('avatar');
-      $fileName = time() . '.' . $avatar->getClientOriginalExtension();
-      Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+      if(isset($request['avatar'])) {
+        $avatar = $request->file('avatar');
+        $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+        Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+      } else {
+        $fileName = $user->avatar;
+      }
 
-      $identification_file = $request->file('identification');
-      $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
-      $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+      if(isset($request['identification'])) {
+        $identification_file = $request->file('identification');
+        $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+        $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+      } else {
+        $identification_upload = $user->identification;
+      }
 
       User::where('id', $user->id)
             ->update([

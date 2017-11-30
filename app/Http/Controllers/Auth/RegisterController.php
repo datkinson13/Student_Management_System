@@ -74,13 +74,22 @@ class RegisterController extends Controller {
         $email = preg_replace('/.+@/', '', strtolower($data['email']));
         $employer = Employer::where('domain', $email)->get();
 
-        $avatar = $data['avatar'];
-        $fileName = time() . '.' . $avatar->getClientOriginalExtension();
-        Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+        if(isset($data['avatar'])) {
+          $avatar = $data['avatar'];
+          $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+          Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+        } else {
+          $fileName = 'default.jpg';
+        }
 
-        $identification_file = $data['identification'];
-        $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
-        $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+        if(isset($data['identification'])) {
+          $identification_file = $data['identification'];
+          $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+          $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+        } else {
+          $identification_upload = NULL;
+        }
+
 
         $user = User::create([
             'Fname'    => $data['Fname'],
