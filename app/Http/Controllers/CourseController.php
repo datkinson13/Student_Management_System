@@ -70,7 +70,36 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('course.show', compact('course'));
+        // Get the current authed user.
+        $currentUser = \Auth::user();
+
+        // Create two arrays that hold all managed users for the current user.
+        $enrolledUsers = []; // This will hold all enrolled users.
+        $nonEnrolledUsers = []; // This will hold all non enrolled users.
+
+        // What type of user is this?
+        if ($currentUser->isEmployer()) {
+            // This user is an employer. Return their employees.
+            foreach ($currentUser->employer->employees as $employee) {
+                if ($enrollment = $employee->user->competencies->where('course_id', $course->id)->first()) {
+                    array_push($enrolledUsers, $enrollment);
+                } else {
+                    array_push($nonEnrolledUsers, $employee);
+                }
+            }
+        } elseif ($currentUser->hasAccess(['users-edit-enrollment'])) {
+            // This user is an Administrator. Return all users.
+            // $enrollments = $course->enrollments; // Get all enrollments
+        } else {
+            $enrollment = $course->enrollments->where('user_id', $currentUser->id);
+            if ($enrollment > 0) {
+                array_push($enrolledUsers, $enrollment);
+            } else {
+                array_push($nonEnrolledUsers, $currentUser);
+            }
+        }
+
+        return view('course.show', compact('course', 'enrolledUsers', 'nonEnrolledUsers'));
     }
 
     /**
