@@ -92,7 +92,7 @@ class EnrollmentController extends Controller
 
         Enrollment::where('id', $enrollment->id)
             ->update([
-                'enrolment_status' => $request->input('enrolment_status'),
+                'enrollment_status' => $request->input('enrollment_status'),
                 'CompletedDate' => $request->input('CompletedDate'),
                 'ExpiryDate' => $expiry,
             ]);

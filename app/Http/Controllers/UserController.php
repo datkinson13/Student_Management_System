@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\SystemRole;
 use App\User;
 use Gate;
+use Image;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -44,6 +45,15 @@ class UserController extends Controller
         'confirmPassword' => 'required_with:password|same:password|min:6'
       ]);
 
+      $avatar = $request->file('avatar');
+      $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+      Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+
+      $identification_file = $request->file('identification');
+      $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+      $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+
+
       User::create([
               'Fname' => $request->input('Fname'),
               'Lname' => $request->input('Lname'),
@@ -52,6 +62,8 @@ class UserController extends Controller
               'address' => $request->input('address'),
               'phone' => $request->input('phone'),
               'mobile' => $request->input('mobile'),
+              'avatar' => $fileName,
+              'identification' => $identification_upload,
               'password' => bcrypt($request->input('password'))
             ]);
 
@@ -89,6 +101,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+      $avatar = $request->file('avatar');
+      $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+      Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+
+      $identification_file = $request->file('identification');
+      $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+      $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+
       User::where('id', $user->id)
             ->update([
               'Fname' => $request->input('Fname'),
@@ -97,7 +117,9 @@ class UserController extends Controller
               'DOB' => $request->input('DOB'),
               'address' => $request->input('address'),
               'phone' => $request->input('phone'),
-              'mobile' => $request->input('mobile')
+              'mobile' => $request->input('mobile'),
+              'avatar' => $fileName,
+              'identification' => $identification_upload,
             ]);
 
         // Only do the next steps if the user is authorized.

@@ -2,7 +2,7 @@
 
 @section('content')
   <h1>New User</h1>
-  <form action = "/users" method = "POST">
+  <form enctype = "multipart/form-data" action = "/users" method = "POST">
     {{ csrf_field() }}
 
     <div class = "form-group row">
@@ -21,6 +21,12 @@
       <label for = "email" class = "col-sm-2 col-form-label">Email:</label>
       <div class = "col-sm-6">
         <input type = "text" class = "form-control" id = "email" name = "email">
+      </div>
+    </div>
+    <div class = "form-group row">
+      <label for = "avatar" class = "col-sm-2 col-form-label">Profile Picture:</label>
+      <div class = "col-sm-6">
+        <input type = "file" id = "avatar" name = "avatar" accept = "image/*">
       </div>
     </div>
     <div class = "form-group row">
@@ -46,6 +52,12 @@
       <label for = "mobile" class = "col-sm-2 col-form-label">Mobile:</label>
       <div class = "col-sm-6">
         <input type = "text" class = "form-control" id = "mobile" name = "mobile">
+      </div>
+    </div>
+    <div class = "form-group row">
+      <label for = "identification" class = "col-sm-2 col-form-label">Proof of identification:</label>
+      <div class = "col-sm-6">
+        <input type = "file" id = "identification" name = "identification" accept = "application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/pdf, image/*">
       </div>
     </div>
     <hr/>

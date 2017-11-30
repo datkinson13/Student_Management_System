@@ -179,6 +179,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Intervention image package
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
@@ -228,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

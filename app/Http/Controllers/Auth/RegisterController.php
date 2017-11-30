@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Employer;
 use App\Employee;
+use Image;
 
 class RegisterController extends Controller {
 
@@ -53,8 +54,8 @@ class RegisterController extends Controller {
             'Fname'    => 'required|string|max:255',
             'Lname'    => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users',
-            'phone'    => 'nullable|digits:10',
-            'mobile'   => 'nullable|digits:10',
+            'phone'    => 'nullable|string',
+            'mobile'   => 'nullable|string',
             'DOB'      => 'nullable|date',
             'address'  => 'nullable|string',
             'password' => 'required|string|min:6|confirmed',
@@ -73,6 +74,14 @@ class RegisterController extends Controller {
         $email = preg_replace('/.+@/', '', strtolower($data['email']));
         $employer = Employer::where('domain', $email)->get();
 
+        $avatar = $data['avatar'];
+        $fileName = time() . '.' . $avatar->getClientOriginalExtension();
+        Image::make($avatar)->resize(300, 300)->save(public_path('/uploads/avatars/' . $fileName));
+
+        $identification_file = $data['identification'];
+        $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
+        $identification_file->storePubliclyAs('/uploads/identification/', $identification_upload, 'public');
+
         $user = User::create([
             'Fname'    => $data['Fname'],
             'Lname'    => $data['Lname'],
@@ -81,6 +90,8 @@ class RegisterController extends Controller {
             'mobile'   => $data['mobile'],
             'DOB'      => $data['DOB'],
             'address'  => $data['address'],
+            'avatar' => $fileName,
+            'identification' => $identification_upload,
             'password' => bcrypt($data['password']),
         ]);
 

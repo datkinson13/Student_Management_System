@@ -15,7 +15,8 @@
             </div>
             <hr class="my-4">
             <div class="bootstrap-timepicker">
-                <input id="CourseTime" name="CourseTime" type="text" class="input-small">
+                <label for="CourseTime">Course Time: </label>
+                <input id="CourseTime" name="CourseTime" type="text" class="input-small form-control">
                 <span class="oi" data-glyph="clock"></span>
             </div>
             <div class="form-group">
@@ -29,6 +30,10 @@
             <div class="form-group">
                 <label for="days_valid">Competency valid for (days): </label>
                 <input type="number" class="form-control" name="days_valid" id="days_valid">
+            </div>
+            <div class="form-group">
+                <label for="days_valid">Cost ($): </label>
+                <input type="number" class="form-control" name="cost" id="cost">
             </div>
             <div class="form-group">
                 <textarea class="form-control" name="description" id="description" placeholder="Description...."></textarea>

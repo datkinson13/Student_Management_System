@@ -52,7 +52,7 @@
                         @endif
                         <td>{{ $enrollment->course->name }}</td>
                         <td>{{ $enrollment->CompletedDate }}</td>
-                        <td>{{ $enrollment->enrolment_status }}</td>
+                        <td>{{ $enrollment->enrollment_status }}</td>
                         <td>{{ $enrollment->ExpiryDate }}</td>
                         <td>{{ $enrollment->daysRemaining() }}</td>
                         <td>{{ $enrollment->competencyStatus()['color'] }}</td>

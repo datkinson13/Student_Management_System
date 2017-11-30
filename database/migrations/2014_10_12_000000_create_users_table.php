@@ -19,9 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('Lname');
             $table->date('DOB');
             $table->string('address');
-            $table->integer('phone')->nullable();
-            $table->integer('mobile')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('password');
+            $table->string('avatar')->default('default.jpg');
+            $table->string('identification')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
