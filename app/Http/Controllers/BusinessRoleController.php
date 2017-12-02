@@ -18,14 +18,14 @@ class BusinessRoleController extends Controller
      */
     public function index()
     {
-        $business_roles = BusinessRole::all();
+        $businessRoles = BusinessRole::all();
 
-        foreach($business_roles as $business_role) {
-          $business_role->users = sizeof(explode(",", $business_role->users)) - 1;
-          $business_role->courses = sizeof(explode(",", $business_role->courses)) - 1;
+        foreach($businessRoles as $businessRole) {
+          $businessRole->users = sizeof(explode(",", $businessRole->users)) - 1;
+          $businessRole->courses = sizeof(explode(",", $businessRole->courses)) - 1;
         }
 
-        return view('businessroles.index', compact('business_roles'));
+        return view('businessroles.index', compact('businessRoles'));
     }
 
     /**
@@ -49,39 +49,59 @@ class BusinessRoleController extends Controller
      */
     public function store(Request $request)
     {
-      BusinessRole::create([
+      $businessRole = BusinessRole::create([
               'name' => $request->input('name'),
               'description' => $request->input('description'),
               'users' => $request->input('request-users'),
               'courses' => $request->input('request-courses')
             ]);
 
-        return redirect('/businessroles');
+      $businessRole->save();
+
+      $added_users = explode(',', $request->input('request-users'));
+      $added_skills = explode(',', $request->input('request-courses'));
+
+      foreach($added_users as $user) {
+        if($user != '') {
+          DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessRole->id]);
+        }
+      }
+
+      foreach($added_skills as $skill) {
+        if($skill != '') {
+          DB::insert('insert into businessrole_skills (course_id, businessrole_id) values (?, ?)', [$skill, $businessRole->id]);
+        }
+      }
+
+      return redirect('/businessroles');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\BusinessRole  $businessRole
+     * @param  \App\BusinessRole  $businessrole
      * @return \Illuminate\Http\Response
      */
-    public function show(BusinessRole $businessRole)
+    public function show(BusinessRole $businessrole)
     {
+      $businessRole = $businessrole;
+
       $users = User::orderBy('Lname', 'asc')->get();
       $courses = Course::orderBy('name', 'asc')->get()->unique('name');
 
-      dd($businessRole);
+      $current_users = DB::select('select * from businessrole_users inner join users on businessrole_users.user_id = users.id where businessrole_users.businessrole_id = ?', [$businessrole->id]);
+      $current_courses =  DB::select('select * from businessrole_skills inner join courses on businessrole_skills.course_id = courses.id where businessrole_skills.businessrole_id = ?', [$businessrole->id]);
 
-      return view('businessroles.show', compact('businessRole', 'users', 'courses'));
+      return view('businessroles.show', compact('businessRole', 'users', 'courses', 'current_users', 'current_courses'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\BusinessRole  $businessRole
+     * @param  \App\BusinessRole  $businessrole
      * @return \Illuminate\Http\Response
      */
-    public function edit(BusinessRole $businessRole)
+    public function edit(BusinessRole $businessrole)
     {
         //
     }
@@ -90,22 +110,50 @@ class BusinessRoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BusinessRole  $businessRole
+     * @param  \App\BusinessRole  $businessrole
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BusinessRole $businessRole)
+    public function update(Request $request, BusinessRole $businessrole)
     {
-        //
+        BusinessRole::where('id', $businessrole->id)
+                    ->update([
+                      'name' => $request->input('name'),
+                      'description' => $request->input('description'),
+                      'users' => $request->input('request-users'),
+                      'courses' => $request->input('request-courses')
+                    ]);
+
+        DB::table('businessrole_users')->where('businessrole_id', '=', $businessrole->id)->delete();
+        DB::table('businessrole_skills')->where('businessrole_id', '=', $businessrole->id)->delete();
+
+        $updated_users = explode(',', $request->input('request-users'));
+        $updated_skills = explode(',', $request->input('request-courses'));
+
+        foreach($updated_users as $user) {
+          if($user != '') {
+            DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessrole->id]);
+          }
+        }
+
+        foreach($updated_skills as $skill) {
+          if($skill != '') {
+            DB::insert('insert into businessrole_skills (course_id, businessrole_id) values (?, ?)', [$skill, $businessrole->id]);
+          }
+        }
+
+        return redirect()->action('BusinessRoleController@show', [$businessrole]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BusinessRole  $businessRole
+     * @param  \App\BusinessRole  $businessrole
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BusinessRole $businessRole)
+    public function destroy(BusinessRole $businessrole)
     {
-        //
+        $businessrole->delete();
+
+        return redirect('/businessroles');
     }
 }

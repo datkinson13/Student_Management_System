@@ -1,3 +1,8 @@
+/* https://stackoverflow.com/questions/2610497/change-an-html5-inputs-placeholder-color-with-css */
+#edit-description::placeholder {
+   color:    #495057;
+}
+
 #profile-picture-main {
   float: right;
   width: 180px;

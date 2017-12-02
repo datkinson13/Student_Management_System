@@ -10,7 +10,7 @@
       <div id = "users" class = "pre-scrollable">
         <ul class = "list-group">
           @foreach($users as $user)
-            <li class = "list-group-item user-draggable">
+            <li id = "user-{{ $user->id }}" class = "list-group-item user-draggable">
               <span class = "user-id" style = "display: none;">{{ $user->id }}</span>
               <strong><span class = "user-name">{{ $user->Fname }} {{ $user->Lname }}</span></strong><br/>
               {{ $user->email }}
@@ -51,7 +51,7 @@
       <div id = "courses" class = "pre-scrollable">
         <ul class = "list-group">
           @foreach($courses as $course)
-            <li class = "list-group-item course-draggable">
+            <li id = "course-{{ $course->id }}" class = "list-group-item course-draggable">
               <span class = "course-id" style = "display: none;">{{ $course->id }}</span>
               <strong><span class = "course-name">{{ $course->name }}</span></strong><br/>
               {{ $course->subtitle }}
@@ -72,7 +72,7 @@
         scroll: false,
         appendTo: 'body',
         cursor: 'move',
-        revert: true,
+        revert: 'invalid',
         helper: 'clone',
       });
       $('#user-droppable').droppable({
@@ -86,6 +86,8 @@
            + '<i class="fa fa-minus-circle remove-user" aria-hidden="true"></i></span></div>');
 
            $('#request-users').val($('#request-users').val() + $(item.draggable).find('.user-id').text() + ',');
+
+           $(item.draggable).hide();
         }
       });
 
@@ -94,7 +96,7 @@
         scroll: false,
         appendTo: 'body',
         cursor: 'move',
-        revert: true,
+        revert: 'invalid',
         helper: 'clone'
       });
       $('#course-droppable').droppable({
@@ -107,15 +109,24 @@
            + '<i class="fa fa-minus-circle remove-course" aria-hidden="true"></i></span></div>');
 
            $('#request-courses').val($('#request-courses').val() + $(item.draggable).find('.course-id').text() + ',');
+
+           $(item.draggable).hide();
         }
       });
 
       $(document).on('click', '.remove-user', function() {
+        var user_id = $(this).parent().parent().find('.role-user-id').text().slice(0, -1);
+        $('#users').find('#user-' + user_id).show();
+
         $(this).parent().parent().remove();
+
         $('#request-users').val($('#user-droppable').find('.role-user-id').text());
       });
 
       $(document).on('click', '.remove-course', function() {
+        var course_id = $(this).parent().parent().find('.role-course-id').text().slice(0, -1);
+        $('#courses').find('#course-' + course_id).show();
+
         $(this).parent().parent().remove();
         $('#request-courses').val($('#course-droppable').find('.role-course-id').text());
       });
