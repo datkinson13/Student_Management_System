@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-  <a href = "/users/create"><button class = "btn btn-primary user-profile-buttons">Add User</button></a>
+    @can('create', App\User::class)
+        <a href = "/users/create"><button class = "btn btn-primary user-profile-buttons">Add User</button></a>
+    @endcan
   <h1>Users</h1>
   <div class="table-responsive">
     <table class="table table-striped">

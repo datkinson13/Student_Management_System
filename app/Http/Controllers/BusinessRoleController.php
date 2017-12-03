@@ -18,6 +18,8 @@ class BusinessRoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', BusinessRole::class);
+
         $businessRoles = BusinessRole::all();
         $current_users = [];
         $current_courses = [];
