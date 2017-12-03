@@ -4,56 +4,71 @@
 <h1>Monitor competencies</h1>
 <div id = "competency-space">
   <div class = "row">
-  <div id = "user-accordion" class = "col-md-3">
-    <!-- @foreach($users as $user)
-      <h3>{{ $user->Fname }} {{ $user->Lname }}</h3>
-      <div class = "business-role-accordion">
-        @foreach($business_roles as $business_role)
-          <h3>{{ $business_role->name }}</h3>
-          <div>
-            @foreach($courses as $course)
-              <p>{{ $course->name }}</p>
+    <div id = "user-accordion" class = "col-md-3">
+      @foreach($users as $user)
+        <h3 id = "user-{{ $user->id }}">{{ $user->Fname }} {{ $user->Lname }}</h3>
+        <div>
+          <div class = "business-role-accordion">
+            @foreach($businessRoles[$user->id] as $businessRole)
+              <h3 class = "business-role-{{ $businessRole->id }}">{{ $businessRole->name }}</h3>
+              <div>
+                @foreach($courses[$businessRole->businessrole_id] as $course)
+                  <p class = "course-{{ $course->id }}">{{ $course->name }}</p><br/>
+                @endforeach
+              </div>
             @endforeach
           </div>
-        @endforeach
-      </div>
-    @endforeach -->
-    <h3>John Smith</h3>
-    <div  class = "business-role-accordion">
-      <h3 id = "prototype-image-1">Business Role 1</h3>
-      <div>
-        <p>Skills Course 1</p>
-        <p>Skills Course 2</p>
-        <p>Skills Course 3</p>
-      </div>
-      <h3 id = "prototype-image-2">Business Role 2</h3>
-      <div>
-        <p>Skills Course 4</p>
-        <p>Skills Course 5</p>
-        <p>Skills Course 6</p>
-      </div>
+        </div>
+      @endforeach
+    </div>
+    <div class = "col-md-9">
+      <canvas id="myChart" width="640" height="360"></canvas>
     </div>
   </div>
-  <div class = "col-md-9">
-    <img id = "prototype-image" src = "/images/CompetencyMonitor1.png" width = "710px" style = "margin-left: 50px; padding-top: 10px;" />
-  </div>
-</div>
 </div>
 @endsection
 
 @section('footer-scripts')
 <script>
   $('#user-accordion').accordion({
-    autoHeight:true
-  });
-  $('.business-role-accordion').accordion();
-
-  $('#prototype-image-1').on('click', function() {
-    $('#prototype-image').prop('src', '/images/CompetencyMonitor1.png');
+    heightStyle: 'content',
+    autoHeight:false
   });
 
-  $('#prototype-image-2').on('click', function() {
-    $('#prototype-image').prop('src', '/images/CompetencyMonitor2.png');
+  $('.business-role-accordion').accordion({
+    heightStyle: 'content',
+    autoHeight:false
   });
+
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+      type: 'horizontalBar',
+      data: {
+          labels: ["Course1", "Course2", "Course3"],
+          datasets: [{
+              label: '# of Votes',
+              backgroundColor: "#000000",
+              data: [12, 19, 3, 5, 7, 3],
+              borderWidth: 1
+          }]
+      },
+      options: {
+          legend: {
+              display: false
+          },
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  },
+                  barPercentage: 0.03
+              }],
+              xAxes: [{
+                  position: 'top'
+              }]
+          }
+      }
+  });
+
 </script>
 @endsection
