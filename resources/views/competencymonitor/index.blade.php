@@ -22,7 +22,7 @@
       @endforeach
     </div>
     <div class = "col-md-9">
-      <canvas id="myChart" width="640" height="360"></canvas>
+      <canvas id="timeline" width="640" height="360"></canvas>
     </div>
   </div>
 </div>
@@ -40,7 +40,7 @@
     autoHeight:false
   });
 
-  var ctx = document.getElementById("myChart").getContext('2d');
+  var ctx = document.getElementById("timeline").getContext('2d');
   var myChart = new Chart(ctx, {
       type: 'horizontalBar',
       data: {
