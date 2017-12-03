@@ -19,13 +19,18 @@ class BusinessRoleController extends Controller
     public function index()
     {
         $businessRoles = BusinessRole::all();
+        $current_users = [];
+        $current_courses = [];
 
         foreach($businessRoles as $businessRole) {
           $businessRole->users = sizeof(explode(",", $businessRole->users)) - 1;
           $businessRole->courses = sizeof(explode(",", $businessRole->courses)) - 1;
+
+          $current_users[$businessRole->id] = DB::select('select * from businessrole_users inner join users on businessrole_users.user_id = users.id where businessrole_users.businessrole_id = ?', [$businessRole->id]);
+          $current_courses[$businessRole->id] = DB::select('select * from businessrole_skills inner join courses on businessrole_skills.course_id = courses.id where businessrole_skills.businessrole_id = ?', [$businessRole->id]);
         }
 
-        return view('businessroles.index', compact('businessRoles'));
+        return view('businessroles.index', compact('businessRoles', 'current_users', 'current_courses'));
     }
 
     /**
@@ -141,7 +146,7 @@ class BusinessRoleController extends Controller
           }
         }
 
-        return redirect()->action('BusinessRoleController@show', [$businessrole]);
+        return redirect('/businessroles');
     }
 
     /**
@@ -156,4 +161,20 @@ class BusinessRoleController extends Controller
 
         return redirect('/businessroles');
     }
+
+    /*
+    public function removeUser (Request $request)
+    {
+      $user = $request->input('remove-user');
+      $businessRole = $request->input('remove-user-from-role');
+
+      DB::delete('delete from businessrole_users where user_id = ? AND businessrole_id = ?', [$user, $businessRole]);
+
+    }
+
+    public function removeCourse (Request $request)
+    {
+
+    }
+    */
 }

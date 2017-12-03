@@ -26,6 +26,8 @@ Route::resource('tickets', 'TicketController');
 Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 
 // Business role Routing
+// Route::delete('businessroles/removeuser', 'BusinessRoleController@removeUser');
+// Route::delete('businessroles/removecourse', 'BusinessRoleController@removeCourse');
 Route::resource('businessroles', 'BusinessRoleController');
 
 // Report routing

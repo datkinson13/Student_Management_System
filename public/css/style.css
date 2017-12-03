@@ -46,6 +46,25 @@
   height: 100%;
 }
 
+.modal-list-button {
+  float:right;
+  margin-top: 5px;
+}
+
+.modal-user-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  min-height: 100%;
+}
+
+.modal-course-list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  min-height: 100%;
+}
+
 #users {
   overflow-y: auto;
   overflow-x: hidden;
