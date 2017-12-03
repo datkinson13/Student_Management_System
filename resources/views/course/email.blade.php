@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>Course {{ $course }}</h1>
+    <h1>Email {{ $course->name }} Students</h1>
     <form>
         <div class="form-group">
             <label for="emailSubject">Subject</label>

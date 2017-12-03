@@ -2,8 +2,18 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+// Models
+use App\BusinessRole;
+use App\Comment;
+use App\Course;
+use App\User;
+// Policies
+use App\Policies\BusinessRolePolicy;
+use App\Policies\CommentPolicy;
+use App\Policies\CoursePolicy;
+use App\Policies\UserPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +23,11 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Model'         => 'App\Policies\ModelPolicy',
+        Course::class       => CoursePolicy::class,
+        BusinessRole::class => BusinessRolePolicy::class,
+        Comment::class      => CommentPolicy::class,
+        User::class         => UserPolicy::class,
     ];
 
     /**
@@ -24,20 +38,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $this->registerUserActionPolicies();
-        //
-    }
-
-    public function registerUserActionPolicies()
-    {
-        // Define a gate allowing a users permissions to be changed.
-        Gate::define('change-permissions', function ($user) {
-            return $user->hasAccess(['change-permissions']);
-        });
-
-        // Define a gate allowing user deletion.
-        Gate::define('user-delete', function ($user) {
-            return $user->hasAccess(['user-delete']);
-        });
     }
 }
