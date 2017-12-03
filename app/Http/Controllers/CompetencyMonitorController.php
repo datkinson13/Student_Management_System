@@ -15,17 +15,19 @@ class CompetencyMonitorController extends Controller
     public function index()
     {
       $users = User::all();
-      $business_roles = BusinessRole::all();
-      $courses = Course::all();
+      $businessRoles = [];
+
+      $all_roles = BusinessRole::all();
+      $courses = [];
 
       foreach($users as $user) {
-        foreach($business_roles as $business_role) {
-          foreach($courses as $course) {
-            
-          }
-        }
+        $businessRoles[$user->id] = DB::select('select * from business_roles inner join businessrole_users on business_roles.id = businessrole_users.businessrole_id where businessrole_users.user_id = ?', [$user->id]);
       }
 
-      return view('competencymonitor.index', compact('users', 'business_roles', 'courses'));
+      foreach($all_roles as $role) {
+        $courses[$role->id] = DB::select('select * from courses inner join businessrole_skills on courses.id = businessrole_skills.course_id where businessrole_skills.businessrole_id = ?', [$role->id]);
+      }
+
+      return view('competencymonitor.index', compact('users', 'businessRoles', 'courses'));
     }
 }

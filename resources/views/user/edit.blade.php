@@ -60,7 +60,7 @@
         <input type = "file" id = "identification" name = "identification" accept = "application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/pdf, image/*">
       </div>
     </div>
-      @can('change-permissions')
+      @can('permissions', App\User::class)
           <div class="form-group row">
               <label class="col-sm-2 col-form-label">Permissions:</label>
               <div class="form-check">
