@@ -40,9 +40,7 @@ Route::get('/competencies/monitor', 'CompetencyMonitorController@index');
 Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index');
 
 // Calendar routing
-Route::get('calendar', function () {
-    return view('calendar.index');
-});
+Route::resource('calendar', 'CalendarController');
 
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
