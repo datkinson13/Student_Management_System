@@ -9,11 +9,14 @@ use App\BusinessRole;
 use App\Comment;
 use App\Course;
 use App\User;
+use App\Employer;
+
 // Policies
 use App\Policies\BusinessRolePolicy;
 use App\Policies\CommentPolicy;
 use App\Policies\CoursePolicy;
 use App\Policies\UserPolicy;
+use App\Policies\EmployerPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         BusinessRole::class => BusinessRolePolicy::class,
         Comment::class      => CommentPolicy::class,
         User::class         => UserPolicy::class,
+        Employer::class     => EmployerPolicy::class,
     ];
 
     /**

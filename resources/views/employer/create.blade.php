@@ -34,7 +34,7 @@
                         <div class="form-check mb-2 mr-sm-2 mb-sm-0">
                             <label class="form-check-label">
                                 <input class="form-check-input" name="auto_enroll"
-                                       type="checkbox" {{ old('auto_enroll') ? 'checked' : '' }}>
+                                       type="checkbox" {{ old('auto_enroll') ? 'checked' : '' }} onclick="ShowHideDiv(this)">
                                 <span style="padding-bottom: .15rem">Auto Enroll Employees</span>
                             </label>
                         </div>
@@ -42,7 +42,10 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('domain') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('domain') ? ' has-error' : '' }}" id="divDomain"
+                     @if (! old('auto_enroll') || old('auto_enroll') === null)
+                        style="display: none;"
+                     @endif>
                     <label for="domain" class="col-md-4 control-label">E-Mail Domain</label>
 
                     <div class="col-md-6">
@@ -101,4 +104,13 @@
             </div>
         </div>
     </form>
+@endsection
+
+@section('page-script')
+    <script type="text/javascript">
+        function ShowHideDiv(chkAutoEnroll) {
+            var divDomain = document.getElementById("divDomain");
+            divDomain.style.display = chkAutoEnroll.checked ? "block" : "none";
+        }
+    </script>
 @endsection
