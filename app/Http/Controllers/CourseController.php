@@ -52,8 +52,11 @@ class CourseController extends Controller {
      */
     public function store(StoreCourse $request)
     {
-        // The incoming request is valid...
-        //      because the StoreCourse class will handle all validation.
+        // The incoming request is valid and authorized...
+        //      because the StoreCourse class handles all validation and authorization.
+
+        // This line is redundant, the request cannot get to this point if it isn't authorized.
+        // Will leave it here as not all requests are using Request validators so it will look out of place without it.
         $this->authorize('create', Course::class);
 
         Course::create([

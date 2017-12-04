@@ -26,15 +26,15 @@ class StoreCourse extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-            'subtitle' => 'nullable|string',
+            'name'        => 'required|string',
+            'subtitle'    => 'nullable|string',
             'description' => 'required|string',
-            'StartDate' => 'required|date',
-            'EndDate' => 'required|date',
-            'CourseTime' => 'required|string',
-            'days_valid' => 'required|string',
-            'cost' => 'required|string',
-            'visible' => 'nullable|boolean',
+            'StartDate'   => 'required|date',
+            'EndDate'     => 'required|date',
+            'CourseTime'  => 'required|string',
+            'days_valid'  => 'required|string',
+            'cost'        => 'required|string',
+            'visible'     => 'nullable|boolean',
         ];
     }
 }
