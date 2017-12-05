@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Http\Requests\StoreCourse;
 use Illuminate\Http\Request;
 
-class CourseController extends Controller
-{
+class CourseController extends Controller {
+
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -24,7 +25,10 @@ class CourseController extends Controller
         //   After selecting the course a Coordinator would then be able to edit.
         //   Pagination should not be apart of this version, maybe considered for v2.
 
-        $courses = Course::all(); // Uncomment when we have a DB and some courses.
+        $courses = Course::all()->filter(function ($course) {
+            return $course->visible();
+        })->all();
+
         return view('course.index', compact('courses'));
     }
 
@@ -35,29 +39,36 @@ class CourseController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Course::class);
+
         return view('course.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreCourse $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCourse $request)
     {
-        // Do some validation first.
+        // The incoming request is valid and authorized...
+        //      because the StoreCourse class handles all validation and authorization.
+
+        // This line is redundant, the request cannot get to this point if it isn't authorized.
+        // Will leave it here as not all requests are using Request validators so it will look out of place without it.
+        $this->authorize('create', Course::class);
 
         Course::create([
-            'name' => $request->input('name'),
-            'subtitle' => $request->input('subtitle'),
+            'name'        => $request->input('name'),
+            'subtitle'    => $request->input('subtitle'),
             'description' => $request->input('description'),
-            'StartDate' => $request->input('StartDate'),
-            'EndDate' => $request->input('EndDate'),
-            'CourseTime' => $request->input('CourseTime'),
-            'days_valid' => $request->input('days_valid'),
-            'user_id' => \Auth::user()->id,
-            'cost' => $request->input('cost')
+            'StartDate'   => $request->input('StartDate'),
+            'EndDate'     => $request->input('EndDate'),
+            'CourseTime'  => $request->input('CourseTime'),
+            'days_valid'  => $request->input('days_valid'),
+            'user_id'     => \Auth::user()->id,
+            'cost'        => $request->input('cost')
         ]);
 
         return redirect(route('course.index'));
@@ -71,32 +82,43 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        // Get the current authed user.
-        $currentUser = \Auth::user();
+        if (!$course->visible()) {
+            abort(404);
+        }
+
+        // Really unhappy about disabling this line.
+        // Maybe there is a way to keep it.
+        // Currently it would seem that an unauthed user is by default not authorized for any tasks.
+        // $this->authorize('view', $course);
+
 
         // Create two arrays that hold all managed users for the current user.
         $enrolledUsers = []; // This will hold all enrolled users.
         $nonEnrolledUsers = []; // This will hold all non enrolled users.
 
-        // What type of user is this?
-        if ($currentUser->isEmployer()) {
-            // This user is an employer. Return their employees.
-            foreach ($currentUser->employer->employees as $employee) {
-                if ($enrollment = $employee->user->competencies->where('course_id', $course->id)->first()) {
-                    array_push($enrolledUsers, $enrollment);
-                } else {
-                    array_push($nonEnrolledUsers, $employee);
+        if (\Auth::user()) {
+            // Get the current authed user.
+            $currentUser = \Auth::user();
+            // What type of user is this?
+            if ($currentUser->isEmployer()) {
+                // This user is an employer. Return their employees.
+                foreach ($currentUser->employer->employees as $employee) {
+                    if ($enrollment = $employee->user->competencies->where('course_id', $course->id)->first()) {
+                        array_push($enrolledUsers, $enrollment);
+                    } else {
+                        array_push($nonEnrolledUsers, $employee);
+                    }
                 }
-            }
-        } elseif ($currentUser->hasAccess(['users-edit-enrollment'])) {
-            // This user is an Administrator. Return all users.
-            // $enrollments = $course->enrollments; // Get all enrollments
-        } else {
-            $enrollment = $course->enrollments->where('user_id', $currentUser->id)->first();
-            if (count($enrollment) > 0) {
-                $enrolledUsers = $enrollment;
+            } elseif ($currentUser->hasAccess(['users-edit-enrollment'])) {
+                // This user is an Administrator. Return all users.
+                // $enrollments = $course->enrollments; // Get all enrollments
             } else {
-                $nonEnrolledUsers = $currentUser;
+                $enrollment = $course->enrollments->where('user_id', $currentUser->id)->first();
+                if (count($enrollment) > 0) {
+                    $enrolledUsers = $enrollment;
+                } else {
+                    $nonEnrolledUsers = $currentUser;
+                }
             }
         }
 
@@ -106,45 +128,47 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
-        //
+        $this->authorize('create', $course);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
-        //
+        $this->authorize('create', $course);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        $this->authorize('create', $course);
     }
 
     /**
      * Allows sending of an email to all students enrolled in the course..
      *
-     * @param  Course  $course
+     * @param  Course $course
      * @return \Illuminate\Http\Response
      */
-    public function compose($course)
+    public function compose(Course $course)
     {
+        $this->authorize('compose', $course);
+
         return view('course.email', compact('course'));
     }
 }

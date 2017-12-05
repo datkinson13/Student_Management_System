@@ -19,9 +19,13 @@
         <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
             <div class="jumbotron">
                 <h1 class="display-3">{{ $course->name }}
-                    <a class="btn btn-warning btn-lg" href="#" role="button">Edit Course</a>
-                    <a class="btn btn-success btn-lg" href="/course/{{ $course->id }}/email" role="button">Email
-                        Students</a>
+                    @can('edit', $course)
+                        <a class="btn btn-warning btn-lg" href="#" role="button">Edit Course</a>
+                    @endcan
+                    @can('compose', $course)
+                        <a class="btn btn-success btn-lg" href="/course/{{ $course->id }}/email" role="button">Email
+                            Students</a>
+                    @endcan
                 </h1>
                 <p class="lead">{{ $course->subtitle }}</p>
                 @if (count($enrolledUsers) > 0)

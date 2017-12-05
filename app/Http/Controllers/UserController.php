@@ -17,7 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'asc')->get();
+        $users = User::all()->filter(function ($value) {
+            return \Auth::user()->can('view', $value);
+        })->all();
 
         return view('user.index', compact('users'));
     }
@@ -29,6 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
         return view('user.create');
     }
 
@@ -40,6 +43,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+      $this->authorize('create', User::class);
+
       $this->validate($request, [
         'password' => 'min:6',
         'confirmPassword' => 'required_with:password|same:password|min:6'
@@ -85,6 +90,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $this->authorize('view', $user);
         return view('user.show', compact('user'));
     }
 
@@ -96,6 +102,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         return view('user.edit', compact('user'));
     }
 
@@ -108,6 +116,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+      $this->authorize('update', $user);
+
       if(isset($request['avatar'])) {
         $avatar = $request->file('avatar');
         $fileName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -138,7 +148,7 @@ class UserController extends Controller
             ]);
 
         // Only do the next steps if the user is authorized.
-        if (Gate::allows('change-permissions')) {
+        if (\Auth::user()->can('permissions', User::class)) {
             // This user has the 'change-permissions' permission.
             $role_arr = is_array($request->input('roles')) ? $request->input('roles') : array();
             foreach ($user->roles as $role) {
@@ -176,6 +186,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete', $user);
+
         $del_user = User::where('id', $user->id); // Get the user that is trying to be deleted.
         if (Gate::denies('user-delete')) { // Is this 'managing' user allowed to delete users?
             // This user isn't allowed to delete other users.

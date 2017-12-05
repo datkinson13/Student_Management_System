@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employer;
+use App\Http\Requests\StoreEmployer;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
@@ -24,27 +25,24 @@ class EmployerController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Employer::class);
         return view('employer.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreEmployer  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEmployer $request)
     {
-        // Do some validation first.
-        $this->validate($request, [
-            'domain'        => 'unique:employers'
-        ]);
+        // This request has already been validated and authorized via StoreEmployer.
 
         Employer::create(['user_id'     => \Auth::id(),
                           'company'     => $request->input('company'),
                           'address'     => $request->input('address'),
                           'phone'       => $request->input('phone'),
-                          //'auto_enroll' => $request->input('auto_enroll'),
                           'domain'      => strtolower($request->input('domain'))
         ]);
 
@@ -59,7 +57,7 @@ class EmployerController extends Controller
      */
     public function show(Employer $employer)
     {
-        //
+        $this->authorize('view', $employer);
     }
 
     /**
@@ -70,6 +68,7 @@ class EmployerController extends Controller
      */
     public function edit(Employer $employer)
     {
+        $this->authorize('update', $employer);
         return view('errors.indev');
     }
 
@@ -82,7 +81,7 @@ class EmployerController extends Controller
      */
     public function update(Request $request, Employer $employer)
     {
-        //
+        $this->authorize('update', $employer);
     }
 
     /**
@@ -93,6 +92,6 @@ class EmployerController extends Controller
      */
     public function destroy(Employer $employer)
     {
-        //
+        $this->authorize('update', $employer);
     }
 }

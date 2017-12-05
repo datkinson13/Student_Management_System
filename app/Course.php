@@ -14,4 +14,9 @@ class Course extends Model
         // Return enrollments for the course.
         return $this->hasMany(Enrollment::class);
     }
+
+    public function visible() {
+        // This will be adjusted to be a database column that will allow facilitators to make a course as ready to be enrolled into.
+        return true;
+    }
 }
