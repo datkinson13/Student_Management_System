@@ -30,10 +30,9 @@ class BusinessRolePolicy
      * Determine whether the user can view the businessRole.
      *
      * @param  \App\User  $user
-     * @param  \App\BusinessRole  $businessRole
      * @return mixed
      */
-    public function view(User $user, BusinessRole $businessRole)
+    public function view(User $user)
     {
         // Only businesses can access this feature.
         if ($user->isEmployer()) {
