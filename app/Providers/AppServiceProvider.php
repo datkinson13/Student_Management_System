@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\Resource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
             $user = \Auth::user();
             view()->share('currentUser', $user);
         });
+
+        Resource::withoutWrapping(); // https://laravel.com/docs/5.5/eloquent-resources#data-wrapping
     }
 
     /**
