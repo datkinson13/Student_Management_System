@@ -41,6 +41,7 @@ Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index');
 
 // Calendar routing
 Route::resource('calendar', 'CalendarController');
+Route::match(['get','post'], 'calendarEvents', 'CalendarController@events')->name('calendar.events');
 
 // Enrollment routing
 Route::resource('enrollment', 'EnrollmentController');
