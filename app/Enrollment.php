@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use Carbon\Carbon;
 
 class Enrollment extends Model
 {
     protected $fillable = ['course_id', 'user_id', 'ExpiryDate', 'CompletedDate'];
+
+    public $color = "blue";
 
     public function daysRemaining() {
         $expiryDate = new DateTime($this->ExpiryDate);
@@ -36,5 +39,76 @@ class Enrollment extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     *
+     * Turn the enrollment item into an FullCalendar event
+     * https://github.com/maddhatter/laravel-fullcalendar
+     *
+     */
+
+    /**
+     * Get the event's id number
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get the event's title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->course->name;
+    }
+
+    /**
+     * Is it an all day event?
+     *
+     * @return bool
+     */
+    public function isAllDay()
+    {
+        // return (bool) $this->all_day;
+        // Hardcoded False for now.
+        return false;
+    }
+
+    /**
+     * Get the start time
+     *
+     * @return Carbon
+     */
+    public function getStart()
+    {
+        return new Carbon($this->CompletedDate);
+    }
+
+    /**
+     * Get the end time
+     *
+     * @return Carbon
+     */
+    public function getEnd()
+    {
+        return new Carbon($this->ExpiryDate);
+    }
+
+    /**
+     * Optional FullCalendar.io settings for this event
+     *
+     * @return array
+     */
+    public function getEventOptions()
+    {
+        return [
+            'color' => $this->color,
+        ];
     }
 }

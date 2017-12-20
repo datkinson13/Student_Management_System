@@ -33,14 +33,35 @@
                                 My Enrollments
                             </label>
                         </div>
-                        <hr>
-                        <div class="form-group">
-                            <label for="enrollmentColor">MyEnrollments Color</label>
-                            <input type="text" class="form-control" id="enrollmentColor" name="enrollmentColor" aria-describedby="emailHelp" value="#ff0000">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="myCompetencies" id="myCompetencies">
+                                My Competencies
+                            </label>
                         </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="iFacilitate" id="iFacilitate">
+                                My Facilitated courses
+                            </label>
+                        </div>
+                        <hr>
+                        {{-- https://eduardopereira.pt/wp-content/uploads/2012/06/google_calendar_api_event_color_chart.png --}}
                         <div class="form-group">
                             <label for="courseColor">All Courses color</label>
-                            <input type="text" class="form-control" id="courseColor" name="courseColor" aria-describedby="emailHelp" value="#ff0000">
+                            <input type="text" class="form-control" id="courseColor" name="courseColor" aria-describedby="emailHelp" value="#E1E1E1">
+                        </div>
+                        <div class="form-group">
+                            <label for="enrollmentColor">My Enrollments Color</label>
+                            <input type="text" class="form-control" id="enrollmentColor" name="enrollmentColor" aria-describedby="emailHelp" value="#A4BDFC">
+                        </div>
+                        <div class="form-group">
+                            <label for="enrollmentColor">My Competency Color</label>
+                            <input type="text" class="form-control" id="competencyColor" name="competencyColor" aria-describedby="emailHelp" value="#51B749">
+                        </div>
+                        <div class="form-group">
+                            <label for="facilitateColor">My Facilitated courses</label>
+                            <input type="text" class="form-control" id="facilitateColor" name="facilitateColor" aria-describedby="emailHelp" value="#FFB878">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -135,11 +156,23 @@
                         "allCourses": function () {
                             return document.getElementById('allCourses').checked ? 1 : 0;
                         },
+                        "myCompetencies": function () {
+                            return document.getElementById('myCompetencies').checked ? 1 : 0;
+                        },
+                        "iFacilitate" : function () {
+                            return document.getElementById('iFacilitate').checked ? 1 : 0;
+                        },
                         "courseColor": function () {
                             return document.getElementById('courseColor').value;
                         },
                         "enrollmentColor": function () {
                             return document.getElementById('enrollmentColor').value;
+                        },
+                        "competencyColor": function () {
+                            return document.getElementById('competencyColor').value;
+                        },
+                        "facilitateColor": function () {
+                            return document.getElementById('facilitateColor').value;
                         }
                     }
                 }
