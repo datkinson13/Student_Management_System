@@ -101,19 +101,64 @@ class CalendarController extends Controller {
     public function events(Request $request)
     {
         // Get some events to show and filter here.
-        // We will start with MyEnrollments. Populate that and then increase events.
         $events = collect([]); // Empty collection to store events.
-        if ($request->myEnrollments) {
+
+        // We will start with MyEnrollments. Populate that and then increase events.
+
             if ($currentUser = \Auth::user()) {
                 $enrollments = $currentUser->competencies;
-                foreach ($enrollments as $enrollment) {
-                    if ($request->enrollmentColor !== null) {
-                        $enrollment->course->color = $request->enrollmentColor;
+                if ($request->myEnrollments || $request->myCompetencies) {
+                    foreach ($enrollments as $enrollment) {
+                        // Determine if this enrollment is complete.
+                        if ($enrollment->enrollment_status == 'Completed') {
+                            // If enrollment is complete then this is a competency.
+                            if ($request->myCompetencies) {
+                                if ($request->competencyColor !== null) {
+                                    $enrollment->color = $request->competencyColor;
+                                } else {
+                                    $enrollment->color = "#51B749";
+                                }
+                                $events->push($enrollment);
+                            }
+                        } elseif ($enrollment->enrollment_status == 'In Progress') {
+                            // If enrollment is not complete this is an enrollment.
+                            if ($request->myEnrollments) {
+                                if ($request->enrollmentColor !== null) {
+                                    $enrollment->course->color = $request->enrollmentColor;
+                                }
+                                $events->push($enrollment->course);
+                            }
+                        } elseif ($enrollment->enrollment_status == 'failed') {
+                            // This course was failed. What should we do with it?
+                        } elseif ($enrollment->enrollment_status == 'pending') {
+                            // This course is pending. What should we do with it?
+                            if ($request->myEnrollments) {
+                                if ($request->enrollmentColor !== null) {
+                                    $enrollment->course->color = $request->enrollmentColor;
+                                }
+                                $events->push($enrollment->course);
+                            }
+                        }
                     }
-                    $events->push($enrollment->course);
                 }
             }
+
+        // Add myFacilitated courses
+        if ($request->iFacilitate) {
+            if ($currentUser = \Auth::user()) {
+                // You can only get these if you're logged in. Need a user id.
+                $events = $events->merge(
+                    Course::where('user_id', '=', $currentUser->id)->get()->each(function($course) use ($request) {
+                        if ($request->facilitateColor !== null) {
+                            $course = $course->color = $request->facilitateColor;
+                        }
+                        return $course;
+                    })
+                );
+            }
         }
+
+        // Add the rest of the courses.
         if ($request->allCourses) {
             $events = $events->merge(Course::all()->each(function($course) use ($request) {
                 if ($request->courseColor !== null) {
