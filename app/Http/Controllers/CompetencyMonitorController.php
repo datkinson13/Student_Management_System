@@ -28,6 +28,10 @@ class CompetencyMonitorController extends Controller
         $courses[$role->id] = DB::select('select * from courses inner join businessrole_skills on courses.id = businessrole_skills.course_id where businessrole_skills.businessrole_id = ?', [$role->id]);
       }
 
-      return view('competencymonitor.index', compact('users', 'businessRoles', 'courses'));
+      $enrolments = DB::select('select * from enrollments where enrollment_status = "completed" or enrollment_status = "expired"');
+
+      //dd($enrolments);
+
+      return view('competencymonitor.index', compact('users', 'businessRoles', 'courses', 'enrolments'));
     }
 }

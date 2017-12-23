@@ -10,10 +10,10 @@
         <div>
           <div class = "business-role-accordion">
             @foreach($businessRoles[$user->id] as $businessRole)
-              <h3 class = "business-role-item" id = "user-{{ $user->id }}-business-role-{{ $businessRole->id }}">{{ $businessRole->name }}</h3>
+              <h3 class = "business-role-item" data-user = "{{ $user->id }}" id = "user-{{ $user->id }}-business-role-{{ $businessRole->id }}">{{ $businessRole->name }}</h3>
               <div class = "business-role-{{ $businessRole->id }}-courses">
                 @foreach($courses[$businessRole->businessrole_id] as $course)
-                  <p class = "course-{{ $course->id }}">{{ $course->name }}</p><br/>
+                  <p data-course = "{{ $course->course_id }}" class = "course-{{ $course->id }}">{{ $course->name }}</p><br/>
                 @endforeach
               </div>
             @endforeach
@@ -31,21 +31,39 @@
 @section('footer-scripts')
 <script>
   var rows = [];
-  var courses = [];
+  var courseNames = [];
 
   $('.business-role-item').on('click', function() {
+    var courseIds = [];
+    var userId = $(this).data('user');
 
     rows.length = 0;
-    courses.length = 0;
+    courseNames.length = 0;
 
     $(this).next().children().each(function() {
       if($(this).text() != "") {
-        courses.push($(this).text());
+        courseNames.push($(this).text());
+      }
+
+      if($(this).data('course') != null) {
+        courseIds.push($(this).data('course'));
       }
     });
 
-    for(var i = 0; i < courses.length; i++) {
-      rows.push([String(i), courses[i], new Date(2015, 5, 6), new Date(2020, 6, 8)]);
+    for(var i = 0; i < courseIds.length; i++) {
+      @foreach($enrolments as $enrolment)
+        if(courseIds[i] == "<?= $enrolment->course_id ?>" && userId == "<?= $enrolment->user_id ?>") {
+          var enrolmentCompleted = "{{ $enrolment->CompletedDate }}";
+          var enrolmentExpired = "{{ $enrolment->ExpiryDate }}";
+
+          rows.push([
+            String(i),
+            courseNames[i],
+            new Date(enrolmentCompleted),
+            new Date(enrolmentExpired)
+          ]);
+        }
+      @endforeach
     }
 
     drawChart();
