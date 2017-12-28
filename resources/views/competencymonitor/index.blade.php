@@ -29,6 +29,7 @@
 @endsection
 
 @section('footer-scripts')
+
 <script>
   var rows = [];
   var courseNames = [];
@@ -51,17 +52,15 @@
     });
 
     for(var i = 0; i < courseIds.length; i++) {
+      rows.push([courseNames[i], new Date(new Date().getFullYear(), 00, 01), new Date(new Date().getFullYear(), 00, 01)]);
+
       @foreach($enrolments as $enrolment)
         if(courseIds[i] == "<?= $enrolment->course_id ?>" && userId == "<?= $enrolment->user_id ?>") {
           var enrolmentCompleted = "{{ $enrolment->CompletedDate }}";
           var enrolmentExpired = "{{ $enrolment->ExpiryDate }}";
 
-          rows.push([
-            String(i),
-            courseNames[i],
-            new Date(enrolmentCompleted),
-            new Date(enrolmentExpired)
-          ]);
+          rows[i][1] = new Date(enrolmentCompleted);
+          rows[i][2] = new Date(enrolmentExpired);
         }
       @endforeach
     }
@@ -92,14 +91,14 @@
     var chart = new google.visualization.Timeline(container);
     var dataTable = new google.visualization.DataTable();
 
-    dataTable.addColumn({ type: 'string', id: 'ID' });
+    //dataTable.addColumn({ type: 'string', id: 'ID' });
     dataTable.addColumn({ type: 'string', id: 'Course' });
     dataTable.addColumn({ type: 'date', id: 'EnrolmentCompleted' });
     dataTable.addColumn({ type: 'date', id: 'EnrolmentExpired' });
     dataTable.addRows(rows);
 
     var options = {
-      timeline: { showRowLabels: false },
+      //timeline: { showRowLabels: false },
       hAxis: {
         viewWindowMode:'explicit',
         viewWindow: {
@@ -108,9 +107,11 @@
         minValue: new Date(2012, 0, 0),
         maxValue: new Date(2024, 0, 0),
       },
+      //interpolateNulls: true,
     };
 
     chart.draw(dataTable, options);
   }
 </script>
+
 @endsection
