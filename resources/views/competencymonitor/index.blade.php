@@ -13,7 +13,7 @@
               <h3 class = "business-role-item" data-user = "{{ $user->id }}" id = "user-{{ $user->id }}-business-role-{{ $businessRole->id }}">{{ $businessRole->name }}</h3>
               <div class = "business-role-{{ $businessRole->id }}-courses">
                 @foreach($courses[$businessRole->businessrole_id] as $course)
-                  <p data-course = "{{ $course->course_id }}" class = "course-{{ $course->id }}">{{ $course->name }}</p><br/>
+                  <p id = "user-{{ $user->id }}-business-role-{{ $businessRole->id }}-course-{{ $course->id }}" data-course = "{{ $course->course_id }}" class = "course-{{ $course->id }}">{{ $course->name }}</p><br/>
                 @endforeach
               </div>
             @endforeach
@@ -29,6 +29,51 @@
 @endsection
 
 @section('footer-scripts')
+
+<script>
+  $(document).ready(function() {
+    var today = new Date();
+    var dateLimit = new Date();
+    var trafficLights = [];
+
+    dateLimit.setDate(today.getDate() + 90);
+
+    @foreach($users as $user)
+      $('#user-{{ $user->id }}').prepend("<span class = 'traffic-light' style = 'color: green;'><i class='fa fa-circle' aria-hidden='true'></i></span>");
+
+      @foreach($businessRoles[$user->id] as $businessRole)
+        $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').prepend("<span class = 'traffic-light' style = 'color: red;'><i class='fa fa-circle' aria-hidden='true'></i></span>");
+
+        $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').next().children().each(function() {
+          @foreach($enrolments as $enrolment)
+            if($(this).data('course') == "<?= $enrolment->course_id ?>" && "<?= $user->id ?>" == "<?= $enrolment->user_id ?>") {
+              if(Date.parse("<?= $enrolment->ExpiryDate ?>") > dateLimit) {
+                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "green");
+              } else if(Date.parse("<?= $enrolment->ExpiryDate ?>") < dateLimit && Date.parse("<?= $enrolment->ExpiryDate ?>") > today) {
+                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "orange");
+              } else {
+                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "red");
+              }
+            }
+          @endforeach
+        });
+      @endforeach
+
+      alert($('#user-{{ $user->id }}').find('.business-role-accordion'));
+
+      /*
+      $('#user-{{ $user->id }}').next().next().children('h3').each(function() {
+        if($(this).find(.'traffic-light').css('color') == 'red') {
+          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'red');
+          return false;
+        } else if($(this).find(.'traffic-light').css('color') == 'orange') {
+          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'orange');
+          return false;
+        }
+      });*/
+    @endforeach
+  });
+</script>
 
 <script>
   var rows = [];
@@ -52,7 +97,8 @@
     });
 
     for(var i = 0; i < courseIds.length; i++) {
-      rows.push([courseNames[i], new Date(new Date().getFullYear(), 00, 01), new Date(new Date().getFullYear(), 00, 01)]);
+
+      rows.push([courseNames[i], new Date('2017-01-01'), new Date('2017-01-01')]);
 
       @foreach($enrolments as $enrolment)
         if(courseIds[i] == "<?= $enrolment->course_id ?>" && userId == "<?= $enrolment->user_id ?>") {
@@ -61,6 +107,11 @@
 
           rows[i][1] = new Date(enrolmentCompleted);
           rows[i][2] = new Date(enrolmentExpired);
+
+          /*if(rows[i][2] > dateLimit) {
+            $(this).find(".traffic-light").css("color", "green");
+            $(this).parent().parent().prev().find(".traffic-light").css("color", "green");
+          }*/
         }
       @endforeach
     }
@@ -91,14 +142,12 @@
     var chart = new google.visualization.Timeline(container);
     var dataTable = new google.visualization.DataTable();
 
-    //dataTable.addColumn({ type: 'string', id: 'ID' });
     dataTable.addColumn({ type: 'string', id: 'Course' });
     dataTable.addColumn({ type: 'date', id: 'EnrolmentCompleted' });
     dataTable.addColumn({ type: 'date', id: 'EnrolmentExpired' });
     dataTable.addRows(rows);
 
     var options = {
-      //timeline: { showRowLabels: false },
       hAxis: {
         viewWindowMode:'explicit',
         viewWindow: {
@@ -107,7 +156,7 @@
         minValue: new Date(2012, 0, 0),
         maxValue: new Date(2024, 0, 0),
       },
-      //interpolateNulls: true,
+      colors: ['#000000'],
     };
 
     chart.draw(dataTable, options);

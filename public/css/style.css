@@ -121,7 +121,7 @@
 }
 
 .business-role-accordion {
-  
+
 }
 
 .ui-state-active,
@@ -162,3 +162,9 @@ html .ui-button.ui-state-disabled:active {
 .ui-corner-bl {
   border-bottom-left-radius: 0px !important;
 }
+
+/* Styling the size of the timeline bars for competency monitoring
+#timeline svg g rect {
+  height: 5px !important;
+  y: y + 6;
+} */
