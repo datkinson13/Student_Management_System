@@ -39,38 +39,46 @@
     dateLimit.setDate(today.getDate() + 90);
 
     @foreach($users as $user)
-      $('#user-{{ $user->id }}').prepend("<span class = 'traffic-light' style = 'color: green;'><i class='fa fa-circle' aria-hidden='true'></i></span>");
+      $('#user-{{ $user->id }}').prepend("<span class = 'traffic-light' style = 'color: rgb(255,0,0);'><i class='fa fa-circle' aria-hidden='true'></i></span>");
 
       @foreach($businessRoles[$user->id] as $businessRole)
-        $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').prepend("<span class = 'traffic-light' style = 'color: red;'><i class='fa fa-circle' aria-hidden='true'></i></span>");
+        var signalCheck = false;
+
+        $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').prepend("<span class = 'traffic-light' style = 'color: rgb(0,128,0);'><i class='fa fa-circle' aria-hidden='true'></i></span>");
 
         $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').next().children().each(function() {
           @foreach($enrolments as $enrolment)
             if($(this).data('course') == "<?= $enrolment->course_id ?>" && "<?= $user->id ?>" == "<?= $enrolment->user_id ?>") {
-              if(Date.parse("<?= $enrolment->ExpiryDate ?>") > dateLimit) {
-                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "green");
-              } else if(Date.parse("<?= $enrolment->ExpiryDate ?>") < dateLimit && Date.parse("<?= $enrolment->ExpiryDate ?>") > today) {
-                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "orange");
-              } else {
-                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "red");
+              if(Date.parse("<?= $enrolment->ExpiryDate ?>") < dateLimit && Date.parse("<?= $enrolment->ExpiryDate ?>") > today) {
+                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,128,0)");
+              } else if(Date.parse("<?= $enrolment->ExpiryDate ?>") < today) {
+                $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,0,0)");
               }
+
+              signalCheck = true;
             }
           @endforeach
+
+          if(signalCheck == false) {
+            $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,0,0)");
+          }
+
         });
       @endforeach
 
-      alert($('#user-{{ $user->id }}').find('.business-role-accordion'));
+      //alert($('#user-{{ $user->id }}').html());
 
-      /*
-      $('#user-{{ $user->id }}').next().next().children('h3').each(function() {
-        if($(this).find(.'traffic-light').css('color') == 'red') {
-          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'red');
+      $('#user-{{ $user->id }}').next().find('.business-role-item').each(function() {
+        if($(this).find('.traffic-light').css('color') == 'rgb(255, 0, 0)') {
+          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
           return false;
-        } else if($(this).find(.'traffic-light').css('color') == 'orange') {
-          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'orange');
-          return false;
+        } else if($(this).find('.traffic-light').css('color') == 'rgb(255, 128, 0)') {
+          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 128, 0)');
+          // return false;
+        } else if($(this).find('.traffic-light').css('color') == 'rgb(0, 128, 0)') {
+          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(0, 128, 0)');
         }
-      });*/
+      });
     @endforeach
   });
 </script>
