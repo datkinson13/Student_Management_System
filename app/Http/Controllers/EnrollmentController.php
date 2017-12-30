@@ -45,7 +45,11 @@ class EnrollmentController extends Controller
             // Add an additional validator here.
 
             // If you are an employer you must enroll an employee.
-            $enrollUser = $request->input('user_id');
+            $user = User::find($request->input('user_id'));
+            // Ensure the user is an employee.
+            if (\Auth::user()->can('view', $user)) {
+                $enrollUser = $request->input('user_id');
+            }
         } else {
             // If you are just a user, you can only enroll yourself.
             $enrollUser = \Auth::id();
