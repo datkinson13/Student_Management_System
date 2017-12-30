@@ -37,7 +37,7 @@ class UserPolicy
             return true;
         }
 
-        if ($user->isEmployer()) {
+        if ($user->isEmployer() && $model->isEmployee()) {
             if ($model->employer->id === $user->employer->id) {
                 // Allow employers to view employee details.
                 return true;
