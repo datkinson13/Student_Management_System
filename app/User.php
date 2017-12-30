@@ -76,7 +76,7 @@ class User extends Authenticatable
         return count(Employee::where('user_id', $this->id)->get()) == 1;
     }
 
-    public function monitoredCompetencies() {
+    public function monitoredCompetencies($enrollments = false) {
         // Build a full list of all competencies that need to be monitored.
         // As an employer this will include all employees.
         if ($this->isEmployer()) {
@@ -86,6 +86,7 @@ class User extends Authenticatable
                 // Get the employees competencies and add them to our collection
                 $competencies = $competencies->merge($employee->user->competencies);
             }
+
         } else {
             // This user isn't an employer, return their competencies.
             $competencies = $this->competencies()->get();
@@ -93,9 +94,13 @@ class User extends Authenticatable
 
         // Reorder them so the soon to expire ones are first.
         // Exclude incomplete competencies.
-        return $competencies->sortBy('ExpiryDate')->filter(function ($value) {
-            return $value->ExpiryDate != null;
-        });
+        $competencies = $competencies->sortBy('ExpiryDate');
+        if (!$enrollments) {
+            $competencies = $competencies->filter(function ($value) {
+                return $value->ExpiryDate != null;
+            });
+        }
+        return $competencies;
     }
 
     /**

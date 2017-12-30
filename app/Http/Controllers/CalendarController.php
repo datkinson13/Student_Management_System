@@ -106,7 +106,7 @@ class CalendarController extends Controller {
         // We will start with MyEnrollments. Populate that and then increase events.
 
             if ($currentUser = \Auth::user()) {
-                $enrollments = $currentUser->monitoredCompetencies();
+                $enrollments = $currentUser->monitoredCompetencies(true);
                 if ($request->myEnrollments || $request->myCompetencies) {
                     foreach ($enrollments as $enrollment) {
                         // Determine if this enrollment is complete.
