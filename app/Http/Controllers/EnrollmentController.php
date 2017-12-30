@@ -14,7 +14,9 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        $enrollments = Enrollment::all();
+        $enrollments = Enrollment::all()->filter(function($value) {
+            return \Auth::user()->can('view', $value->user);
+        });
         return view('enrollment.index', compact('enrollments'));
     }
 
