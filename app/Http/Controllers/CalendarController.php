@@ -167,13 +167,12 @@ class CalendarController extends Controller {
                 return $course;
             })); // Return a collection of all Course events.
         }
-
         // We've now collected all events that the user has requested.
         // We need to filter them based on the parameters (reducing the number of events returned)
         // This will allow a much larger number of events yet still keep the frontend fast.
         if ($request->start && $request->end) {
             // Only filter if we have some params.
-            $calEvents = $events->filter(function ($course, $index) use ($request) {
+            $calEvents = $events->filter(function ($course) use ($request) {
 
                 /* Things that must work:
                  * 1. Start date is before period, end date is within.
@@ -186,12 +185,12 @@ class CalendarController extends Controller {
                  *
                  * */
 
-                $start = new Carbon($course->StartDate); // Convert the course StartDate into a carbon date.
-                $end = new Carbon($course->EndDate);     // Convert the course EndDate into a carbon date.
+                $start = $course->getStart(); // Convert the course StartDate into a carbon date.
+                $end = $course->getEnd();     // Convert the course EndDate into a carbon date.
 
                 $startBool = $start->lte(new Carbon($request->end));
                 $endBool = $end->gte(new Carbon($request->start));
-
+                
                 return ($startBool && $endBool); // If both are true return true, else return false.
             });
         }
