@@ -25,6 +25,12 @@ class Course extends Model implements \MaddHatter\LaravelFullcalendar\Event {
         return true;
     }
 
+    public function facilitator()
+    {
+        // Return the facilitator
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
     /**
      *
      * Turn the course item into an FullCalendar event
