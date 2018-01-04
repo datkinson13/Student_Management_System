@@ -73,8 +73,19 @@
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
           return false;
         } else if($(this).find('.traffic-light').css('color') == 'rgb(255, 128, 0)') {
-          $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 128, 0)');
-          // return false;
+          var redCheck = false;
+
+          $('#user-{{ $user->id }}').next().find('.business-role-item').each(function() {
+            if($(this).find('.traffic-light').css('color') == 'rgb(255, 0, 0)') {
+              redCheck = true;
+            }
+          });
+
+          if(redCheck) {
+            $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
+          } else {
+            $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 128, 0)');
+          }
         } else if($(this).find('.traffic-light').css('color') == 'rgb(0, 128, 0)') {
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(0, 128, 0)');
         }
