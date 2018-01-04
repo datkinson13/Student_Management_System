@@ -23,57 +23,27 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong>Business Role 1</strong></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 1</td>
-      <td>$100</td>
-      <td>$300</td>
-      <td>$1,000</td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 2</td>
-      <td>$0</td>
-      <td>$200</td>
-      <td>$500</td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 3</td>
-      <td>$0</td>
-      <td>$0</td>
-      <td>$0</td>
-    </tr>
-    <tr>
-      <td><strong>Business Role 2</strong></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 4</td>
-      <td>$100</td>
-      <td>$300</td>
-      <td>$1,000</td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 5</td>
-      <td>$0</td>
-      <td>$200</td>
-      <td>$500</td>
-    </tr>
-    <tr>
-      <td style = "padding-left: 30px;">Skills Course 6</td>
-      <td>$0</td>
-      <td>$0</td>
-      <td>$0</td>
-    </tr>
+    @foreach($business_roles as $business_role)
+      <tr>
+        <td><strong>{{ $business_role->name }}</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      @foreach($courses[$business_role->id] as $course)
+        @foreach($users[$business_role->id] as $user)
+          <tr>
+            <td style = "padding-left: 30px;">{{ $course->name }}</td>
+            <td>${{ $course->cost * $user->total }}</td>
+            <td>$0</td>
+            <td>$0</td>
+          </tr>
+        @endforeach
+      @endforeach
+    @endforeach
     <tr style = "border-top: 2px solid #000000; border-bottom: 2px solid #000000;">
       <td><strong>Total Expense:</strong></td>
-      <td><strong>$200</strong></td>
+      <td><strong>${{ $immediate_total }}</strong></td>
       <td><strong>$1,000</strong></td>
       <td><strong>$3,000</strong></td>
     </tr>
