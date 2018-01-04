@@ -6,7 +6,7 @@
   <div class = "row">
     <div id = "user-accordion" class = "col-md-3">
       @foreach($users as $user)
-        <h3 id = "user-{{ $user->id }}">{{ $user->Fname }} {{ $user->Lname }}</h3>
+        <h3 class = "user-name" id = "user-{{ $user->id }}">{{ $user->Fname }} {{ $user->Lname }}</h3>
         <div>
           <div class = "business-role-accordion">
             @foreach($businessRoles[$user->id] as $businessRole)
@@ -66,13 +66,12 @@
         });
       @endforeach
 
-      //alert($('#user-{{ $user->id }}').html());
-
       $('#user-{{ $user->id }}').next().find('.business-role-item').each(function() {
         if($(this).find('.traffic-light').css('color') == 'rgb(255, 0, 0)') {
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
           return false;
         } else if($(this).find('.traffic-light').css('color') == 'rgb(255, 128, 0)') {
+
           var redCheck = false;
 
           $('#user-{{ $user->id }}').next().find('.business-role-item').each(function() {
@@ -86,11 +85,17 @@
           } else {
             $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 128, 0)');
           }
+
         } else if($(this).find('.traffic-light').css('color') == 'rgb(0, 128, 0)') {
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(0, 128, 0)');
         }
       });
     @endforeach
+
+    $('.user-name').on('click', function() {
+      $('#timeline').hide();
+    });
+
   });
 </script>
 
@@ -126,14 +131,11 @@
 
           rows[i][1] = new Date(enrolmentCompleted);
           rows[i][2] = new Date(enrolmentExpired);
-
-          /*if(rows[i][2] > dateLimit) {
-            $(this).find(".traffic-light").css("color", "green");
-            $(this).parent().parent().prev().find(".traffic-light").css("color", "green");
-          }*/
         }
       @endforeach
     }
+
+    $('#timeline').show();
 
     drawChart();
 
