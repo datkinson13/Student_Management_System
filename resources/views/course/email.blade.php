@@ -11,7 +11,8 @@
             <label for="emailBody">Message</label>
             <textarea class="form-control" id="emailBody" placeholder="Enter your message here..."></textarea>
         </div>
-        <button type="submit" class="btn btn-primary px-5">Send</button><button type="submit" class="btn btn-secondary ml-5 px-5">Cancel</button>
+        <button type="submit" class="btn btn-primary px-5">Send</button>
+        <a href="{{ route('course.show', ['id' => $course->id]) }}" class="btn btn-secondary active ml-5 px-5" role="button" aria-pressed="true">Cancel</a>
     </form>
 
 @endsection

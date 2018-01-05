@@ -98,5 +98,15 @@ class CoursePolicy
         }
     }
 
+    /**
+     * Determine whether the user can assign who facilitates a course.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function assignFacilitator(User $user)
+    {
+
+    }
 
 }

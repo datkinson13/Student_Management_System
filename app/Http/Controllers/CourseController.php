@@ -59,7 +59,7 @@ class CourseController extends Controller {
         // Will leave it here as not all requests are using Request validators so it will look out of place without it.
         $this->authorize('create', Course::class);
 
-        Course::create([
+        $course = Course::create([
             'name'        => $request->input('name'),
             'subtitle'    => $request->input('subtitle'),
             'description' => $request->input('description'),
@@ -70,6 +70,11 @@ class CourseController extends Controller {
             'user_id'     => \Auth::user()->id,
             'cost'        => $request->input('cost')
         ]);
+
+        if (\Auth::user()->can('assignFacilitator', Course::class)) {
+            $course->user_id = $request->input('user_id');
+            $course->save();
+        }
 
         return redirect(route('course.index'));
     }
@@ -133,7 +138,8 @@ class CourseController extends Controller {
      */
     public function edit(Course $course)
     {
-        $this->authorize('create', $course);
+        $this->authorize('update', $course);
+        return view('course.edit', compact('course'));
     }
 
     /**
@@ -145,7 +151,26 @@ class CourseController extends Controller {
      */
     public function update(Request $request, Course $course)
     {
-        $this->authorize('create', $course);
+        $this->authorize('update', $course);
+        // do the updating.
+        $course->update([
+            'name'        => $request->input('name'),
+            'subtitle'    => $request->input('subtitle'),
+            'description' => $request->input('description'),
+            'StartDate'   => $request->input('StartDate'),
+            'EndDate'     => $request->input('EndDate'),
+            'CourseTime'  => $request->input('CourseTime'),
+            'days_valid'  => $request->input('days_valid'),
+            'user_id'     => \Auth::user()->id,
+            'cost'        => $request->input('cost')
+        ]);
+
+        if (\Auth::user()->can('assignFacilitator', Course::class)) {
+            $course->user_id = $request->input('user_id');
+            $course->save();
+        }
+
+        return redirect(route('course.index'));
     }
 
     /**

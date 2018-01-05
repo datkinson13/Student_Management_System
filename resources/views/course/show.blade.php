@@ -6,6 +6,7 @@
             <a class="nav-link active" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info"
                aria-selected="true">Info</a>
         </li>
+        @if(Auth::check())
         <li class="nav-item">
             <a class="nav-link" id="assignments-tab" data-toggle="tab" href="#assignments" role="tab"
                aria-controls="assignments" aria-selected="false">Assignments</a>
@@ -14,13 +15,14 @@
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab"
                aria-controls="documents" aria-selected="false">Documents</a>
         </li>
+        @endif
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
             <div class="jumbotron">
                 <h1 class="display-3">{{ $course->name }}
-                    @can('edit', $course)
-                        <a class="btn btn-warning btn-lg" href="#" role="button">Edit Course</a>
+                    @can('update', $course)
+                        <a class="btn btn-warning btn-lg" href="/course/{{ $course->id }}/edit" role="button">Edit Course</a>
                     @endcan
                     @can('compose', $course)
                         <a class="btn btn-success btn-lg" href="/course/{{ $course->id }}/email" role="button">Email
@@ -71,6 +73,9 @@
                             </div>
                         </div>
                     </div>
+                @endif
+                @if(!Auth::check())
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#RegisterModal">Enroll</button>
                 @endif
                 @if (count($nonEnrolledUsers) > 0)
                     <a href="#">
@@ -124,10 +129,35 @@
                 <p>{{ $course->description }}</p>
             </div>
         </div>
+        @if(Auth::check())
         <div class="tab-pane fade" id="assignments" role="tabpanel" aria-labelledby="assignments-tab">
             <p>List assignments and stuff here.</p>
         </div>
         <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
             <p>Allow student to upload course documents and stuff here.</p>
         </div>
+        @else
+            <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="RegisterModalLabel">Register first</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            To enroll in a course you must first register an account. If you already have an account, please login.
+                            <hr>
+                            <a href="{{ route('login') }}" class="btn btn-primary active ml-5 px-5" role="button" aria-pressed="true">Login</a>
+                            <a href="{{ route('register') }}" class="btn btn-success active ml-5 px-5" role="button" aria-pressed="true">Register</a>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
 @endsection
