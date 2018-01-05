@@ -28,24 +28,24 @@ Route::post('/tickets/{ticket}/comments', 'CommentController@store');
 // Business role Routing
 // Route::delete('businessroles/removeuser', 'BusinessRoleController@removeUser');
 // Route::delete('businessroles/removecourse', 'BusinessRoleController@removeCourse');
-Route::resource('businessroles', 'BusinessRoleController');
+Route::resource('businessroles', 'BusinessRoleController')->middleware('auth');
 
 // Report routing
-Route::resource('reports', 'ReportController');
+Route::resource('reports', 'ReportController')->middleware('auth');
 
 // Competency monitor routing
-Route::get('/competencies/monitor', 'CompetencyMonitorController@index');
+Route::get('/competencies/monitor', 'CompetencyMonitorController@index')->middleware('auth');
 
 // Training Liability Calculator routing
-Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index');
+Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index')->middleware('auth');
 
 // Calendar routing
 Route::resource('calendar', 'CalendarController');
 Route::match(['get','post'], 'calendarEvents', 'CalendarController@events')->name('calendar.events');
 
 // Enrollment routing
-Route::resource('enrollment', 'EnrollmentController');
-Route::post('/enrollment/withdraw', 'EnrollmentController@withdraw')->name('enrollment.withdraw');
+Route::resource('enrollment', 'EnrollmentController')->middleware('auth');
+Route::post('/enrollment/withdraw', 'EnrollmentController@withdraw')->name('enrollment.withdraw')->middleware('auth');
 
 // Employer/Business routing
 Route::resource('business', 'EmployerController');
