@@ -89,6 +89,8 @@ class EnrollmentController extends Controller
      */
     public function update(Request $request, Enrollment $enrollment)
     {
+        $this->authorize('update', $enrollment);
+
         $completed = $request->input('CompletedDate');
         if ($completed) {
             $expiry = date('Y-m-d', strtotime($completed . ' + ' . $enrollment->course->days_valid . ' days'));

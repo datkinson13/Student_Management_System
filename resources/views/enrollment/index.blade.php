@@ -26,13 +26,15 @@
                     <td>{{ $enrollment->ExpiryDate }}</td>
                     <td>{{ $enrollment->daysRemaining() }}</td>
                     <td>{{ $enrollment->competencyStatus()['color'] }}</td>
-                    <td>
-                        <a href="#">
-                            <button type="button" class="btn btn-primary user-action-buttons" data-toggle="modal"
-                                    data-target="#enroll-update-modal" data-id="{{ $enrollment->id }}" data-title="{{ $enrollment->course->name }}">Update
-                            </button>
-                        </a>
-                    </td>
+                    @can('update', $enrollment)
+                        <td>
+                            <a href="#">
+                                <button type="button" class="btn btn-primary user-action-buttons" data-toggle="modal"
+                                        data-target="#enroll-update-modal" data-id="{{ $enrollment->id }}" data-title="{{ $enrollment->course->name }}">Update
+                                </button>
+                            </a>
+                        </td>
+                    @endcan
                 </tr>
             @endforeach
             </tbody>
