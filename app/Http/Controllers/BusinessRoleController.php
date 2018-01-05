@@ -18,21 +18,27 @@ class BusinessRoleController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', BusinessRole::class);
+        if ($currentUser = \Auth::user()) {
+            if ($currentUser->can('view', BusinessRole::class)) {
+                $businessRoles = BusinessRole::all();
+                $current_users = [];
+                $current_courses = [];
 
-        $businessRoles = BusinessRole::all();
-        $current_users = [];
-        $current_courses = [];
+                foreach($businessRoles as $businessRole) {
+                    $businessRole->users = sizeof(explode(",", $businessRole->users)) - 1;
+                    $businessRole->courses = sizeof(explode(",", $businessRole->courses)) - 1;
 
-        foreach($businessRoles as $businessRole) {
-          $businessRole->users = sizeof(explode(",", $businessRole->users)) - 1;
-          $businessRole->courses = sizeof(explode(",", $businessRole->courses)) - 1;
+                    $current_users[$businessRole->id] = DB::select('select * from businessrole_users inner join users on businessrole_users.user_id = users.id where businessrole_users.businessrole_id = ?', [$businessRole->id]);
+                    $current_courses[$businessRole->id] = DB::select('select * from businessrole_skills inner join courses on businessrole_skills.course_id = courses.id where businessrole_skills.businessrole_id = ?', [$businessRole->id]);
+                }
 
-          $current_users[$businessRole->id] = DB::select('select * from businessrole_users inner join users on businessrole_users.user_id = users.id where businessrole_users.businessrole_id = ?', [$businessRole->id]);
-          $current_courses[$businessRole->id] = DB::select('select * from businessrole_skills inner join courses on businessrole_skills.course_id = courses.id where businessrole_skills.businessrole_id = ?', [$businessRole->id]);
+                return view('businessroles.index', compact('businessRoles', 'current_users', 'current_courses'));
+            } else {
+                dd('Something about creating a business account to access this section.');
+            }
+        } else {
+            return redirect(route('login'));
         }
-
-        return view('businessroles.index', compact('businessRoles', 'current_users', 'current_courses'));
     }
 
     /**
