@@ -31,21 +31,31 @@
         <td></td>
       </tr>
       @foreach($courses[$business_role->id] as $course)
-        @foreach($users[$business_role->id] as $user)
-          <tr>
-            <td style = "padding-left: 30px;">{{ $course->name }}</td>
-            <td>${{ $course->cost * $user->total }}</td>
-            <td>$0</td>
-            <td>$0</td>
-          </tr>
+        @foreach($green_enrolments["$business_role->id-$course->course_id"] as $green_enrolment)
+          @foreach($yellow_enrolments["$business_role->id-$course->course_id"] as $yellow_enrolment)
+            @foreach($red_enrolments["$business_role->id-$course->course_id"] as $red_enrolment)
+              @foreach($pending_enrolments["$business_role->id-$course->course_id"] as $pending_enrolment)
+                @foreach($completed_enrolments["$business_role->id-$course->course_id"] as $completed_enrolment)
+                  @foreach($users[$business_role->id] as $user)
+                    <tr>
+                      <td style = "padding-left: 30px;">{{ $course->name }}</td>
+                      <td>${{ $course->cost * ($red_enrolment->total + ($user->total - ($pending_enrolment->total + $completed_enrolment->total))) }}</td>
+                      <td>${{ $course->cost * ($yellow_enrolment->total )}}</td>
+                      <td>${{ $course->cost * ($green_enrolment->total )}}</td>
+                    </tr>
+                  @endforeach
+                @endforeach
+              @endforeach
+            @endforeach
+          @endforeach
         @endforeach
       @endforeach
     @endforeach
     <tr style = "border-top: 2px solid #000000; border-bottom: 2px solid #000000;">
       <td><strong>Total Expense:</strong></td>
       <td><strong>${{ $immediate_total }}</strong></td>
-      <td><strong>$1,000</strong></td>
-      <td><strong>$3,000</strong></td>
+      <td><strong>${{ $approaching_total }}</strong></td>
+      <td><strong>${{ $distant_total }}</strong></td>
     </tr>
   </tbody>
 </table>
