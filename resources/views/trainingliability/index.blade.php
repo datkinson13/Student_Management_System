@@ -7,7 +7,7 @@
     Export
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#" id = "excel_button" onClick="javascript:ExcelReport()">as Excel</a>
+    <a class="dropdown-item" href="#" id = "excel_button">as Excel</a>
     <a class="dropdown-item" href="#" id = "word_button">as Word</a>
     <a class="dropdown-item" href="#" id = "pdf_button">as PDF</a>
   </div>
@@ -70,17 +70,43 @@
       $('#distant').tooltip();
 
       $('#excel_button').on('click', function() {
+        // https://stackoverflow.com/questions/15547198/export-html-table-to-csv - Melancia - 21/3/13
+        var csv = $('#expense_table').table2CSV({
+          delivery: 'value'
+        });
+
+        window.location.href = 'data:text/csv;charset=UTF-8,' + encodeURIComponent(csv);
 
       });
 
       $('#word_button').on('click', function() {
-
+        // https://stackoverflow.com/questions/36330859/export-html-table-as-word-file-and-change-file-orientation
+        var htmltable= document.getElementById('expense_table');
+        var html = htmltable.outerHTML;
+        window.open('data:application/msword,' + '\uFEFF' + encodeURIComponent(html));
       });
 
       $('#pdf_button').on('click', function() {
-
+        demoFromHTML();
       });
 
     });
+
+    // https://stackoverflow.com/questions/26100014/html-table-to-pdf-using-javascript
+    function demoFromHTML() {
+      var pdf = new jsPDF('p', 'pt', 'letter');
+
+      pdf.cellInitialize();
+      pdf.setFontSize(10);
+      $.each( $('#expense_table tr'), function (i, row){
+          $.each( $(row).find("td, th"), function(j, cell){
+              var txt = $(cell).text().trim() || " ";
+              var width = (j==0) ? 250 : 70; //make 1st column smaller
+              pdf.cell(10, 50, width, 30, txt, i);
+          });
+      });
+
+      pdf.save('download.pdf');
+    }
   </script>
 @endsection
