@@ -163,8 +163,8 @@ html .ui-button.ui-state-disabled:active {
   border-bottom-left-radius: 0px !important;
 }
 
-/* Styling the size of the timeline bars for competency monitoring
-#timeline svg g rect {
-  height: 5px !important;
-  y: y + 6;
-} */
+#immediate:hover,
+#approaching:hover,
+#distant:hover {
+ cursor: help;
+}

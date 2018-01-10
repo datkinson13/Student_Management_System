@@ -125,7 +125,8 @@ class TrainingLiabilityController extends Controller
         'completed_enrolments',
         'immediate_total',
         'approaching_total',
-        'distant_total'
+        'distant_total',
+        'today'
       ));
     }
 }
