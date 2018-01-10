@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<button class = "btn btn-primary" style = "float: right; margin-left: 20px;" type = "button">Email Accounts</button>
+<button class = "btn btn-primary" style = "float: right; margin-left: 20px;" type = "button" id = "email_button">Email Accounts</button>
 <div class="dropdown" style = "float:right;">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Export
@@ -90,8 +90,14 @@
         demoFromHTML();
       });
 
-    });
+      /*$('#email_button').on('click', function() {
+        emailUsers();
+      });*/
 
+    });
+  </script>
+
+  <script>
     // https://stackoverflow.com/questions/26100014/html-table-to-pdf-using-javascript
     function demoFromHTML() {
       var pdf = new jsPDF('p', 'pt', 'letter');
@@ -108,5 +114,14 @@
 
       pdf.save('download.pdf');
     }
+  </script>
+
+  <script>
+    /*function emailUsers() {
+      var subject = "Net Training Liability - {{ $today }}";
+      var body = $('#expense_table').html();
+
+      window.location.href('mailto:test@example.com?subject=' + subject + '&body=' + body);
+    }*/
   </script>
 @endsection
