@@ -7,6 +7,7 @@ use App\User;
 use Gate;
 use Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -204,5 +205,21 @@ class UserController extends Controller
         }
 
       return redirect('/users');
+    }
+
+    /**
+     * Allows users to upload documentation to the users document store.
+     *
+     * @param  Request $request
+     * @param  User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function upload(Request $request, User $user)
+    {
+        // $path = $request->file('document')->store('documents');
+        $path = Storage::disk('user')->putFileAs(
+            $user->id, $request->file('document'), $request->file('document')->getClientOriginalName()
+        );
+        return redirect(route('users.show', [$user->id]));
     }
 }

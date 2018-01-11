@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -36,6 +37,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function documents() {
+        return Storage::disk('user')->allFiles($this->id);
+    }
+
+
+    public function document($path) {
+        return Storage::disk('user')->get($path);
+    }
 
     public function ticket()
     {

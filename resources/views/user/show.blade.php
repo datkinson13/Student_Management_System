@@ -26,4 +26,35 @@
     <p>Phone: {{ $user->employer->phone }}</p>
   @endif
 
+  <hr>
+  {{-- Display user documentation --}}
+  <div>
+    <form action="{{ route('user.upload', [$user->id]) }}" method="post" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      <div class="form-group">
+        <label for="document">Documentation upload - Your uploaded documents will appear in the table below.</label>
+        <input type="file" class="form-control-file" id="document" name="document">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </div>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">File</th>
+        </tr>
+      </thead>
+      @foreach ($user->documents() as $count=>$document)
+        <tbody>
+          <tr>
+            <th scope="row">{{ $count+1 }}</th>
+            <td>{{ $document }}</td>
+          </tr>
+        </tbody>
+      @endforeach
+    </table>
+  </div>
+
 @endsection
