@@ -156,6 +156,8 @@
                     </div>
                 </div>
 
+                {!! app('captcha')->display() !!}
+
                 <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">
                         {{-- Make these buttons the same size and appear at opposite sides of the form. --}}

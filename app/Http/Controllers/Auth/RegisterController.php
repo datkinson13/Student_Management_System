@@ -70,6 +70,9 @@ class RegisterController extends Controller {
      */
     protected function create(array $data)
     {
+        $validate = Validator::make($data, [
+            'g-recaptcha-response' => 'required|captcha'
+        ])->validate();
 
         $email = preg_replace('/.+@/', '', strtolower($data['email']));
         $employer = Employer::where('domain', $email)->get();

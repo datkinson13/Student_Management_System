@@ -182,6 +182,9 @@ return [
         // Intervention image package
         Intervention\Image\ImageServiceProvider::class,
 
+        // reCapture
+        'Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider',
+
     ],
 
     /*
