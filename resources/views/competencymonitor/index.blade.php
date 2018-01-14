@@ -53,6 +53,7 @@
                 $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,128,0)");
               } else if(Date.parse("<?= $enrolment->ExpiryDate ?>") < today) {
                 $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,0,0)");
+                return false;
               }
 
               signalCheck = true;
@@ -61,6 +62,7 @@
 
           if(signalCheck == false) {
             $('#user-{{ $user->id }}-business-role-{{ $businessRole->id }}').find(".traffic-light").css("color", "rgb(255,0,0)");
+            return false;
           }
 
         });
