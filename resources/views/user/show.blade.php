@@ -44,6 +44,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">File</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       @foreach ($user->documents() as $count=>$document)
@@ -51,10 +52,50 @@
           <tr>
             <th scope="row">{{ $count+1 }}</th>
             <td>{{ $document }}</td>
+            <td>
+              <button type="button" class="btn btn-danger" data-title="{{ $document }}" data-toggle="modal" data-target="#deleteFileModal">
+                Delete
+              </button>
+            </td>
           </tr>
         </tbody>
       @endforeach
     </table>
   </div>
 
+  <!-- Delete File Modal -->
+  <div class="modal fade" id="deleteFileModal" tabindex="-1" role="dialog" aria-labelledby="deleteFileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteFileModalLabel">Delete file</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete this file?
+        </div>
+        <div class="modal-footer">
+          <form id="delete-form" action="{{ route('user.deletefile', [$user->id]) }}" method="post">
+            <input type="hidden" value="" id="path" name="path">
+            {{ csrf_field() }}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection
+
+@section('page-script')
+  <script type="text/javascript">
+      jQuery(document).ready(function ($) {
+          $('#deleteFileModal').on("show.bs.modal", function (e) {
+              $("#path").attr("value", $(e.relatedTarget).data('title'));
+          });
+      });
+  </script>
 @endsection

@@ -226,4 +226,10 @@ class UserController extends Controller
         );
         return redirect(route('users.show', [$user->id]));
     }
+
+    public function deletefile(Request $request, User $user) {
+        $status = Storage::disk('user')->delete($request->path);
+
+        return redirect(route('users.show', [$user->id]));
+    }
 }

@@ -20,6 +20,7 @@ Auth::routes(); // Laravel built in Auth routes. /login /register /password/forg
 // User routing
 Route::resource('users', 'UserController')->middleware('auth');
 Route::post('/users/{user}/upload', 'UserController@upload')->name('user.upload')->middleware('auth');
+Route::post('/users/{user}/deletefile', 'UserController@deletefile')->name('user.deletefile')->middleware('auth');
 // Route::get('/users/{user}/updatePassword', 'UserController@updatePassword');
 
 // Routing for help tickets
