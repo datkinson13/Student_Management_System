@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Create a report</h1>
+<!-- Create report form -->
 <form method = "POST" action = "/reports">
 {{ csrf_field() }}
 

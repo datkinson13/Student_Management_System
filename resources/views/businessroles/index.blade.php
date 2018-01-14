@@ -16,6 +16,7 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Show all business roles -->
       @foreach($businessRoles as $businessRole)
         <tr>
           <td>{{ $businessRole->name }}</td>
@@ -32,8 +33,8 @@
           </td>
         </tr>
 
+        <!-- Modal for deleting business role -->
         <!-- https://stackoverflow.com/questions/32469873/show-bootstrap-modal-when-click-on-href-laravel - User: FewFlyBy - 09/09/15 -->
-
         <div class="modal fade" id="businessrole-delete-modal-{{ $businessRole->id }}" tabindex="-1" role="dialog" aria-labelledby="businessrole-delete-modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -58,6 +59,7 @@
         </div>
         </div>
 
+        <!-- Modal for display all users in business role -->
         <div class="modal fade" id="businessrole-users-{{ $businessRole->id }}" tabindex="-1" role="dialog" aria-labelledby="businessrole-users-modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -92,6 +94,7 @@
         </div>
         </div>
 
+        <!-- Modal for display all courses in business role -->
         <div class="modal fade" id="businessrole-courses-{{ $businessRole->id }}" tabindex="-1" role="dialog" aria-labelledby="businessrole-courses-modal">
         <div class="modal-dialog" role="document">
           <div class="modal-content">

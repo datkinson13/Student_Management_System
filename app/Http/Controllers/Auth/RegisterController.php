@@ -77,6 +77,7 @@ class RegisterController extends Controller {
         $email = preg_replace('/.+@/', '', strtolower($data['email']));
         $employer = Employer::where('domain', $email)->get();
 
+        // If profile picture is uploaded, then save to server
         if(isset($data['avatar'])) {
           $avatar = $data['avatar'];
           $fileName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -85,6 +86,7 @@ class RegisterController extends Controller {
           $fileName = 'default.jpg';
         }
 
+        // If identification documentation is uploaded, then save it to server
         if(isset($data['identification'])) {
           $identification_file = $data['identification'];
           $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();

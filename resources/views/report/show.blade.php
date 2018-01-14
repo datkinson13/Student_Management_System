@@ -5,9 +5,11 @@
 
 <div class = "row">
   <div class = "col-md-7">
+    <!-- Display report graph -->
     <canvas id = "user-chart" width = "640" height = "360"></canvas>
   </div>
   <div class = "col-md-5">
+    <!-- Display create report form preset with current settings -->
     <form action = "/reports/{{ $report->id }}" method = "POST">
       {{ csrf_field() }}
       {{ method_field('PATCH') }}
@@ -47,6 +49,7 @@
 </div>
 
 <div class="pre-scrollable table-responsive col-md-12" style = "padding-top: 30px;">
+  <!-- Display report data in table below graph -->
   <table class="table table-striped">
     <thead>
       <tr>
@@ -71,6 +74,7 @@
 
 @section('footer-scripts')
 <script>
+// Use chartjs to create report graph for display
 var ctx = document.getElementById("user-chart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: '{{ $report->type }}',

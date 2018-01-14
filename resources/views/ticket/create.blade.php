@@ -2,6 +2,7 @@
 
 @section('content')
 <h1>Submit a ticket</h1>
+<!-- Create ticket form -->
 <form method = "POST" action = "/tickets">
   {{ csrf_field() }}
 

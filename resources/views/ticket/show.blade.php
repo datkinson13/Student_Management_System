@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+<!-- Display ticket details -->
 <h1>Ticket: #{{ $ticket->id }}</h1>
 <h5>Ticket ID: </h5>
 <p>#{{ $ticket->id }}</p>
@@ -20,6 +21,7 @@
 
 <div class = "comments">
   <ul class = "list-group">
+    <!-- Display all ticket comments -->
     @foreach($ticket->comments as $comment)
       <li class = "list-group-item">
         {{ $comment->user->Fname }} {{ $comment->user->Lname }}<br/>
@@ -32,6 +34,7 @@
 
 <div class = "card">
   <div class = "card-block">
+    <!-- Display add comment textbox -->
     <form method = "POST" action="/tickets/{{ $ticket->id }}/comments">
       {{ csrf_field() }}
 

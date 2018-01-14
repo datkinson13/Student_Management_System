@@ -23,6 +23,7 @@
     </tr>
   </thead>
   <tbody>
+    <!-- Loop through each business role -->
     @foreach($business_roles as $business_role)
       <tr>
         <td><strong>{{ $business_role->name }}</strong></td>
@@ -30,6 +31,7 @@
         <td></td>
         <td></td>
       </tr>
+      <!-- For each role, loop through course and enrolments -->
       @foreach($courses[$business_role->id] as $course)
         @foreach($green_enrolments["$business_role->id-$course->course_id"] as $green_enrolment)
           @foreach($yellow_enrolments["$business_role->id-$course->course_id"] as $yellow_enrolment)
@@ -37,9 +39,9 @@
               @foreach($pending_enrolments["$business_role->id-$course->course_id"] as $pending_enrolment)
                 @foreach($completed_enrolments["$business_role->id-$course->course_id"] as $completed_enrolment)
                   @foreach($users[$business_role->id] as $user)
+                    <!-- Calculate all cost depending on expiry dates and apply to relevant column -->
                     <tr>
                       <td style = "padding-left: 30px;">{{ $course->name }}</td>
-                      <!--  Why is it not passing into ALL business role courses? Seems to be totalling in one per role? -->
                       <td>${{ $course->cost * ($red_enrolment->total + ($user->total - ($pending_enrolment->total + $completed_enrolment->total))) }}</td>
                       <td>${{ $course->cost * ($yellow_enrolment->total )}}</td>
                       <td>${{ $course->cost * ($green_enrolment->total )}}</td>
@@ -52,7 +54,9 @@
         @endforeach
       @endforeach
     @endforeach
+
     <tr style = "border-top: 2px solid #000000; border-bottom: 2px solid #000000;">
+      <!-- Calculate total for each column -->
       <td><strong>Total Expense:</strong></td>
       <td><strong>${{ $immediate_total }}</strong></td>
       <td><strong>${{ $approaching_total }}</strong></td>
@@ -65,10 +69,12 @@
 @section('footer-scripts')
   <script>
     $(document).ready(function() {
+      // Add tooltips for column headings
       $('#immediate').tooltip();
       $('#approaching').tooltip();
       $('#distant').tooltip();
 
+      // Download excel document of table data when button is clicked
       $('#excel_button').on('click', function() {
         // https://stackoverflow.com/questions/15547198/export-html-table-to-csv - Melancia - 21/3/13
         var csv = $('#expense_table').table2CSV({
@@ -79,6 +85,7 @@
 
       });
 
+      // Download word document of table data when button is clicked
       $('#word_button').on('click', function() {
         // https://stackoverflow.com/questions/36330859/export-html-table-as-word-file-and-change-file-orientation
         var htmltable= document.getElementById('expense_table');
@@ -86,6 +93,7 @@
         window.open('data:application/msword,' + '\uFEFF' + encodeURIComponent(html));
       });
 
+      // Download pdf document of table data when button is clicked
       $('#pdf_button').on('click', function() {
         demoFromHTML();
       });
@@ -100,6 +108,7 @@
   <script>
     // https://stackoverflow.com/questions/26100014/html-table-to-pdf-using-javascript
     function demoFromHTML() {
+      // Use jsPDF to generate pdf of table data
       var pdf = new jsPDF('p', 'pt', 'letter');
 
       pdf.cellInitialize();

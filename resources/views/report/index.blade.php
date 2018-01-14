@@ -15,6 +15,7 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Display list of all reports -->
       @foreach($reports as $report)
       <tr>
         <td>{{ $report->report_name }}</td>

@@ -20,10 +20,14 @@ class BusinessRoleController extends Controller
     {
         if ($currentUser = \Auth::user()) {
             if ($currentUser->can('view', BusinessRole::class)) {
+
+                // Grab all business roles
                 $businessRoles = BusinessRole::all();
+
                 $current_users = [];
                 $current_courses = [];
 
+                // Set the number of users/courses in each business role and determine which users/courses are relevant
                 foreach($businessRoles as $businessRole) {
                     $businessRole->users = sizeof(explode(",", $businessRole->users)) - 1;
                     $businessRole->courses = sizeof(explode(",", $businessRole->courses)) - 1;
@@ -48,6 +52,7 @@ class BusinessRoleController extends Controller
      */
     public function create()
     {
+        // Pass through list of available users/courses for business role
         $users = User::orderBy('Lname', 'asc')->get();
         $courses = Course::orderBy('name', 'asc')->get()->unique('name');
 
@@ -62,6 +67,7 @@ class BusinessRoleController extends Controller
      */
     public function store(Request $request)
     {
+      // Save new business role to database
       $businessRole = BusinessRole::create([
               'name' => $request->input('name'),
               'description' => $request->input('description'),
@@ -71,15 +77,18 @@ class BusinessRoleController extends Controller
 
       $businessRole->save();
 
+      // Save record of users/courses added to role into array
       $added_users = explode(',', $request->input('request-users'));
       $added_skills = explode(',', $request->input('request-courses'));
 
+      // Save record of users to database
       foreach($added_users as $user) {
         if($user != '') {
           DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessRole->id]);
         }
       }
 
+      // Save record of courses to database
       foreach($added_skills as $skill) {
         if($skill != '') {
           DB::insert('insert into businessrole_skills (course_id, businessrole_id) values (?, ?)', [$skill, $businessRole->id]);
@@ -99,9 +108,11 @@ class BusinessRoleController extends Controller
     {
       $businessRole = $businessrole;
 
+      // Show all other users and courses so that they can be added to role
       $users = User::orderBy('Lname', 'asc')->get();
       $courses = Course::orderBy('name', 'asc')->get()->unique('name');
 
+      // Show all users and courses in the business role
       $current_users = DB::select('select * from businessrole_users inner join users on businessrole_users.user_id = users.id where businessrole_users.businessrole_id = ?', [$businessrole->id]);
       $current_courses =  DB::select('select * from businessrole_skills inner join courses on businessrole_skills.course_id = courses.id where businessrole_skills.businessrole_id = ?', [$businessrole->id]);
 
@@ -136,12 +147,15 @@ class BusinessRoleController extends Controller
                       'courses' => $request->input('request-courses')
                     ]);
 
+        // Delete existing role records for users/courses
         DB::table('businessrole_users')->where('businessrole_id', '=', $businessrole->id)->delete();
         DB::table('businessrole_skills')->where('businessrole_id', '=', $businessrole->id)->delete();
 
+        // Save new users/courses to array
         $updated_users = explode(',', $request->input('request-users'));
         $updated_skills = explode(',', $request->input('request-courses'));
 
+        // Update users/skills for business role in the database
         foreach($updated_users as $user) {
           if($user != '') {
             DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessrole->id]);

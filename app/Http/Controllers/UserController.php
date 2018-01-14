@@ -51,6 +51,7 @@ class UserController extends Controller
         'confirmPassword' => 'required_with:password|same:password|min:6'
       ]);
 
+      // If a profile image is uploaded then save it to server
       if(isset($request['avatar'])) {
         $avatar = $request->file('avatar');
         $fileName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -59,6 +60,7 @@ class UserController extends Controller
         $fileName = 'default.jpg';
       }
 
+      // If identification documentation is uploaded, then save it to server
       if(isset($request['identification'])) {
         $identification_file = $request->file('identification');
         $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();
@@ -119,6 +121,7 @@ class UserController extends Controller
     {
       $this->authorize('update', $user);
 
+      // If a profile image is uploaded then save it to server
       if(isset($request['avatar'])) {
         $avatar = $request->file('avatar');
         $fileName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -127,6 +130,7 @@ class UserController extends Controller
         $fileName = $user->avatar;
       }
 
+      // If identification documentation is uploaded, then save it to server
       if(isset($request['identification'])) {
         $identification_file = $request->file('identification');
         $identification_upload = time() . '.' . $identification_file->getClientOriginalExtension();

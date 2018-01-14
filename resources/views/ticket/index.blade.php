@@ -15,6 +15,7 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Display all tickets created -->
       @foreach($tickets as $ticket)
         <tr>
           <td>{{ $ticket->id }}</td>

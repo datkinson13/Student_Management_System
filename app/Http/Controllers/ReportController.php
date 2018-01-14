@@ -61,15 +61,19 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
+      // Determine relevant report type and grab data
       $table = $report->report_entity;
       $columns = DB::getSchemaBuilder()->getColumnListing($table);
       $data = DB::select("SELECT * FROM $table");
 
+      // Set labels for report graph to months and grab relevant data
       $labels = '["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]';
       $frequencies = DB::select("SELECT MONTH(created_at) month, COUNT(*) count FROM $table WHERE YEAR(created_at)=YEAR(CURRENT_TIMESTAMP) GROUP BY month ORDER BY month ASC");
 
+      // Initialise graph column data to 0
       $chart_data = [0,0,0,0,0,0,0,0,0,0,0,0];
 
+      // For each month of the year, display data as calculated
       foreach($frequencies as $frequency) {
         for($i = 1; $i < 13; $i++) {
           if($i == $frequency->month) {
