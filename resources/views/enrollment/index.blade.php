@@ -7,6 +7,7 @@
             <thead>
             <tr>
                 <th>ID</th>
+                <th>User</th>
                 <th>Course</th>
                 <th>Date Completed</th>
                 <th>Status</th>
@@ -20,6 +21,7 @@
             @foreach($enrollments as $enrollment)
                 <tr>
                     <td>{{ $enrollment->id }}</td>
+                    <td>&nbsp;</td>
                     <td>{{ $enrollment->course->name }}</td>
                     <td>{{ $enrollment->CompletedDate }}</td>
                     <td>{{ $enrollment->enrollment_status }}</td>

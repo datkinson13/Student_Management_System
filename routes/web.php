@@ -55,3 +55,8 @@ Route::resource('business', 'EmployerController');
 // Course routing
 Route::resource('/course', 'CourseController');
 Route::get('course/{course}/email', 'CourseController@compose');
+
+// Terms and conditions page
+Route::get('/auth/terms-and-conditions', function() {
+  return view('/auth/terms-and-conditions');
+});

@@ -131,7 +131,13 @@
                   <div class = "col-sm-6">
                     <input type = "file" id = "identification" name = "identification" accept = "application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/msword, application/pdf, image/*">
                   </div>
-                </div>
+                </div><br/>
+
+                <div class = "form-group">
+                  <div class = "col-sm-12">
+                    <input type = "checkbox" id = "terms-and-conditions" name = "terms-and-conditions" required> I agree to the <a href = "/auth/terms-and-conditions" target = "_blank">Terms and Conditions</a>.<br/>
+                  </div>
+                </div><br/>
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <label for="password" class="col-md-4 control-label">Password</label>

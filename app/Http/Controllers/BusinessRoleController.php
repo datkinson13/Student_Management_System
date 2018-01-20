@@ -6,8 +6,10 @@ use App\BusinessRole;
 use App\User;
 use App\Course;
 use App\Enrollment;
+use App\Mail\BusinessRoleChanged;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BusinessRoleController extends Controller
 {
@@ -85,6 +87,7 @@ class BusinessRoleController extends Controller
       foreach($added_users as $user) {
         if($user != '') {
           DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessRole->id]);
+          //Mail::to($user)->send(new BusinessRoleChanged());
         }
       }
 
