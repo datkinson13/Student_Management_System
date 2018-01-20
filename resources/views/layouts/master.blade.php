@@ -6,7 +6,7 @@
 </head>
 <body>
     @include('layouts.partials.nav')
-    <div class="container-fluid">
+    <div class="container-fluid" style = "padding-top: 20px;">
         <div class="row">
             <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
                 @include('layouts.partials.sidebar')

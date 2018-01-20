@@ -3,6 +3,14 @@
    color:    #495057;
 }
 
+.nav-pills .nav-link.active, .show>.nav-pills .nav-link {
+  background-color: #72c44d !important;
+}
+
+.bg-dark {
+  background-color: #1d4443 !important;
+}
+
 #profile-picture-main {
   float: right;
   width: 180px;

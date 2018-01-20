@@ -1,4 +1,4 @@
-<ul class="nav nav-pills flex-column">
+<ul class="nav nav-pills flex-column" style = "padding-top: 15px;">
     <li class="nav-item"><a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a></li>
     @if (Auth::check())<li class="nav-item"><a class="nav-link {{ Request::is('users*') ? 'active' : '' }}" href="/users">Users</a></li>@endif
     <li class="nav-item"><a class="nav-link {{ Request::is('course*') ? 'active' : '' }}" href="/course">Courses</a></li>
