@@ -11,6 +11,11 @@
   background-color: #1d4443 !important;
 }
 
+.btn-primary {
+  background-color: #72c44d !important;
+  border-color: #72c44d !important;
+}
+
 #profile-picture-main {
   float: right;
   width: 180px;
