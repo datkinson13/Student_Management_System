@@ -16,7 +16,11 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
+        if(Auth::User()->inRole('administrator')) {
+          $tickets = Ticket::orderBy('created_at', 'asc')->get();
+        } else {
+          $tickets = Ticket::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
+        }
 
         return view('ticket.index', compact('tickets'));
     }
@@ -42,7 +46,9 @@ class TicketController extends Controller
       Ticket::create([
               'user_id' => Auth::id(),
               'subject' => $request->input('subject'),
-              'description' => $request->input('description')
+              'description' => $request->input('description'),
+              'priority' => $request->get('priority'),
+              'status' => $request->get('status')
             ]);
 
         return redirect('/tickets');

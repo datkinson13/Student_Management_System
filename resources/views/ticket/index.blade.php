@@ -8,6 +8,7 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>User</th>
         <th>Subject</th>
         <th>Lasted Updated</th>
         <th>Priority</th>
@@ -19,6 +20,7 @@
       @foreach($tickets as $ticket)
         <tr>
           <td>{{ $ticket->id }}</td>
+          <td>{{ $ticket->user->Fname }} {{ $ticket->user->Lname }}</td>
           <td>{{ $ticket->subject }}</td>
           <td>{{ $ticket->updated_at }}</td>
           <td>{{ $ticket->priority }}</td>

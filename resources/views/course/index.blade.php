@@ -1,7 +1,12 @@
 @extends('layouts.master')
 
 @section('content')
-    <a href = "/course/create"><button class = "btn btn-primary user-profile-buttons">Add Course</button></a>
+    @if(Auth::Check())
+      @if(Auth::User()->inRole('administrator') || Auth::User()->inRole('facilitator'))
+        <a href = "/course/create"><button class = "btn btn-primary user-profile-buttons">Add Course</button></a>
+      @endif
+    @endif
+
     <h1>Courses</h1>
     <div class="card-deck">
         @foreach ($courses as $course)
