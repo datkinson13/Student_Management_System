@@ -21,7 +21,7 @@
             @foreach($enrollments as $enrollment)
                 <tr>
                     <td>{{ $enrollment->id }}</td>
-                    <td>&nbsp;</td>
+                    <td>{{ $enrollment->user->Fname }} {{ $enrollment->user->Lname}}</td>
                     <td>{{ $enrollment->course->name }}</td>
                     <td>{{ $enrollment->CompletedDate }}</td>
                     <td>{{ $enrollment->enrollment_status }}</td>
