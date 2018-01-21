@@ -3,6 +3,11 @@
    color:    #495057;
 }
 
+.page-item.active .page-link {
+  background-color: #72c44d !important;
+  border-color: #72c44d !important;
+}
+
 .nav-pills .nav-link.active, .show>.nav-pills .nav-link {
   background-color: #72c44d !important;
 }

@@ -23,7 +23,7 @@ class CompetencyMonitorController extends Controller
       $users = $usersAv;
 
       $page = request('page',1);
-      $perPage = 1;
+      $perPage = 5;
       $offset = ($page * $perPage) - $perPage;
 
       $users = new LengthAwarePaginator(

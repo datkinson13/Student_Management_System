@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class = "row">
-    <div class = "pagination">
+    <div style = "padding-left: 45%;">
       {{ $users->links() }}
     </div>
   </div>
