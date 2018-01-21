@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CompetencyMonitor;
 use App\User;
 use App\Course;
 use App\Enrollment;
@@ -15,6 +16,10 @@ class CompetencyMonitorController extends Controller
 {
     public function index(Request $request)
     {
+      if (!\Auth::user()->can('view', CompetencyMonitor::class)) {
+          return redirect(route('home'));
+      }
+
       // Get all users and business roles
       $usersAv = User::all()->filter(function ($value) {
           return \Auth::user()->can('view', $value);

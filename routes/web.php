@@ -12,7 +12,7 @@
 */
 
 // Dashboard routing
-Route::get('/', 'PageController@index');
+Route::get('/', 'PageController@index')->name('home');
 
 // Auth routing
 Auth::routes(); // Laravel built in Auth routes. /login /register /password/forgot /password/reset

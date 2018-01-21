@@ -7,25 +7,27 @@
     @endif
     <li class="nav-item"><a class="nav-link {{ Request::is('course*') ? 'active' : '' }}" href="/course">Courses</a></li>
     @if (Auth::check())
-      @if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))
-        <li class="nav-item"><a class="nav-link {{ Request::is('businessroles*') ? 'active' : '' }}" href="/businessroles">Business Roles</a></li>
-      @endif
+        @can('view', \App\BusinessRole::class)
+            <li class="nav-item"><a class="nav-link {{ Request::is('businessroles*') ? 'active' : '' }}" href="/businessroles">Business Roles</a></li>
+        @endcan
     @endif
     @if (Auth::check())
-      @if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))
+      {{--@if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))--}}
+      @can('view', \App\CompetencyMonitor::class)
         <li class="nav-item"><a class="nav-link {{ Request::is('/competencies/monitor') ? 'active' : '' }}" href="/competencies/monitor">Competency Monitor</a></li>
-      @endif
+      @endcan
     @endif
     @if (Auth::check())
-      @if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))
-        <li class="nav-item"><a class="nav-link {{ Request::is('/trainingliability/calculate') ? 'active' : '' }}" href="/trainingliability/calculate">Net Training Liability</a></li>
-      @endif
+      {{--@if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))--}}
+        @can('view', \App\TrainingLiability::class)
+            <li class="nav-item"><a class="nav-link {{ Request::is('/trainingliability/calculate') ? 'active' : '' }}" href="/trainingliability/calculate">Net Training Liability</a></li>
+        @endcan
     @endif
     <li class="nav-item"><a class="nav-link {{ Request::is('/calendar*') ? 'active' : '' }}" href="/calendar">Calendar</a></li>
     @if (Auth::check())
-      @if(Auth::User()->isEmployer() || Auth::User()->inRole('administrator'))
+      @can('view', \App\Report::class)
         <li class="nav-item"><a class="nav-link {{ Request::is('reports*') ? 'active' : '' }}" href="/reports">Reports</a></li>
-      @endif
+      @endcan
     @endif
     @if (Auth::check())<li class="nav-item"><a class="nav-link {{ Request::is('enrollment*') ? 'active' : '' }}" href="/enrollment">Enrollment</a></li>@endif
     <hr/>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\TrainingLiability;
 use App\User;
 use App\Course;
 use App\Enrollment;
@@ -15,6 +16,10 @@ class TrainingLiabilityController extends Controller
 {
     public function index()
     {
+      if (!\Auth::user()->can('view', TrainingLiability::class)) {
+          return redirect(route('home'));
+      }
+
       // Create arrays needed for calculating table with 3 columns, multiple cells and columns totals
       $business_roles = BusinessRole::all();
       $courses = [];
@@ -140,6 +145,10 @@ class TrainingLiabilityController extends Controller
 
     public function email(Request $request)
     {
+      if (!\Auth::user()->can('email', TrainingLiability::class)) {
+          return redirect(route('home'));
+      }
+
       // Create arrays needed for calculating table with 3 columns, multiple cells and columns totals
       $business_roles = BusinessRole::all();
       $courses = [];

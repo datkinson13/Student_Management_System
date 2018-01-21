@@ -18,6 +18,9 @@ class ReportController extends Controller
      */
     public function index()
     {
+        if (!\Auth::user()->can('view', Report::class)) {
+            return redirect(route('home'));
+        }
         $reports = Report::orderBy('created_at', 'desc')->get();
 
         return view('report.index', compact('reports'));
@@ -30,6 +33,9 @@ class ReportController extends Controller
      */
     public function create()
     {
+      if (!\Auth::user()->can('create', Report::class)) {
+          return redirect(route('home'));
+      }
       return view('report.create');
     }
 
@@ -41,6 +47,10 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
+        if (!\Auth::user()->can('create', Report::class)) {
+            return redirect(route('home'));
+        }
+
       Report::create([
               'report_name' => $request->input('report_name'),
               'report_entity' => $request->input('report_entity'),
@@ -61,6 +71,10 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
+        if (!\Auth::user()->can('view', Report::class)) {
+            return redirect(route('home'));
+        }
+
       // Determine relevant report type and grab data
       $table = $report->report_entity;
       $columns = DB::getSchemaBuilder()->getColumnListing($table);
@@ -105,6 +119,10 @@ class ReportController extends Controller
      */
     public function update(Request $request, Report $report)
     {
+        if (!\Auth::user()->can('update', Report::class)) {
+            return redirect(route('home'));
+        }
+
       Report::where('id', $report->id)
             ->update([
               'report_name' => $request->input('report_name'),

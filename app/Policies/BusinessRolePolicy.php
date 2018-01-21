@@ -35,7 +35,7 @@ class BusinessRolePolicy
     public function view(User $user)
     {
         // Only businesses can access this feature.
-        if ($user->isEmployer() || $user->isEmployee()) {
+        if ($user->isEmployer()) {
             return true;
         }
 
