@@ -29,6 +29,11 @@
       <div id="timeline" style="width: 100%; height: 360px;"></div>
     </div>
   </div>
+  <div class = "row">
+    <div class = "pagination">
+      {{ $users->links() }}
+    </div>
+  </div>
 </div>
 @endsection
 

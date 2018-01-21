@@ -15,9 +15,9 @@ class CompetencyMonitorController extends Controller
     public function index()
     {
       // Get all users and business roles
-      $users = User::all()->filter(function ($value) {
+      $users = User::paginate(1)->filter(function ($value) {
           return \Auth::user()->can('view', $value);
-      })->all();
+      });
       $all_roles = BusinessRole::all();
 
       $businessRoles = [];
