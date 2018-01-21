@@ -87,7 +87,7 @@ class BusinessRoleController extends Controller
       foreach($added_users as $user) {
         if($user != '') {
           DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessRole->id]);
-          //Mail::to($user)->send(new BusinessRoleChanged());
+          Mail::to(DB::select('select email from users where id = ?', [$user]))->send(new BusinessRoleChanged());
         }
       }
 
@@ -162,6 +162,7 @@ class BusinessRoleController extends Controller
         foreach($updated_users as $user) {
           if($user != '') {
             DB::insert('insert into businessrole_users (user_id, businessrole_id) values (?, ?)', [$user, $businessrole->id]);
+            Mail::to(DB::select('select email from users where id = ?', [$user]))->send(new BusinessRoleChanged());
           }
         }
 
