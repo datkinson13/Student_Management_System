@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
-<button class = "btn btn-primary" style = "float: right; margin-left: 20px;" type = "button" id = "email_button">Email Accounts</button>
+<button class = "btn btn-primary" style = "float: right; margin-left: 20px;" type = "button" id = "email_button" data-toggle="modal"
+        data-target="#training-liability-modal">Email Accounts</button>
 <div class="dropdown" style = "float:right;">
   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Export
@@ -64,6 +65,35 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Modal for deleting business role -->
+<!-- https://stackoverflow.com/questions/32469873/show-bootstrap-modal-when-click-on-href-laravel - User: FewFlyBy - 09/09/15 -->
+<div class="modal fade" id="training-liability-modal" tabindex="-1" role="dialog" aria-labelledby="training-liability-modal">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+<h4 class="modal-title" id="myModalLabel1">Email training liability data:</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <form method = "POST" action = "/trainingliability/email">
+      {{ csrf_field() }}
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="emailAddress">Please enter the appropriate email address:</label>
+          <input type="email" class="form-control" id="emailAddress" name = "emailAddress" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">Please only enter one email address...</small>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Email Accounts</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
 @endsection
 
 @section('footer-scripts')

@@ -40,6 +40,7 @@ Route::get('/competencies/monitor', 'CompetencyMonitorController@index')->middle
 
 // Training Liability Calculator routing
 Route::get('/trainingliability/calculate', 'TrainingLiabilityController@index')->middleware('auth');
+Route::post('/trainingliability/email', 'TrainingLiabilityController@email');
 
 // Calendar routing
 Route::resource('calendar', 'CalendarController');

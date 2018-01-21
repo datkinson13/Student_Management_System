@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <h1>My Enrollments</h1>
+    <h1>Enrollments</h1>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
