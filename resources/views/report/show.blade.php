@@ -22,24 +22,67 @@
       <div class = "form-group">
         <label for ="report_entity">Report Entity: </label>
         <select class = "form-control" id = "report_entity" name = "report_entity">
-          <option value = "users">Users</option>
-          <option value = "enrollments">Enrolments</option>
-          <option value = "courses">Courses</option>
-          <option value = "tickets">Tickets</option>
-          <option value = "business_roles">Business Roles</option>
+          @if($report->report_entity == "users")
+            <option value = "users" selected>Users</option>
+          @else
+            <option value = "users">Users</option>
+          @endif
+          @if($report->report_entity == "enrollments")
+            <option value = "enrollments" selected>Enrolments</option>
+          @else
+            <option value = "enrollments">Enrolments</option>
+          @endif
+          @if($report->report_entity == "courses")
+            <option value = "courses" selected>Courses</option>
+          @else
+            <option value = "courses">Courses</option>
+          @endif
+          @if($report->report_entity == "tickets")
+            <option value = "tickets" selected>Tickets</option>
+          @else
+            <option value = "tickets">Tickets</option>
+          @endif
+          @if($report->report_entity == "business_roles")
+            <option value = "business_roles" selected>Business Roles</option>
+          @else
+            <option value = "business_roles">Business Roles</option>
+          @endif
         </select>
       </div>
 
       <div class = "form-group">
         <label for ="chart_type">Chart type: </label>
         <select class = "form-control" id = "chart_type" name = "chart_type">
-          <option value = "line">Line chart</option>
-          <option value = "bar">Bar chart</option>
-          <option value = "radar">Radar chart</option>
-          <option value = "radar">Radar chart</option>
-          <option value = "pie">Pie chart</option>
-          <option value = "doughnut">Doughnut chart</option>
-          <option value = "polarArea">Polar Area chart</option>
+          @if($report->type == "line")
+            <option value = "line" selected>Line chart</option>
+          @else
+            <option value = "line">Line chart</option>
+          @endif
+          @if($report->type == "bar")
+            <option value = "bar" selected>Bar chart</option>
+          @else
+            <option value = "bar">Bar chart</option>
+          @endif
+          @if($report->type == "radar")
+            <option value = "radar" selected>Radar chart</option>
+          @else
+            <option value = "radar">Radar chart</option>
+          @endif
+          @if($report->type == "pie")
+            <option value = "pie" selected>Pie chart</option>
+          @else
+            <option value = "pie">Pie chart</option>
+          @endif
+          @if($report->type == "doughnut")
+            <option value = "doughnut" selected>Doughnut chart</option>
+          @else
+            <option value = "doughnut">Doughnut chart</option>
+          @endif
+          @if($report->type == "polarArea")
+            <option value = "polarArea" selected>Polar Area chart</option>
+          @else
+            <option value = "polarArea">Polar Area chart</option>
+          @endif
         </select>
       </div>
       <br/>
@@ -54,7 +97,7 @@
     <thead>
       <tr>
         @foreach($columns as $heading)
-          <th>{{ $heading }}</th>
+            <th>{{ $heading }}</th>
         @endforeach
       </tr>
     </thead>

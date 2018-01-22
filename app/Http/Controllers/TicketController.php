@@ -85,7 +85,12 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+      Ticket::where('id', $ticket->id)
+            ->update([
+              'status' => $request->get('status')
+            ]);
+
+      return redirect('/tickets');
     }
 
     /**

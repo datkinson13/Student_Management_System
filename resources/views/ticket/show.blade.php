@@ -4,13 +4,28 @@
 <!-- Display ticket details -->
 
 <h1>Ticket: #{{ $ticket->id }}</h1>
+<form method = "POST" action = "/tickets/{{ $ticket->id }}">
+  {{ csrf_field() }}
+  {{ method_field('PATCH') }}
+
+  @if(Auth::User()->inRole('administrator'))
+    <button type = "submit" class = "btn btn-primary user-profile-buttons">Update ticket</button>
+  @endif
 <div class = "row">
   <h5 class = "col-md-3">Ticket ID: </h5>
-  <p>#{{ $ticket->id }}</p>
+  @if(Auth::User()->inRole('administrator'))
+    <p style = "margin-left: 40px !important;">#{{ $ticket->id }}</p>
+  @else
+    <p>#{{ $ticket->id }}</p>
+  @endif
 </div>
 <div class = "row">
   <h5 class = "col-md-3">Ticket created: </h5>
-  <p>{{ $ticket->created_at }}</p>
+  @if(Auth::User()->inRole('administrator'))
+    <p style = "margin-left: 40px !important;">{{ $ticket->created_at }}</p>
+  @else
+    <p>{{ $ticket->created_at }}</p>
+  @endif
 </div>
 <div class = "row">
   <h5 class = "col-md-3">Ticket last updated: </h5>
@@ -22,12 +37,40 @@
 </div>
 <div class = "row">
   <h5 class = "col-md-3">Ticket Status: </h5>
-  <p>{{ $ticket->status }}</p>
+  @if(Auth::User()->inRole('administrator'))
+    <select class="col-md-2" id="status" name = "status" value = "{{ $ticket->status }}">
+      @if($ticket->status == "Open")
+        <option value = "Open" selected>Open</option>
+      @else
+        <option value = "Open">Open</option>
+      @endif
+      @if($ticket->status == "Pending")
+        <option value = "Pending" selected>Pending</option>
+      @else
+        <option value = "Pending">Pending</option>
+      @endif
+      @if($ticket->status == "Solved")
+        <option value = "Solved" selected>Solved</option>
+      @else
+        <option value = "Solved">Solved</option>
+      @endif
+      @if($ticket->status == "Closed")
+        <option value = "Closed" selected>Closed</option>
+      @else
+        <option value = "Closed">Closed</option>
+      @endif
+    </select>
+  @else
+    <p>{{ $ticket->status }}</p>
+  @endif
 </div><br/>
 <h5>Subject: </h5>
 <p>{{ $ticket->subject }}</p>
 <h5>Description: </h5>
-<p>{{ $ticket->description }}</p><br/>
+<p>{{ $ticket->description }}</p>
+</form>
+
+<br/>
 <hr/>
 <br/>
 
