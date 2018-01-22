@@ -81,6 +81,10 @@ class CoursePolicy
     public function delete(User $user, Course $course)
     {
         // return ($user->hasAccess(['course.delete']));
+        if ($course->user_id === $user->id) {
+            // This user is the creator of the course.
+            return true;
+        }
     }
 
     /**

@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
+    <form method="POST" action="{{ route('course.destroy', ['id' => $course->id]) }}">
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
+        <button type="submit" class="btn btn-danger user-profile-buttons">Delete</button>
+    </form>
     <form method="POST" action="{{ route('course.show', ['id' => $course->id]) }}">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}

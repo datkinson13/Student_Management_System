@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model implements \MaddHatter\LaravelFullcalendar\Event {
 
+    use SoftDeletes;
+
     protected $fillable = ['name', 'subtitle', 'description', 'StartDate', 'EndDate', 'user_id', 'CourseTime', 'days_valid', 'cost'];
 
-    protected $dates = ['StartDate', 'EndDate', 'start', 'end'];
+    protected $dates = ['StartDate', 'EndDate', 'start', 'end', 'deleted_at'];
 
     public $color = 'blue';
 

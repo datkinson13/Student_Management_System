@@ -26,6 +26,9 @@ class CourseController extends Controller {
         //   Pagination should not be apart of this version, maybe considered for v2.
 
         $courses = Course::all()->filter(function ($course) {
+            if ($course->trashed()) {
+                return false;
+            }
             return $course->visible();
         })->all();
 
@@ -181,7 +184,9 @@ class CourseController extends Controller {
      */
     public function destroy(Course $course)
     {
-        $this->authorize('create', $course);
+        $this->authorize('delete', $course);
+        $course->delete();
+        return redirect(route('course.index'));
     }
 
     /**
