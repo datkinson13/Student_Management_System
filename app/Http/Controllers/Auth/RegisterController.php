@@ -62,7 +62,7 @@ class RegisterController extends Controller {
                            'string',
                            'min:6',
                            'max:25',
-                           'regex:^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$',
+                           'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
                            'confirmed',]
         ]);
     }
