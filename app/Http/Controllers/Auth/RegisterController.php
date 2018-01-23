@@ -58,7 +58,12 @@ class RegisterController extends Controller {
             'mobile'   => 'nullable|string',
             'DOB'      => 'nullable|date',
             'address'  => 'nullable|string',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => ['required',
+                           'string',
+                           'min:6',
+                           'max:25',
+                           'regex:^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$',
+                           'confirmed',]
         ]);
     }
 
