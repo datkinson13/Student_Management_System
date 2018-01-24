@@ -50,7 +50,7 @@
 
     @foreach($users as $user)
       // For each user, set the traffic light signal initially to red
-      $('#user-{{ $user->id }}').prepend("<span class = 'traffic-light' style = 'color: rgb(255,0,0);'><i class='fa fa-circle' aria-hidden='true'></i></span>");
+      $('#user-{{ $user->id }}').prepend("<span class = 'traffic-light' style = 'color: rgb(0,0,0);'><i class='fa fa-circle-thin' aria-hidden='true'></i></span>");
 
       @foreach($businessRoles[$user->id] as $businessRole)
         /*
@@ -97,6 +97,7 @@
         // If the business role is red, then set the user to red
         if($(this).find('.traffic-light').css('color') == 'rgb(255, 0, 0)') {
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
+          $('#user-{{ $user->id }}').find('.traffic-light i').removeClass('fa-circle-thin').addClass('fa-circle');
           return false;
         // If the business role is orange, then check other roles for red then set to orange
         } else if($(this).find('.traffic-light').css('color') == 'rgb(255, 128, 0)') {
@@ -112,13 +113,16 @@
           // If another role is red, then set as red instead of orange
           if(redCheck) {
             $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 0, 0)');
+            $('#user-{{ $user->id }}').find('.traffic-light i').removeClass('fa-circle-thin').addClass('fa-circle');
           } else {
             $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(255, 128, 0)');
+            $('#user-{{ $user->id }}').find('.traffic-light i').removeClass('fa-circle-thin').addClass('fa-circle');
           }
 
           // Set role to green if no other role is red/orange
         } else if($(this).find('.traffic-light').css('color') == 'rgb(0, 128, 0)') {
           $('#user-{{ $user->id }}').find('.traffic-light').css('color', 'rgb(0, 128, 0)');
+          $('#user-{{ $user->id }}').find('.traffic-light i').removeClass('fa-circle-thin').addClass('fa-circle');
         }
       });
     @endforeach
